@@ -2,6 +2,8 @@ package com.yfax.webapi.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.yfax.webapi.vo.WithdrawHisVo;
  */
 @Service
 public class WithdrawHisService{
+	
+	protected static Logger logger = LoggerFactory.getLogger(WithdrawHisService.class);
 	
 	@Autowired
 	private WithdrawHisDao dao;
@@ -64,7 +68,7 @@ public class WithdrawHisService{
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("新增提现记录异常：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}

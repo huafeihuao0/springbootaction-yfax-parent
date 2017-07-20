@@ -1,5 +1,7 @@
 package com.yfax.webapi.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yfax.webapi.dao.UsersDao;
@@ -12,6 +14,8 @@ import com.yfax.webapi.vo.UsersVo;
  */
 @Service
 public class UsersService{
+	
+	protected static Logger logger = LoggerFactory.getLogger(UsersService.class);
 	
 	@Autowired
 	private UsersDao dao;
@@ -35,7 +39,7 @@ public class UsersService{
 		try {
 			return this.dao.insertUser(usersVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("新增手机IM用户异常：" + e.getMessage(), e);
 			return false;
 		}
 	}

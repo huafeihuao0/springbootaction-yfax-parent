@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ import com.yfax.webapi.vo.UserTaskListVo;
  */
 @Service
 public class UserTaskListService {
+	
+	protected static Logger logger = LoggerFactory.getLogger(UserTaskListService.class);
 
 	@Autowired
 	private UserTaskListDao userTaskListDao;
@@ -93,7 +97,7 @@ public class UserTaskListService {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("抢购任务异常：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}
@@ -127,7 +131,7 @@ public class UserTaskListService {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("放弃进行中的任务异常：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}
@@ -156,7 +160,7 @@ public class UserTaskListService {
 					return new JsonResult(ResultCode.SUCCESS_FAIL);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("提交审核异常：" + e.getMessage(), e);
 				return new JsonResult(ResultCode.EXCEPTION);
 			}
 		}else {
@@ -176,7 +180,7 @@ public class UserTaskListService {
 		try {
 			return this.userTaskListDao.updateIsChecked(map);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("设置任务已查看标识异常：" + e.getMessage(), e);
 			return false;
 		}
 	}

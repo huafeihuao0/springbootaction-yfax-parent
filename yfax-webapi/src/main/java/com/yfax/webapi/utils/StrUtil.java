@@ -299,7 +299,6 @@ public class StrUtil {
 //				return fileName;
 //			}
 //		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
 //		}
 		return "";
 	}

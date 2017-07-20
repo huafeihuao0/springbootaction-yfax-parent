@@ -44,12 +44,12 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 //	        }
 	        //TODO tokenId还没验证，待app测试后再看要如何验证
 			//验证session是否存在
-	        Object obj = request.getSession().getAttribute("_session_tokenId");
-	        if(obj == null) {
-	        		String result = new JsonResult(ResultCode.NOT_LOGIN).toJsonString();
-				this.output(response, result);
-	            return false;
-	        }
+//	        Object obj = request.getSession().getAttribute("_session_tokenId");
+//	        if(obj == null) {
+//	        		String result = new JsonResult(ResultCode.NOT_LOGIN).toJsonString();
+//				this.output(response, result);
+//	            return false;
+//	        }
 			return true;
 		} else {
 			String result = new JsonResult(ResultCode.PARAMS_ERROR).toJsonString();
