@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.yfax.webapi"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mybatis/mapper/IncomeHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/WithdrawHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/UsersMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserTaskListMapper.xml"/>
+        <mapper resource="mybatis/mapper/IncomeSetMapper.xml"/>
+        <mapper resource="mybatis/mapper/ApkUrlMapper.xml"/>
+        <mapper resource="mybatis/mapper/TaskDetailMapper.xml"/>
+        <mapper resource="mybatis/mapper/TaskListMapper.xml"/>
+    </mappers>
+</configuration>

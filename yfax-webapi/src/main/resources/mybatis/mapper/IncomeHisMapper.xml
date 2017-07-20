@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.vo.IncomeHisVo">
+
+	<resultMap id="result" type="com.yfax.webapi.vo.IncomeHisVo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="phoneId" property="phoneId" jdbcType="VARCHAR" />
+		<result column="taskId" property="taskId" jdbcType="VARCHAR" />
+		<result column="logoUrl" property="logoUrl" jdbcType="VARCHAR" />
+		<result column="taskName" property="taskName" jdbcType="VARCHAR" />
+		<result column="incomeTime" property="incomeTime" jdbcType="VARCHAR" />
+		<result column="income" property="income" jdbcType="VARCHAR" />
+		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
+		<result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
+	</resultMap>
+
+    <select id="selectIncomeHis" resultMap="result">
+		select id,phoneId,taskId,logoUrl,taskName,income,
+		date_format(incomeTime,'%Y-%m-%d %H:%i:%s') as incomeTime,
+		date_format(createDate,'%Y-%m-%d %H:%i:%s') as createDate,
+		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate 
+		from cfdb_income_his where phoneId = #{phoneId}
+		order by incometime desc
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.vo.UsersVo">
+
+    <select id="selectUsersByPhoneId" resultType="com.yfax.webapi.vo.UsersVo">
+		select phoneId,balance from cfdb_users where phoneId = #{phoneId}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.yfax.webapi.vo.UsersVo">
+		insert into cfdb_users(phoneId, balance, createDate, updateDate) 
+			values(#{phoneId}, #{balance}, #{createDate}, #{updateDate})
+	</insert>
+    
+</mapper>
