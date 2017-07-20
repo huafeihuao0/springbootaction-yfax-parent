@@ -22,6 +22,9 @@ public enum ResultCode {
 	
 	/** 不支持此操作 */
 	SUCCESS_NOT_RIGHT("206", "不支持此操作"),
+	
+	/** 同一任务只能做一次 */
+	SUCCESS_JUST_ONE("207", "同一任务只能做一次"),
 
 	/** 没有登录 */
 	NOT_LOGIN("400", "没有登录"),

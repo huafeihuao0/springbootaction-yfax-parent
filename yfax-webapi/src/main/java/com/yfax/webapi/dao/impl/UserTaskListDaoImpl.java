@@ -54,4 +54,10 @@ public class UserTaskListDaoImpl implements UserTaskListDao {
 	public UserTaskListVo selectUserTaskListById(String id) {
 		return this.sqlSessionTemplate.selectOne("selectUserTaskListById", id);
 	}
+
+	@Override
+	public boolean selectCountIsExist(Map<Object, Object> map) {
+		long count = this.sqlSessionTemplate.selectOne("selectCountIsExist", map);
+		return count > 0 ? true : false;
+	}
 }

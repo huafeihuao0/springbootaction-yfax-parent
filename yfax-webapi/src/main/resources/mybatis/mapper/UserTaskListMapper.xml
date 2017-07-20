@@ -17,7 +17,12 @@
 	
 	<select id="selectUserTaskListById" resultType="com.yfax.webapi.vo.UserTaskListVo">
 		select * from cfdb_user_tasklist where id=#{id}
-		
+	</select>
+	
+	<!-- 查看任务是否已做过 -->
+	<select id="selectCountIsExist" resultType="java.lang.Long" parameterType="java.util.Map">
+		select count(id) as count from cfdb_user_tasklist where phoneId=#{phoneId} 
+			and taskId=#{taskId} and statusFlag in (1,2,3)
 	</select>
 	
 	<!-- 删除在进行中状态下的任务 -->

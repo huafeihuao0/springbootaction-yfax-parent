@@ -44,16 +44,22 @@ public class UserTaskListService {
 	@Transactional
 	public JsonResult doPanicBuying(String phoneId, String taskId) {
 		try {
-			//TODO 用户可以对同一个任务做多次吗？前一个任务已经审核完成并成功的情况下
+			//1. 先判断用户是否已做过此任务
+			Map<Object, Object> map = new HashMap<>();
+			map.put("phoneId", phoneId);
+			map.put("taskId", taskId);
+			boolean flag = this.userTaskListDao.selectCountIsExist(map);
+			if (flag) {
+				return new JsonResult(ResultCode.SUCCESS_JUST_ONE, "同一任务只能做一次", null);
+			}
 			
-			
-			//1. 获得任务当前剩余数量
+			//2. 获得任务当前剩余数量
 			TaskListVo taskListVo = this.taskListDao.selectTaskListById(taskId);
 			if (taskListVo.getAmount() <= 0) {
 				return new JsonResult(ResultCode.SUCCESS_ALL_GONE, "今天的量已经跑光了", null);
 			}
 			
-			//2. 任务当前剩余数量减1
+			//3. 任务当前剩余数量减1
 			taskListVo.setAmount(taskListVo.getAmount()-1);
 			taskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			boolean flag1 = this.taskListDao.updateTaskListById(taskListVo);
@@ -61,7 +67,7 @@ public class UserTaskListService {
 				return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
 			}
 			
-			//3. 当前用户新增一条任务记录
+			//4. 当前用户新增一条任务记录
 			UserTaskListVo userTaskListVo = new UserTaskListVo();
 			String id = UUID.getUUID();
 			userTaskListVo.setId(id);

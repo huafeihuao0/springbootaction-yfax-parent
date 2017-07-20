@@ -6,6 +6,7 @@ import java.util.Map;
 import com.yfax.webapi.vo.UserTaskListVo;
 
 public interface UserTaskListDao {
+	public boolean selectCountIsExist(Map<Object, Object> map);
 	public UserTaskListVo selectUserTaskListById(String id);
 	public List<UserTaskListVo> selectUserTaskListByPhoneId(String phoneId);
 	public boolean deleteUserTask(Map<Object, Object> map) throws Exception;
