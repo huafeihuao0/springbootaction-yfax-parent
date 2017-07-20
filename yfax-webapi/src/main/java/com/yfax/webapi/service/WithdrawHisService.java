@@ -59,13 +59,13 @@ public class WithdrawHisService{
 		try {
 			boolean flag = this.dao.insertWithdrawHis(withdrawHisVo);
 			if (flag) {
-				return new JsonResult(ResultCode.SUCCESS, "成功", null);
+				return new JsonResult(ResultCode.SUCCESS);
 			}else {
-				return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JsonResult(ResultCode.EXCEPTION, "发生异常", null);
+			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}
 	

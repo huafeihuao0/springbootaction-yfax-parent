@@ -33,6 +33,9 @@ spring:
 # tomcat
 server:
   port: 8080
+  #自定义session失效时间
+  session: 
+    timeout: 60
 
 #自定义属性
 name: zhangsan

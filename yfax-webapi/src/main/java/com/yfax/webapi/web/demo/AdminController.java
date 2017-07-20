@@ -32,10 +32,11 @@ public class AdminController {
 	@RequestMapping("/login")
 	public JsonResult login(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Map<String, String> map) {
-		if (userName.equals(map.get("userName")) && pw.equals(map.get("password"))) {
-			return new JsonResult(ResultCode.SUCCESS, "登录成功！", null);
-		} else {
-			return new JsonResult(ResultCode.NOT_LOGIN, "登录失败！", null);
-		}
+//		if (userName.equals(map.get("userName")) && pw.equals(map.get("password"))) {
+//			return new JsonResult(ResultCode.SUCCESS, "登录成功！", null);
+//		} else {
+//			return new JsonResult(ResultCode.NOT_LOGIN, "登录失败！", null);
+//		}
+		return null;
 	}
 }

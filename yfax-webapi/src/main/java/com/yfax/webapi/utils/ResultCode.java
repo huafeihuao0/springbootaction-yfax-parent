@@ -41,8 +41,8 @@ public enum ResultCode {
 	/** 不支持或已经废弃 */
 	NOT_SUPPORTED("410", "不支持或已经废弃"),
 	
-	/** IMEI值错误 */
-	IMEI_ERROR("411", "IMEI值错误"),
+	/** 无效IMEI值 */
+	IMEI_ERROR("411", "无效IMEI值"),
 
 	/** AuthCode错误 */
 	INVALID_AUTHCODE("444", "无效的AuthCode"),
@@ -53,8 +53,8 @@ public enum ResultCode {
 	/** 未知的错误 */
 	UNKNOWN_ERROR("499", "未知错误");
 
-	private ResultCode(String value, String msg) {
-		this.val = value;
+	private ResultCode(String val, String msg) {
+		this.val = val;
 		this.msg = msg;
 	}
 
@@ -68,4 +68,5 @@ public enum ResultCode {
 
 	private String val;
 	private String msg;
+	
 }

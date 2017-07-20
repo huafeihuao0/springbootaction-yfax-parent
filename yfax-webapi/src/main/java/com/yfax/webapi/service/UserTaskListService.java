@@ -50,13 +50,13 @@ public class UserTaskListService {
 			map.put("taskId", taskId);
 			boolean flag = this.userTaskListDao.selectCountIsExist(map);
 			if (flag) {
-				return new JsonResult(ResultCode.SUCCESS_JUST_ONE, "同一任务只能做一次", null);
+				return new JsonResult(ResultCode.SUCCESS_JUST_ONE);
 			}
 			
 			//2. 获得任务当前剩余数量
 			TaskListVo taskListVo = this.taskListDao.selectTaskListById(taskId);
 			if (taskListVo.getAmount() <= 0) {
-				return new JsonResult(ResultCode.SUCCESS_ALL_GONE, "今天的量已经跑光了", null);
+				return new JsonResult(ResultCode.SUCCESS_ALL_GONE);
 			}
 			
 			//3. 任务当前剩余数量减1
@@ -64,7 +64,7 @@ public class UserTaskListService {
 			taskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			boolean flag1 = this.taskListDao.updateTaskListById(taskListVo);
 			if (!flag1) {
-				return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 			
 			//4. 当前用户新增一条任务记录
@@ -87,14 +87,14 @@ public class UserTaskListService {
 			userTaskListVo.setUpdateDate(cTime);
 			boolean flag2 = this.userTaskListDao.insertUserTask(userTaskListVo);
 			if (!flag2) {
-				return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}else {
-				return new JsonResult(ResultCode.SUCCESS, "成功", null);
+				return new JsonResult(ResultCode.SUCCESS);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JsonResult(ResultCode.EXCEPTION, "发生异常", null);
+			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class UserTaskListService {
 			//1. 放弃任务
 			boolean flag = this.userTaskListDao.deleteUserTask(map);
 			if (!flag) {
-				return new JsonResult(ResultCode.SUCCESS_NO_DATA, "数据为空", null);
+				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 			}
 			//2. 获得任务当前剩余数量
 			TaskListVo taskListVo = this.taskListDao.selectTaskListById(taskId);
@@ -122,13 +122,13 @@ public class UserTaskListService {
 			taskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			boolean flag1 = this.taskListDao.updateTaskListById(taskListVo);
 			if (flag1) {
-				return new JsonResult(ResultCode.SUCCESS, "成功", null);
+				return new JsonResult(ResultCode.SUCCESS);
 			}else {
-				return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JsonResult(ResultCode.EXCEPTION, "发生异常", null);
+			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}
 	
@@ -141,7 +141,7 @@ public class UserTaskListService {
 	public JsonResult doProve(String phoneId, String id) {
 		UserTaskListVo userTaskListVo = this.userTaskListDao.selectUserTaskListById(id);
 		if(userTaskListVo == null) {
-			return new JsonResult(ResultCode.SUCCESS_NO_DATA, "数据为空", null);
+			return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 		}
 		if(userTaskListVo.getStatusFlag() == 1) {	//当前状态需为进行中
 			userTaskListVo.setId(id);
@@ -151,16 +151,16 @@ public class UserTaskListService {
 			try {
 				boolean flag = this.userTaskListDao.updateUserTaskById(userTaskListVo);
 				if (flag) {
-					return new JsonResult(ResultCode.SUCCESS, "成功", null);
+					return new JsonResult(ResultCode.SUCCESS);
 				}else {
-					return new JsonResult(ResultCode.SUCCESS_FAIL, "失败，请重试", null);
+					return new JsonResult(ResultCode.SUCCESS_FAIL);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				return new JsonResult(ResultCode.EXCEPTION, "发生异常", null);
+				return new JsonResult(ResultCode.EXCEPTION);
 			}
 		}else {
-			return new JsonResult(ResultCode.SUCCESS_NOT_RIGHT, "不支持此操作", null);
+			return new JsonResult(ResultCode.SUCCESS_NOT_RIGHT);
 		}
 	}
 	

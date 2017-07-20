@@ -1,5 +1,7 @@
 package com.yfax.webapi.utils;
 
+import net.sf.json.JSONObject;
+
 public class JsonResult {
 	private String code;
 	private String message;
@@ -7,7 +9,7 @@ public class JsonResult {
 
 	public JsonResult() {
 		this.setCode(ResultCode.SUCCESS);
-		this.setMessage("成功！");
+		this.setMessage(ResultCode.SUCCESS.msg());
 	}
 
 	public JsonResult(ResultCode code) {
@@ -15,16 +17,22 @@ public class JsonResult {
 		this.setMessage(code.msg());
 	}
 
-	public JsonResult(ResultCode code, String message) {
+//	public JsonResult(ResultCode code, String message) {
+//		this.setCode(code);
+//		this.setMessage(message);
+//	}
+	
+	public JsonResult(ResultCode code, Object data) {
 		this.setCode(code);
-		this.setMessage(message);
-	}
-
-	public JsonResult(ResultCode code, String message, Object data) {
-		this.setCode(code);
-		this.setMessage(message);
+		this.setMessage(code.msg());
 		this.setData(data);
 	}
+
+//	public JsonResult(ResultCode code, String message, Object data) {
+//		this.setCode(code);
+//		this.setMessage(message);
+//		this.setData(data);
+//	}
 
 	public String getCode() {
 		return code;
@@ -48,5 +56,10 @@ public class JsonResult {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public String toJsonString(){
+		JSONObject json = JSONObject.fromObject(this);
+		return json.toString();
 	}
 }

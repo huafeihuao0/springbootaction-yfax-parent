@@ -2,6 +2,7 @@ package com.yfax.webapi.rest;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.UsersVo;
-
 
 /**
  * @author Minbo.He
@@ -38,27 +38,23 @@ public class AppDoRest {
 	 * 用户登录接口（限定手机IM码）
 	 */
 	@RequestMapping("/doLogin")
-	public JsonResult doLogin(String phoneId) {
-		if(!StrUtil.null2Str(phoneId).equals("")) {
-			if(phoneId.length() == 15) {
-				UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
-				if(users == null) {
-					boolean result = this.usersService.addUser(phoneId);
-					if(!result) {
-						return new JsonResult(ResultCode.EXCEPTION, "发生异常", null);
-					}
+	public JsonResult doLogin(String phoneId, HttpServletRequest request) {
+		if(phoneId.length() == 15) {
+			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+			if(users == null) {
+				boolean result = this.usersService.addUser(phoneId);
+				if(!result) {
+					return new JsonResult(ResultCode.SUCCESS_FAIL);
 				}
-				//TODO 返回一个tokenId值
-				Map<String,String> map = new HashMap<String, String>();
-				String tokenId = UUID.getUUID();
-				map.put("tokenId", tokenId);
-				return new JsonResult(ResultCode.SUCCESS, "成功", map);
-			}else {
-				return new JsonResult(ResultCode.IMEI_ERROR, "IMEI值错误", null);
 			}
-			
+			Map<String,String> map = new HashMap<String, String>();
+			String tokenId = UUID.getUUID();
+			map.put("tokenId", tokenId);
+			//默认session失效时间为30分钟
+			request.getSession().setAttribute("_session_tokenId", tokenId);
+			return new JsonResult(ResultCode.SUCCESS, map);
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.IMEI_ERROR);
 		}
 	}
 	
@@ -67,17 +63,12 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doPanicBuying")
 	public JsonResult doPanicBuying(String phoneId, String taskId) {
-		if(!StrUtil.null2Str(phoneId).equals("")) {
-			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
-			if(users != null) {
-				return this.userTaskListService.doPanicBuying(phoneId, taskId);
-			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER, "用户不存在", null);
-			}
+		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+		if(users != null) {
+			return this.userTaskListService.doPanicBuying(phoneId, taskId);
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
-		
 	}
 	
 	/**
@@ -85,15 +76,11 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doAbandonTask")
 	public JsonResult doAbandonTask(String phoneId, String taskId) {
-		if(!StrUtil.null2Str(phoneId).equals("")) {
-			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
-			if(users != null) {
-				return this.userTaskListService.abandonUserTask(phoneId, taskId);
-			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER, "用户不存在", null);
-			}
+		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+		if(users != null) {
+			return this.userTaskListService.abandonUserTask(phoneId, taskId);
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
 	}
 	
@@ -107,10 +94,10 @@ public class AppDoRest {
 			if(users != null) {
 				return this.userTaskListService.doProve(phoneId, id);
 			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER, "用户不存在", null);
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
 			}
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 
@@ -130,13 +117,13 @@ public class AppDoRest {
 					return this.withdrawHisService.addWithdrawHis(phoneId, withdrawType, 
 							name, account, income);
 				}else {
-					return new JsonResult(ResultCode.SUCCESS_NOT_ENOUGH, "失败，余额不足", null);
+					return new JsonResult(ResultCode.SUCCESS_NOT_ENOUGH);
 				}
 			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER, "用户不存在", null);
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
 			}
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 	
@@ -145,20 +132,16 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doCheck")
 	public JsonResult doCheck(String phoneId, String id) {
-		if(!StrUtil.null2Str(phoneId).equals("")) {
-			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
-			if(users != null) {
-				boolean result = this.userTaskListService.setIsChecked(id);
-				if(result) {
-					return new JsonResult(ResultCode.SUCCESS, "成功", null);
-				}else{
-					return new JsonResult(ResultCode.SUCCESS_NO_DATA, "数据为空", null);
-				}
-			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER, "用户不存在", null);
+		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+		if(users != null) {
+			boolean result = this.userTaskListService.setIsChecked(id);
+			if(result) {
+				return new JsonResult(ResultCode.SUCCESS);
+			}else{
+				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 			}
 		}else {
-			return new JsonResult(ResultCode.PARAMS_ERROR, "参数错误", null);
+			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
 	}
 }
