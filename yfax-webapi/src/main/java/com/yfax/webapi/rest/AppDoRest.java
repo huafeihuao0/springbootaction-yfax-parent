@@ -26,6 +26,8 @@ import com.yfax.webapi.vo.UsersVo;
 public class AppDoRest {
 
 	protected static Logger logger = LoggerFactory.getLogger(AppDoRest.class);
+	//手机IMEI长度15位，固定值
+	private final static int IMEI_LENGTH = 15;
 	
 	@Autowired
 	private UsersService usersService;
@@ -39,7 +41,7 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doLogin")
 	public JsonResult doLogin(String phoneId, HttpServletRequest request) {
-		if(phoneId.length() == 15) {
+		if(phoneId.length() == IMEI_LENGTH) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users == null) {
 				boolean result = this.usersService.addUser(phoneId);
