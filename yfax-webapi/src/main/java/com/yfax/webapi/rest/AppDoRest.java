@@ -146,4 +146,13 @@ public class AppDoRest {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
 	}
+	
+	/**
+	 * rest推送测试用接口
+	 */
+	@RequestMapping("/testPushNotify")
+	public String testPushNotify(String phoneId) {
+		return this.userTaskListService.testPushNotify(phoneId);
+	}
+	
 }

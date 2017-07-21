@@ -32,7 +32,7 @@ spring:
 
 # tomcat
 server:
-  port: 8080
+  port: 8081
   #自定义session失效时间
   session: 
     timeout: 60
@@ -46,7 +46,6 @@ remark: my name is ${name}
 # mybatis
 mybatis: 
   config-location: classpath:mybatis-config.xml
-  
   
 #下面这一行务必不能少，区分不同配置，而且必须是三个字符"-"
 ---

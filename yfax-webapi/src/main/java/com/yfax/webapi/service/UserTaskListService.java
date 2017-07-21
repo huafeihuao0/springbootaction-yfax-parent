@@ -18,6 +18,7 @@ import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.TaskListVo;
 import com.yfax.webapi.vo.UserTaskListVo;
+import com.yfax.webapi.xinge.XgServiceApi;
 
 /**
  * 用户任务管理
@@ -183,5 +184,12 @@ public class UserTaskListService {
 			logger.error("设置任务已查看标识异常：" + e.getMessage(), e);
 			return false;
 		}
+	}
+	
+	/**
+	 * rest推送测试用
+	 */
+	public String testPushNotify(String phoneId) {
+		return XgServiceApi.demoXingeSimple(phoneId);
 	}
 }

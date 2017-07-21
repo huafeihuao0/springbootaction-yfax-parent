@@ -20,11 +20,25 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.2.RELEASE</version>
 	</parent>
+	
+	<repositories>
+		<repository>
+		    <id>in-project</id>
+		    <name>In Project Repo</name>
+		    <url>file://${project.basedir}/libs</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- 构建成可运行的Web项目 -->
 		<dependency>
@@ -69,6 +83,16 @@
 			<artifactId>json-lib-ext-spring</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		<!-- 
+			需手机集成信鸽依赖，安装到本机库
+			mvn install:install-file -Dfile=PushJavaSDK.jar -DgroupId=PushJavaSDK -DartifactId=PushJavaSDK -Dversion=1.0 -Dpackaging=jar
+		-->
+		<dependency>
+			<groupId>PushJavaSDK</groupId>
+			<artifactId>PushJavaSDK</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
