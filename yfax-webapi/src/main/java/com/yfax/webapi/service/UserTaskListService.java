@@ -99,7 +99,9 @@ public class UserTaskListService {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}else {
 				TaskDetailVo taskDetailVo = this.taskDetailService.selectTaskDetailByTaskId(taskId);
-				return new JsonResult(ResultCode.SUCCESS, taskDetailVo);
+				map.put("id", id);
+				map.put("taskDetailVo", taskDetailVo);
+				return new JsonResult(ResultCode.SUCCESS, map);
 			}
 			
 		} catch (Exception e) {
