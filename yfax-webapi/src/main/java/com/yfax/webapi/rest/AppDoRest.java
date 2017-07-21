@@ -155,4 +155,12 @@ public class AppDoRest {
 		return this.userTaskListService.testPushNotify(phoneId);
 	}
 	
+	/**
+	 * 广告平台状态回调接口
+	 */
+	@RequestMapping("/sendAdvInfo")
+	public JsonResult sendAdvInfo() {
+		logger.info("广告平台状态回调接口.");
+		return new JsonResult(ResultCode.SUCCESS);
+	}
 }

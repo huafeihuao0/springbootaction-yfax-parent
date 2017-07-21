@@ -16,6 +16,7 @@ import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.UUID;
+import com.yfax.webapi.vo.TaskDetailVo;
 import com.yfax.webapi.vo.TaskListVo;
 import com.yfax.webapi.vo.UserTaskListVo;
 import com.yfax.webapi.xinge.XgServiceApi;
@@ -35,6 +36,9 @@ public class UserTaskListService {
 	
 	@Autowired
 	private TaskListDao taskListDao;
+	
+	@Autowired
+	private TaskDetailService taskDetailService;
 	
 	public List<UserTaskListVo> selectUserTaskListByPhoneId(String phoneId) {
 		return this.userTaskListDao.selectUserTaskListByPhoneId(phoneId);
@@ -94,7 +98,8 @@ public class UserTaskListService {
 			if (!flag2) {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}else {
-				return new JsonResult(ResultCode.SUCCESS);
+				TaskDetailVo taskDetailVo = this.taskDetailService.selectTaskDetailByTaskId(taskId);
+				return new JsonResult(ResultCode.SUCCESS, taskDetailVo);
 			}
 			
 		} catch (Exception e) {

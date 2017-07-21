@@ -29,6 +29,10 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String uri = request.getRequestURI();
 		String queryString = request.getQueryString();
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s", url, method, uri, queryString));
+		//广告平台回调不做拦截
+        if(uri.equals("/api/cfdb/sendAdvInfo")){
+            return true;
+        }
 		//拦截请求
 		String phoneId = request.getParameter("phoneId");
 		if (!StrUtil.null2Str(phoneId).equals("")) {
