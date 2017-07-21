@@ -156,6 +156,11 @@ public class AppDoRest {
 	}
 	
 	/**
+	 * 广告平台接口回调数据秘钥
+	 */
+	private final static String AD_SECRET="*#bUOyFBOI#(@BFW";
+	
+	/**
 	 * 广告平台状态回调接口
 	 */
 	@RequestMapping("/sendAdvInfo")
