@@ -8,13 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
+import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
+import com.yfax.webapi.utils.MD5Util;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
+import com.yfax.webapi.vo.AdvHisVo;
 import com.yfax.webapi.vo.UsersVo;
 
 /**
@@ -35,6 +40,8 @@ public class AppDoRest {
 	private UserTaskListService userTaskListService;
 	@Autowired
 	private WithdrawHisService withdrawHisService;
+	@Autowired
+	private AdvHisService advHisService;
 	
 	/**
 	 * 用户登录接口（限定手机IM码）
@@ -164,8 +171,44 @@ public class AppDoRest {
 	 * 广告平台状态回调接口
 	 */
 	@RequestMapping("/sendAdvInfo")
-	public JsonResult sendAdvInfo() {
-		logger.info("广告平台状态回调接口.");
-		return new JsonResult(ResultCode.SUCCESS);
+	public String sendAdvInfo(String hashid,String appid,String adid,
+			String adname,String userid,String mac,String deviceid,
+			String source,String point,String time,String appsecret,
+			String checksum) {
+		//1. 校验MD5数据内容
+		String parameter= "?hashid=" + hashid + "&appid=" + appid + "&adid=" + adid + "&adname=" + adname + ""
+				+ "&userid=" + userid + "&mac=" + mac + "&deviceid=" + deviceid + ""
+				+ "&source=" + source + "&point=" + point + "&time=" + time + "&appsecret=" + AD_SECRET + "";
+		logger.info("parameter=" + parameter);
+		String md5Result = MD5Util.encodeByMD5(parameter)	.toLowerCase();	//小写比较	
+		if(md5Result.equals(checksum.toLowerCase())) {	
+			//2. 保存广告平台回调记录
+			AdvHisVo advHis = new AdvHisVo();
+			advHis.setHashid(hashid);
+			advHis.setAppid(appid);;
+			advHis.setAdid(adid);
+			advHis.setAdname(adname);
+			advHis.setUserid(userid);
+			advHis.setMac(mac);
+			advHis.setDeviceid(deviceid);
+			advHis.setSource(source);
+			advHis.setPoint(point);
+			advHis.setTime(time);
+			advHis.setTimeStr(DateUtil.stampToDate(time));
+			advHis.setAppsecret(appsecret);
+			advHis.setChecksum(checksum);
+			advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
+			boolean result = this.advHisService.addAdvHis(advHis);
+			if(result) {
+				return "{\"message\":\"成功\",\"success\":\"true\"}";
+			}else{
+				logger.error("服务异常");
+				return "{\"message\":\"服务异常\",\"success\":\"false\"}";
+			}
+		}else {
+			logger.warn("数据校验失败。md5Result=" + md5Result 
+					+ ", checksum=" + checksum.toLowerCase());
+			return "{\"message\":\"数据校验失败\",\"success\":\"false\"}";
+		}
 	}
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.vo.AdvHisVo">
+    
+    <!-- 添加 -->
+	<insert id="insertAdvHis" parameterType="com.yfax.webapi.vo.AdvHisVo">
+		insert into cfdb_adv_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="hashid != null" > hashid, </if>
+		  <if test="appid != null" > appid, </if>
+		  <if test="adid != null" > adid, </if>
+		  <if test="adname != null" > adname, </if>
+		  <if test="userid != null" > userid, </if>
+		  <if test="mac != null" > mac, </if>
+		  <if test="deviceid != null" > deviceid, </if>
+		  <if test="source != null" > source, </if>
+		  <if test="point != null" > point, </if>
+		  <if test="time != null" > time, </if>
+		  <if test="timeStr != null" > timeStr, </if>
+		  <if test="appsecret != null" > appsecret, </if>
+		  <if test="checksum != null" > checksum, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="hashid != null" > #{hashid}, </if>
+		  <if test="appid != null" > #{appid}, </if>
+		  <if test="adid != null" > #{adid}, </if>
+		  <if test="adname != null" > #{adname}, </if>
+		  <if test="userid != null" > #{userid}, </if>
+		  <if test="mac != null" > #{mac}, </if>
+		  <if test="deviceid != null" > #{deviceid}, </if>
+		  <if test="source != null" > #{source}, </if>
+		  <if test="point != null" > #{point}, </if>
+		  <if test="time != null" > #{time}, </if>
+		  <if test="timeStr != null" > #{timeStr}, </if>
+		  <if test="appsecret != null" > #{appsecret}, </if>
+		  <if test="checksum != null" > #{checksum}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  
+        </trim>
+	</insert>
+</mapper>

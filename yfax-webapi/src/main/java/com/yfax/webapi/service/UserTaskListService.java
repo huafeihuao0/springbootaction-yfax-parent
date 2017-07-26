@@ -49,6 +49,8 @@ public class UserTaskListService {
 	 * @param phoneId
 	 * @param taskId
 	 * @return
+	 * 
+	 * 注：需多个事务聚合成一个事务时，需service和dao方法都要加上@Transactional才生效
 	 */
 	@Transactional
 	public JsonResult doPanicBuying(String phoneId, String taskId) {

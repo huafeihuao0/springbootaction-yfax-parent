@@ -12,5 +12,14 @@
 		insert into cfdb_users(phoneId, balance, createDate, updateDate) 
 			values(#{phoneId}, #{balance}, #{createDate}, #{updateDate})
 	</insert>
+	
+	<update id="updateUser" parameterType="com.yfax.webapi.vo.UsersVo">
+		update cfdb_users 
+		<set>
+			<if test="balance != null"> balance = #{balance}, </if>
+			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+		</set>
+		where phoneId = #{phoneId} 
+	</update>
     
 </mapper>

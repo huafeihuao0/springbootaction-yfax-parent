@@ -18,6 +18,11 @@ import com.tencent.xinge.XingeApp;
 import com.yfax.webapi.utils.StrUtil;
 import com.tencent.xinge.TagTokenPair;
 
+/**
+ * 腾讯信鸽推送服务
+ * @author Minbo
+ *
+ */
 public class XgServiceApi {
 	
 	protected static Logger logger = LoggerFactory.getLogger(XgServiceApi.class);

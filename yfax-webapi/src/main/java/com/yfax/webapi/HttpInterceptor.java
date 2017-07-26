@@ -1,6 +1,7 @@
 package com.yfax.webapi;
 
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,4 +74,5 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		PrintWriter out = response.getWriter();
 		out.println(result);
 	}
+	
 }
