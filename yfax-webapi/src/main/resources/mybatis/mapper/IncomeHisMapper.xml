@@ -14,14 +14,47 @@
 		<result column="income" property="income" jdbcType="VARCHAR" />
 		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
 		<result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+		
 	</resultMap>
 
     <select id="selectIncomeHis" resultMap="result">
 		select id,phoneId,taskId,logoUrl,taskName,income,
 		date_format(incomeTime,'%Y-%m-%d %H:%i:%s') as incomeTime,
 		date_format(createDate,'%Y-%m-%d %H:%i:%s') as createDate,
-		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate 
+		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate,flag
 		from cfdb_income_his where phoneId = #{phoneId}
 		order by incometime desc
     </select>
+    
+    <!-- 添加 -->
+	<insert id="insertIncomeHis" parameterType="com.yfax.webapi.vo.IncomeHisVo">
+		insert into cfdb_income_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="phoneId != null" > phoneId, </if>
+		  <if test="taskId != null" > taskId, </if>
+		  <if test="logoUrl != null" > logoUrl, </if>
+		  <if test="taskName != null" > taskName, </if>
+		  <if test="incomeTime != null" > incomeTime, </if>
+		  <if test="income != null" > income, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  <if test="flag != null" > flag, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="phoneId != null" > #{phoneId}, </if>
+		  <if test="taskId != null" > #{taskId}, </if>
+		  <if test="logoUrl != null" > #{logoUrl}, </if>
+		  <if test="taskName != null" > #{taskName}, </if>
+		  <if test="incomeTime != null" > #{incomeTime}, </if>
+		  <if test="income != null" > #{income}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  <if test="flag != null" > #{flag}, </if>
+		  
+        </trim>
+	</insert>
 </mapper>

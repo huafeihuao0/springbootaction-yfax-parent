@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.dao.AdvHisDao;
+import com.yfax.webapi.dao.IncomeHisDao;
+import com.yfax.webapi.dao.TaskListDao;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.vo.AdvHisVo;
@@ -26,6 +28,12 @@ public class AdvHisService{
 	
 	@Autowired
 	private UsersDao usersDao;
+	
+//	@Autowired
+//	private TaskListDao taskListDao;
+//	
+//	@Autowired
+//	private IncomeHisDao incomeHisDao;
 	
 	/**
 	 * 积分兑换比率，1比100
@@ -74,6 +82,9 @@ public class AdvHisService{
 			}else {
 				logger.error("用户加钱失败。");
 			}
+			
+			//TODO 广告平台任务需新增信息传递接口
+			//TODO 新增用户收益记录
 		} catch (Exception e) {
 			logger.error("用户加钱失败异常：" + e.getMessage(), e);
 		}

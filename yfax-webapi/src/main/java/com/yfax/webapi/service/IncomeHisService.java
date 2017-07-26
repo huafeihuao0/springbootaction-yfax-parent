@@ -16,10 +16,10 @@ import com.yfax.webapi.vo.IncomeHisVo;
 public class IncomeHisService{
 	
 	@Autowired
-	private IncomeHisDao dao;
+	private IncomeHisDao incomeHisDao;
 	
 	public List<IncomeHisVo> selectIncomeHis(String phoneId){
-		return this.dao.selectIncomeHis(phoneId);
+		return this.incomeHisDao.selectIncomeHis(phoneId);
 	}
 
 }

@@ -6,4 +6,5 @@ import com.yfax.webapi.vo.IncomeHisVo;
 
 public interface IncomeHisDao {
 	public List<IncomeHisVo> selectIncomeHis(String phoneId);
+	public boolean insertIncomeHis(IncomeHisVo incomeHis) throws Exception;
 }

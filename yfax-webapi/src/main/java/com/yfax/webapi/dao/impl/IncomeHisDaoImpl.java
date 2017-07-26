@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.dao.IncomeHisDao;
 import com.yfax.webapi.vo.IncomeHisVo;
@@ -18,6 +19,13 @@ public class IncomeHisDaoImpl implements IncomeHisDao {
 	@Override
 	public List<IncomeHisVo> selectIncomeHis(String phoneId) {
 		return this.sqlSessionTemplate.selectList("selectIncomeHis", phoneId);
+	}
+
+	@Override
+	@Transactional
+	public boolean insertIncomeHis(IncomeHisVo incomeHis) throws Exception {
+		int i = this.sqlSessionTemplate.insert("insertIncomeHis", incomeHis);
+		return i > 0 ? true : false;
 	}
 
 }

@@ -19,6 +19,7 @@ public class IncomeHisVo implements Serializable {
 	private String income;
 	private String createDate;
 	private String updateDate;
+	private int flag;	//1=加钱；2=扣钱
 	
 	public String getId() {
 		return id;
@@ -73,5 +74,11 @@ public class IncomeHisVo implements Serializable {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
 }
