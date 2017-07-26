@@ -38,7 +38,7 @@ server:
     uri-encoding: UTF-8
   error: 
     path: /error
-  port: 8080
+  port: 8081
   #自定义session失效时间
   session: 
     timeout: 60

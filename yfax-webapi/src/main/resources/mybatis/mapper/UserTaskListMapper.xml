@@ -5,12 +5,12 @@
 <mapper namespace="com.yfax.webapi.vo.UserTaskListVo">
 
     <select id="selectUserTaskListByPhoneId" resultType="com.yfax.webapi.vo.UserTaskListVo">
-		select b.id,b.phoneId,b.taskId,b.logoUrl,b.taskName,b.taskTag,b.amount,b.income,b.orderNo,b.goUrl,b.status,b.statusFlag,b.isChecked,b.createDate from (
-			(select a.id,a.phoneId,a.taskId,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,a.status,a.statusFlag,a.isChecked,a.createDate
+		select b.id,b.phoneId,b.taskId,b.taskStatus,b.logoUrl,b.taskName,b.taskTag,b.amount,b.income,b.orderNo,b.goUrl,b.status,b.statusFlag,b.isChecked,b.createDate from (
+			(select a.id,a.phoneId,a.taskId,'' as taskStatus,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,a.status,a.statusFlag,a.isChecked,a.createDate
 			from cfdb_user_tasklist a where a.phoneId=#{phoneId}) 
 			union all
-			(select '' as id,'' as phoneId,a.taskId,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,'' as status,0 as statusFlag,0 as isChecked,'' as createDate
-			from cfdb_tasklist a where a.taskId not in (select taskId from cfdb_user_tasklist where phoneId=#{phoneId}  and statusFlag in (1,2)))
+			(select '' as id,'' as phoneId,a.taskId,a.status as taskStatus,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,'' as status,0 as statusFlag,0 as isChecked,'' as createDate
+			from cfdb_tasklist a where a.status=2 and a.taskId not in (select taskId from cfdb_user_tasklist where phoneId=#{phoneId}  and statusFlag in (1,2,3)))
 		) b order by b.isChecked, b.orderNo, b.createDate
 		
 	</select>
