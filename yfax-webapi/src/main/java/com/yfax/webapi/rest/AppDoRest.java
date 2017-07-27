@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.service.AdvHisService;
+import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
@@ -20,6 +21,7 @@ import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.AdvHisVo;
+import com.yfax.webapi.vo.SdkTasklistVo;
 import com.yfax.webapi.vo.UsersVo;
 
 /**
@@ -42,6 +44,8 @@ public class AppDoRest {
 	private WithdrawHisService withdrawHisService;
 	@Autowired
 	private AdvHisService advHisService;
+	@Autowired
+	private SdkTasklistService sdkTasklistService;
 	
 	/**
 	 * 用户登录接口（限定手机IM码）
@@ -209,6 +213,20 @@ public class AppDoRest {
 			logger.warn("数据校验失败。md5Result=" + md5Result 
 					+ ", checksum=" + checksum.toLowerCase());
 			return "{\"message\":\"数据校验失败\",\"success\":\"false\"}";
+		}
+	}
+	
+	/**
+	 * 新增平台SDK广告记录
+	 */
+	@RequestMapping("/doSdkTasklist")
+	public JsonResult doSdkTasklist(String phoneId) {
+		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+		if(users != null) {
+			SdkTasklistVo sdkTasklistVo = new SdkTasklistVo();
+			return this.sdkTasklistService.addSdkTasklist(sdkTasklistVo);
+		}else {
+			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
 	}
 }

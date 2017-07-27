@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.vo.SdkTasklistVo">
+    
+    <!-- 添加 -->
+	<insert id="insertSdkTasklist" parameterType="com.yfax.webapi.vo.SdkTasklistVo">
+		insert into cfdb_sdk_tasklist
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="adid != null" > adid, </if>
+		  <if test="cid != null" > cid, </if>
+		  <if test="intro != null" > intro, </if>
+		  <if test="url != null" > url, </if>
+		  <if test="icon != null" > icon, </if>
+		  <if test="psize != null" > psize, </if>
+		  <if test="title != null" > title, </if>
+		  <if test="text1 != null" > text1, </if>
+		  <if test="text2 != null" > text2, </if>
+		  <if test="android_url != null" > android_url, </if>
+		  <if test="active_time != null" > active_time, </if>
+		  <if test="runtime != null" > runtime, </if>
+		  <if test="curr_note != null" > curr_note, </if>
+		  <if test="active_num != null" > active_num, </if>
+		  <if test="score != null" > score, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="adid != null" > #{adid}, </if>
+		  <if test="cid != null" > #{cid}, </if>
+		  <if test="intro != null" > #{intro}, </if>
+		  <if test="url != null" > #{url}, </if>
+		  <if test="icon != null" > #{icon}, </if>
+		  <if test="psize != null" > #{psize}, </if>
+		  <if test="title != null" > #{title}, </if>
+		  <if test="text1 != null" > #{text1}, </if>
+		  <if test="text2 != null" > #{text2}, </if>
+		  <if test="android_url != null" > #{android_url}, </if>
+		  <if test="active_time != null" > #{active_time}, </if>
+		  <if test="runtime != null" > #{runtime}, </if>
+		  <if test="curr_note != null" > #{curr_note}, </if>
+		  <if test="active_num != null" > #{active_num}, </if>
+		  <if test="score != null" > #{score}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  
+        </trim>
+	</insert>
+</mapper>
