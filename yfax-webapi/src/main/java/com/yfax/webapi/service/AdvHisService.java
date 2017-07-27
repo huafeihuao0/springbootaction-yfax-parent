@@ -83,7 +83,6 @@ public class AdvHisService{
 				logger.error("用户加钱失败。");
 			}
 			
-			//TODO 广告平台任务需新增信息传递接口
 			//TODO 新增用户收益记录
 		} catch (Exception e) {
 			logger.error("用户加钱失败异常：" + e.getMessage(), e);

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.dao.WithdrawHisDao;
@@ -49,6 +50,7 @@ public class WithdrawHisService{
 	 * @param income
 	 * @return
 	 */
+	@Transactional
 	public JsonResult addWithdrawHis(String phoneId, int withdrawType, 
 			String name, String account, String income) {
 		WithdrawHisVo withdrawHisVo = new WithdrawHisVo();
@@ -66,25 +68,22 @@ public class WithdrawHisService{
 		withdrawHisVo.setCreateDate(cTime);
 		withdrawHisVo.setUpdateDate(cTime);
 		try {
-			boolean flag = this.withdrawHisDao.insertWithdrawHis(withdrawHisVo);
-			if (!flag) {
-				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			//2. 提现，则需要扣减用户余额
+			UsersVo usersVo = this.usersDao.selectUsersByPhoneId(withdrawHisVo.getPhoneId());
+			//更新数据
+			int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
+			int incomeTmp = Integer.valueOf(withdrawHisVo.getIncome());	//提现金额
+			usersVo.setUpdateDate(cTime);
+			usersVo.setBalance(String.valueOf(balance-incomeTmp));
+			logger.info("用户提现申请后，余额=" + (balance-incomeTmp) 
+					+ "。balance=" + balance + ", incomeTmp=" + incomeTmp);
+			
+			this.withdrawHisDao.insertWithdrawHis(withdrawHisVo);
+			boolean flag = this.usersDao.updateUser(usersVo);
+			if(flag) {
+				return new JsonResult(ResultCode.SUCCESS);
 			}else {
-				//2. 提现，则需要扣减用户余额
-				UsersVo usersVo = this.usersDao.selectUsersByPhoneId(withdrawHisVo.getPhoneId());
-				//更新数据
-				int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
-				int incomeTmp = Integer.valueOf(withdrawHisVo.getIncome());	//提现金额
-				usersVo.setUpdateDate(cTime);
-				usersVo.setBalance(String.valueOf(balance-incomeTmp));
-//				usersVo.setBalance("12345678901234567890");
-				logger.info("用户提现申请后，余额=" + (balance-incomeTmp) + "。balance=" + balance + ", incomeTmp=" + incomeTmp);
-				boolean flag2 = this.usersDao.updateUser(usersVo);
-				if(flag2) {
-					return new JsonResult(ResultCode.SUCCESS);
-				}else {
-					return new JsonResult(ResultCode.EXCEPTION);
-				}
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
 			}
 		} catch (Exception e) {
 			logger.error("用户提现申请异常：" + e.getMessage(), e);

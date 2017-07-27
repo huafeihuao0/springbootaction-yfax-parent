@@ -15,6 +15,7 @@ public class UsersDaoImpl implements UsersDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
+	@Transactional
 	public UsersVo selectUsersByPhoneId(String phoneId) {
 		return this.sqlSessionTemplate.selectOne("selectUsersByPhoneId", phoneId);
 	}
