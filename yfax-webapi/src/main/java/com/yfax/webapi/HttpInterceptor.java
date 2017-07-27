@@ -1,7 +1,6 @@
 package com.yfax.webapi;
 
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

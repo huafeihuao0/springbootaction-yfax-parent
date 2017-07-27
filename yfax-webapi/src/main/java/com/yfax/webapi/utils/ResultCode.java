@@ -25,6 +25,9 @@ public enum ResultCode {
 	
 	/** 同一任务只能做一次 */
 	SUCCESS_JUST_ONE("207", "同一任务只能做一次"),
+	
+	/** 重复记录 */
+	SUCCESS_DUPLICATE("208", "重复记录"),
 
 	/** 没有登录 */
 	NOT_LOGIN("400", "没有登录"),

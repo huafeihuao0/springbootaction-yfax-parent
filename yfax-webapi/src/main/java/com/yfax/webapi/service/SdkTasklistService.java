@@ -8,6 +8,7 @@ import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.vo.SdkTasklistVo;
+import com.yfax.webapi.vo.UsersVo;
 
 /**
  * 平台SDK广告记录
@@ -28,6 +29,10 @@ public class SdkTasklistService{
 	 */
 	public JsonResult addSdkTasklist(SdkTasklistVo sdkTasklistVo) {
 		try {
+			SdkTasklistVo isExist = this.sdkTasklistDao.selectSdkTasklistByAdid(sdkTasklistVo.getAdid());
+			if(isExist != null) {
+				return new JsonResult(ResultCode.SUCCESS_DUPLICATE);
+			}
 			boolean flag = this.sdkTasklistDao.insertSdkTasklist(sdkTasklistVo);
 			if (flag) {
 				return new JsonResult(ResultCode.SUCCESS);
@@ -35,7 +40,7 @@ public class SdkTasklistService{
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {
-			logger.error("放弃进行中的任务异常：" + e.getMessage(), e);
+			logger.error("新增平台SDK广告记录：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.EXCEPTION);
 		}
 		

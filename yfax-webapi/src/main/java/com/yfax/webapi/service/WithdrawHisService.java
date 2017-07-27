@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.dao.WithdrawHisDao;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.UUID;
+import com.yfax.webapi.vo.UsersVo;
 import com.yfax.webapi.vo.WithdrawHisVo;
 
 /**
@@ -24,7 +26,10 @@ public class WithdrawHisService{
 	protected static Logger logger = LoggerFactory.getLogger(WithdrawHisService.class);
 	
 	@Autowired
-	private WithdrawHisDao dao;
+	private WithdrawHisDao withdrawHisDao;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	/**
 	 * 查询指定用户名下的提现记录
@@ -32,7 +37,7 @@ public class WithdrawHisService{
 	 * @return
 	 */
 	public List<WithdrawHisVo> selectWithdrawHis(String phoneId){
-		return this.dao.selectWithdrawHis(phoneId);
+		return this.withdrawHisDao.selectWithdrawHis(phoneId);
 	}
 	
 	/**
@@ -61,14 +66,28 @@ public class WithdrawHisService{
 		withdrawHisVo.setCreateDate(cTime);
 		withdrawHisVo.setUpdateDate(cTime);
 		try {
-			boolean flag = this.dao.insertWithdrawHis(withdrawHisVo);
-			if (flag) {
-				return new JsonResult(ResultCode.SUCCESS);
-			}else {
+			boolean flag = this.withdrawHisDao.insertWithdrawHis(withdrawHisVo);
+			if (!flag) {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			}else {
+				//2. 提现，则需要扣减用户余额
+				UsersVo usersVo = this.usersDao.selectUsersByPhoneId(withdrawHisVo.getPhoneId());
+				//更新数据
+				int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
+				int incomeTmp = Integer.valueOf(withdrawHisVo.getIncome());	//提现金额
+				usersVo.setUpdateDate(cTime);
+				usersVo.setBalance(String.valueOf(balance-incomeTmp));
+//				usersVo.setBalance("12345678901234567890");
+				logger.info("用户提现申请后，余额=" + (balance-incomeTmp) + "。balance=" + balance + ", incomeTmp=" + incomeTmp);
+				boolean flag2 = this.usersDao.updateUser(usersVo);
+				if(flag2) {
+					return new JsonResult(ResultCode.SUCCESS);
+				}else {
+					return new JsonResult(ResultCode.EXCEPTION);
+				}
 			}
 		} catch (Exception e) {
-			logger.error("新增提现记录异常：" + e.getMessage(), e);
+			logger.error("用户提现申请异常：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.EXCEPTION);
 		}
 	}

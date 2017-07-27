@@ -48,4 +48,8 @@
 		  
         </trim>
 	</insert>
+	
+	 <select id="selectSdkTasklistByAdid" resultType="com.yfax.webapi.vo.SdkTasklistVo">
+		select * from cfdb_sdk_tasklist where adid = #{adid}
+	</select>
 </mapper>

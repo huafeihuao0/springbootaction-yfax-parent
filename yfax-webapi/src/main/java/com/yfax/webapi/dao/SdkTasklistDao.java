@@ -4,4 +4,5 @@ import com.yfax.webapi.vo.SdkTasklistVo;
 
 public interface SdkTasklistDao {
 	public boolean insertSdkTasklist(SdkTasklistVo sdkTasklist) throws Exception;
+	public SdkTasklistVo selectSdkTasklistByAdid(String adid);
 }

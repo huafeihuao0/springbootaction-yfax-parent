@@ -21,4 +21,8 @@ public class SdkTasklistDaoImpl implements SdkTasklistDao {
 		return i > 0 ? true : false;
 	}
 
+	@Override
+	public SdkTasklistVo selectSdkTasklistByAdid(String adid) {
+		return this.sqlSessionTemplate.selectOne("selectSdkTasklistByAdid", adid);
+	}
 }
