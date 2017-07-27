@@ -220,10 +220,31 @@ public class AppDoRest {
 	 * 新增平台SDK广告记录
 	 */
 	@RequestMapping("/doSdkTasklist")
-	public JsonResult doSdkTasklist(String phoneId) {
+	public JsonResult doSdkTasklist(String phoneId, String adid,String cid,
+			String intro,String url,String icon,String psize,String title,
+			String text1,String text2,String android_url,String active_time,
+			String runtime,String curr_note,String active_num,String score) {
 		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 		if(users != null) {
 			SdkTasklistVo sdkTasklistVo = new SdkTasklistVo();
+			sdkTasklistVo.setAdid(adid);
+			sdkTasklistVo.setCid(cid);
+			sdkTasklistVo.setIntro(intro);
+			sdkTasklistVo.setUrl(url);
+			sdkTasklistVo.setIcon(icon);
+			sdkTasklistVo.setPsize(psize);
+			sdkTasklistVo.setTitle(title);
+			sdkTasklistVo.setText1(text1);
+			sdkTasklistVo.setText2(text2);
+			sdkTasklistVo.setAndroid_url(android_url);
+			sdkTasklistVo.setActive_time(active_time);
+			sdkTasklistVo.setRuntime(runtime);
+			sdkTasklistVo.setCurr_note(curr_note);
+			sdkTasklistVo.setActive_num(active_num);
+			sdkTasklistVo.setScore(score);
+			String cTime = DateUtil.getCurrentLongDateTime();
+			sdkTasklistVo.setCreateDate(cTime);
+			sdkTasklistVo.setUpdateDate(cTime);
 			return this.sdkTasklistService.addSdkTasklist(sdkTasklistVo);
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
