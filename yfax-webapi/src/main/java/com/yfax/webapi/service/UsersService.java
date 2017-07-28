@@ -25,6 +25,15 @@ public class UsersService{
 	}
 	
 	/**
+	 * 获取用户统计的今日收入
+	 * @param usersVo
+	 * @return
+	 */
+	public String selectUsersTodayIncome(UsersVo usersVo){
+		return this.dao.selectUsersTodayIncome(usersVo);
+	}
+	
+	/**
 	 * 新增手机IM用户
 	 * @param usersVo
 	 * @return
@@ -33,6 +42,7 @@ public class UsersService{
 		UsersVo usersVo = new UsersVo();
 		usersVo.setPhoneId(phoneId);
 		usersVo.setBalance("0");
+		usersVo.setTotalIncome("0");
 		String cTime = DateUtil.getCurrentLongDateTime();
 		usersVo.setCreateDate(cTime);
 		usersVo.setUpdateDate(cTime);

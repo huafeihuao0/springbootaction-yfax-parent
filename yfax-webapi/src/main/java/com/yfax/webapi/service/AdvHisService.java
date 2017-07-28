@@ -75,13 +75,15 @@ public class AdvHisService{
 	private void addUserBalance(AdvHisVo advHis) throws Exception {
 		//2. 增加用户余额，1比100
 		UsersVo usersVo = this.usersDao.selectUsersByPhoneId(advHis.getDeviceid());	//IMEI手机码
-		int earn = 0;	//本次获得的钱
+		
 		if(usersVo != null) {
 			//更新数据
 			int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
+			int totalIncome = Integer.valueOf(usersVo.getTotalIncome());	//原累积收入
 			int point = Integer.valueOf(advHis.getPoint());	//本次获赠积分
-			earn = point / POINT_RATE;	
+			int earn = point / POINT_RATE;	//本次获得的钱
 			usersVo.setBalance(String.valueOf(balance + earn));
+			usersVo.setTotalIncome(String.valueOf(totalIncome + earn));
 			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			
 			//3. 记录用户收益记录
@@ -113,9 +115,11 @@ public class AdvHisService{
 						boolean flag2 = usersDao.updateUser(usersVo);
 						if(flag2) {
 							logger.info("回调用户加钱成功。balance=" + balance 
+									+ ", totalIncome=" + totalIncome 
 									+ ", point=" + point + ", earn=" + earn);
 						}else {
 							logger.warn("回调用户加钱失败。balance=" + balance 
+									+ ", totalIncome=" + totalIncome 
 									+ ", point=" + point + ", earn=" + earn);
 						}
 					}else {

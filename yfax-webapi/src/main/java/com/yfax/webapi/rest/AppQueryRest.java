@@ -18,6 +18,7 @@ import com.yfax.webapi.service.WithdrawHisService;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
+import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.vo.ApkUrlVo;
 import com.yfax.webapi.vo.IncomeHisVo;
 import com.yfax.webapi.vo.IncomeSetVo;
@@ -88,13 +89,17 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryOwnInfo")
 	public JsonResult queryOwnInfo(String phoneId) {
-		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
-		if (users != null) {
-			// TODO 临时写死配合APP测试
-			users.setTotalncome("1099");
-			users.setTodayIncome("345");
-			users.setCurrentTime(DateUtil.getCurrentLongDateTime());
-			return new JsonResult(ResultCode.SUCCESS, users);
+		UsersVo usersVo = this.usersService.selectUsersByPhoneId(phoneId);
+		if (usersVo != null) {
+			String currentTime = DateUtil.getCurrentDate();
+			usersVo.setPhoneId(phoneId);
+			usersVo.setCurrentTime(currentTime);
+			String todayIncome = StrUtil.null2Str(this.usersService.selectUsersTodayIncome(usersVo));
+			//今日收入
+			usersVo.setTodayIncome(todayIncome.equals("")?"0.0":todayIncome);		
+			usersVo.setCurrentTime(DateUtil.getCurrentLongDateTime());
+			logger.info("个人资产：" + usersVo);
+			return new JsonResult(ResultCode.SUCCESS, usersVo);
 		} else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}

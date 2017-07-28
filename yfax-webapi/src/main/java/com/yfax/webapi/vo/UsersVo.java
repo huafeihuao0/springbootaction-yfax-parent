@@ -12,17 +12,18 @@ public class UsersVo implements Serializable {
 	
 	private String phoneId;
 	private String balance;
+	private String totalIncome;
 	private String createDate;
 	private String updateDate;
-	private String totalncome;
+	
 	private String todayIncome;
 	private String currentTime;
 	
-	public String getTotalncome() {
-		return totalncome;
+	public String getTotalIncome() {
+		return totalIncome;
 	}
-	public void setTotalncome(String totalncome) {
-		this.totalncome = totalncome;
+	public void setTotalIncome(String totalIncome) {
+		this.totalIncome = totalIncome;
 	}
 	public String getTodayIncome() {
 		return todayIncome;
@@ -59,5 +60,12 @@ public class UsersVo implements Serializable {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	
+	@Override
+	public String toString() {
+		return "UsersVo [phoneId=" + phoneId + ", balance=" + balance + ", totalIncome=" + totalIncome + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + ", todayIncome=" + todayIncome + ", currentTime="
+				+ currentTime + "]";
 	}
 }

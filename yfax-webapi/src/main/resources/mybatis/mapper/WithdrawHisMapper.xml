@@ -11,11 +11,13 @@
 		<result column="income" property="income" jdbcType="VARCHAR" />
 		<result column="withdrawTime" property="withdrawTime" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="statusType" property="statusType" jdbcType="VARCHAR" />
 	</resultMap>
 
     <select id="selectWithdrawHis" resultMap="result">
 		select phoneId,withdrawType,withdrawName,income, 
-		date_format(withdrawTime,'%Y-%m-%d %H:%i:%s') as withdrawTime,status 
+		date_format(withdrawTime,'%Y-%m-%d %H:%i:%s') as withdrawTime,
+		status,statusType
 		from cfdb_withdraw_his where phoneId = #{phoneId}
 		order by withdrawTime desc
     </select>
@@ -50,7 +52,7 @@
 		  <if test="status != null" > #{status}, </if>
 		  <if test="statusType != null" > #{statusType}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
-		  <if test="updateDate != null" > #{updateDate}, </if>
+		  <if test="updateDate != null" > null, </if>
 		  
         </trim>
 	</insert>

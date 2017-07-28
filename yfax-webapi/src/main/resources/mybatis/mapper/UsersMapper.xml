@@ -5,21 +5,31 @@
 <mapper namespace="com.yfax.webapi.vo.UsersVo">
 
     <select id="selectUsersByPhoneId" resultType="com.yfax.webapi.vo.UsersVo">
-		select phoneId,balance from cfdb_users where phoneId = #{phoneId}
+		select phoneId,balance,totalIncome from cfdb_users where phoneId = #{phoneId}
 	</select>
 	
 	<insert id="insertUser" parameterType="com.yfax.webapi.vo.UsersVo">
-		insert into cfdb_users(phoneId, balance, createDate, updateDate) 
-			values(#{phoneId}, #{balance}, #{createDate}, #{updateDate})
+		insert into cfdb_users(phoneId, balance, totalIncome, createDate, updateDate) 
+			values(#{phoneId}, #{balance}, #{totalIncome}, #{createDate}, null)
 	</insert>
 	
 	<update id="updateUser" parameterType="com.yfax.webapi.vo.UsersVo">
 		update cfdb_users 
 		<set>
 			<if test="balance != null"> balance = #{balance}, </if>
+			<if test="totalIncome != null"> totalIncome = #{totalIncome}, </if>
 			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
 		</set>
 		where phoneId = #{phoneId} 
 	</update>
+    
+    <!-- 增加与扣减的差，即为今日收入 -->
+    <select id="selectUsersTodayIncome" parameterType="com.yfax.webapi.vo.UsersVo" 
+    			resultType="java.lang.String">
+		select (select sum(income) from cfdb_income_his where phoneId=#{phoneId} 
+		and date_format(incomeTime,'%Y-%m-%d')=#{currentTime} and flag=1) - 
+		(select sum(income) from cfdb_income_his where phoneId=#{phoneId} 
+		and date_format(incomeTime,'%Y-%m-%d')=#{currentTime} and flag=2) as result
+	</select>
     
 </mapper>

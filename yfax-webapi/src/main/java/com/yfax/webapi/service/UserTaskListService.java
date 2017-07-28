@@ -186,7 +186,6 @@ public class UserTaskListService {
 	public boolean setIsChecked(String id) {
 		Map<Object, Object> map = new HashMap<>();
 		map.put("id", id);
-		map.put("updateDate", DateUtil.getCurrentLongDateTime());
 		try {
 			return this.userTaskListDao.updateIsChecked(map);
 		} catch (Exception e) {

@@ -33,4 +33,9 @@ public class UsersDaoImpl implements UsersDao {
 		int i = this.sqlSessionTemplate.insert("updateUser", usersVo);
 		return i > 0 ? true : false;
 	}
+
+	@Override
+	public String selectUsersTodayIncome(UsersVo usersVo) {
+		return this.sqlSessionTemplate.selectOne("selectUsersTodayIncome", usersVo);
+	}
 }
