@@ -28,4 +28,9 @@ public class IncomeHisDaoImpl implements IncomeHisDao {
 		return i > 0 ? true : false;
 	}
 
+	@Override
+	public IncomeHisVo selectIncomeHisByCondition(IncomeHisVo incomeHisVo) {
+		return this.sqlSessionTemplate.selectOne("selectIncomeHisByCondition", incomeHisVo);
+	}
+
 }
