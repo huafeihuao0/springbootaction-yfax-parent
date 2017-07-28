@@ -185,6 +185,10 @@ public class AppDoRest {
 				+ "&source=" + source + "&point=" + point + "&time=" + time + "&appsecret=" + AD_SECRET + "";
 		logger.info("parameter=" + parameter);
 		String md5Result = MD5Util.encodeByMD5(parameter)	.toLowerCase();	//小写比较	
+		if(hashid == null || appid == null || checksum == null) {
+			logger.error("参数错误");
+			return "{\"message\":\"参数错误\",\"success\":\"false\"}";
+		}
 		if(md5Result.equals(checksum.toLowerCase())) {	
 			//2. 保存广告平台回调记录
 			AdvHisVo advHis = new AdvHisVo();
