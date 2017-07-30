@@ -203,7 +203,7 @@ public class AppDoRest {
 			advHis.setPoint(point);
 			advHis.setTime(time);
 			advHis.setTimeStr(DateUtil.stampToDate(time));
-			advHis.setAppsecret(appsecret);
+//			advHis.setAppsecret(appsecret);
 			advHis.setChecksum(checksum);
 			advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
 			boolean result = this.advHisService.addAdvHis(advHis);
