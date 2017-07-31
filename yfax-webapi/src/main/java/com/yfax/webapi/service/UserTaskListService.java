@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.dao.TaskListDao;
 import com.yfax.webapi.dao.UserTaskListDao;
+import com.yfax.webapi.dao.UserTasklistHisDao;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
@@ -19,6 +20,7 @@ import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.TaskDetailVo;
 import com.yfax.webapi.vo.TaskListVo;
 import com.yfax.webapi.vo.UserTaskListVo;
+import com.yfax.webapi.vo.UserTasklistHisVo;
 import com.yfax.webapi.xinge.XgServiceApi;
 
 /**
@@ -39,6 +41,9 @@ public class UserTaskListService {
 	
 	@Autowired
 	private TaskDetailService taskDetailService;
+	
+	@Autowired
+	private UserTasklistHisDao userTasklistHisDao;
 	
 	public List<UserTaskListVo> selectUserTaskListByPhoneId(String phoneId) {
 		return this.userTaskListDao.selectUserTaskListByPhoneId(phoneId);
@@ -100,6 +105,10 @@ public class UserTaskListService {
 			if (!flag2) {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}else {
+				//5. 记录用户任务操作历史
+				recordUserTaskHis(phoneId, taskListVo, 1);	//进行中
+				
+				//6. 返回任务详情数据返回APP
 				TaskDetailVo taskDetailVo = this.taskDetailService.selectTaskDetailByTaskId(taskId);
 				map.put("id", id);
 				map.put("taskDetailVo", taskDetailVo);
@@ -134,6 +143,8 @@ public class UserTaskListService {
 			//3. 任务当前剩余数量减1
 			taskListVo.setAmount(taskListVo.getAmount()+1);
 			taskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
+			//4. 记录用户任务操作历史
+			recordUserTaskHis(phoneId, taskListVo, 5);	//已放弃
 			boolean flag1 = this.taskListDao.updateTaskListById(taskListVo);
 			if (flag1) {
 				return new JsonResult(ResultCode.SUCCESS);
@@ -164,6 +175,10 @@ public class UserTaskListService {
 			userTaskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			try {
 				boolean flag = this.userTaskListDao.updateUserTaskById(userTaskListVo);
+				//3. 记录用户任务操作历史
+				//获得任务信息
+				TaskListVo taskListVo = this.taskListDao.selectTaskListById(userTaskListVo.getTaskId());
+				recordUserTaskHis(phoneId, taskListVo, 2);	//审核中
 				if (flag) {
 					return new JsonResult(ResultCode.SUCCESS);
 				}else {
@@ -199,5 +214,51 @@ public class UserTaskListService {
 	 */
 	public String testPushNotify(String phoneId) {
 		return XgServiceApi.demoXingeSimple(phoneId);
+	}
+	
+	/**
+	 * 记录用户任务操作历史
+	 * @throws Exception 
+	 */
+	private void recordUserTaskHis(String phoneId, TaskListVo taskListVo, int statusFlag) throws Exception {
+		//5. 记录用户抢购历史
+		UserTasklistHisVo userTasklistHisVo = new UserTasklistHisVo();
+		userTasklistHisVo.setId(UUID.getUUID());
+		userTasklistHisVo.setPhoneId(phoneId);
+		userTasklistHisVo.setTaskId(taskListVo.getTaskId());
+		userTasklistHisVo.setLogoUrl(taskListVo.getLogoUrl());
+		userTasklistHisVo.setTaskName(taskListVo.getTaskName());
+		userTasklistHisVo.setIncome(taskListVo.getIncome());
+		userTasklistHisVo.setStatus(getStatus(statusFlag));
+		userTasklistHisVo.setStatusFlag(statusFlag);
+		userTasklistHisVo.setCreateDate(DateUtil.getCurrentLongDateTime());
+		boolean flag3 = userTasklistHisDao.insertUserTasklistHis(userTasklistHisVo);
+		if(flag3) {
+			logger.debug("记录用户抢购历史成功。");
+		}else {
+			logger.error("记录用户抢购历史失败。");
+		}
+	}
+	
+	/**
+	 * 解析操作类型
+	 * @param statusFlag
+	 * 1=进行中;2=审核中;3=审核成功;4=审核失败;5=已放弃;
+	 */
+	private static String getStatus(int statusFlag) {
+		switch (statusFlag) {
+			case 1:
+				return "进行中";
+			case 2:
+				return "审核中";
+			case 3:
+				return "审核成功";
+			case 4:
+				return "审核失败";
+			case 5:
+				return "已放弃";
+			default:
+				throw new RuntimeException("未知操作类型 statusFlag值");
+		}
 	}
 }
