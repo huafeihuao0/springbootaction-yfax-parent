@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yfax.webapi.service.ApkUrlService;
 import com.yfax.webapi.service.IncomeHisService;
 import com.yfax.webapi.service.IncomeSetService;
+import com.yfax.webapi.service.SdkChannelConfigService;
 import com.yfax.webapi.service.TaskDetailService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
@@ -22,6 +23,7 @@ import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.vo.ApkUrlVo;
 import com.yfax.webapi.vo.IncomeHisVo;
 import com.yfax.webapi.vo.IncomeSetVo;
+import com.yfax.webapi.vo.SdkChannelConfigVo;
 import com.yfax.webapi.vo.TaskDetailVo;
 import com.yfax.webapi.vo.UserTaskListVo;
 import com.yfax.webapi.vo.UsersVo;
@@ -50,6 +52,8 @@ public class AppQueryRest {
 	private ApkUrlService apkUrlService;
 	@Autowired
 	private TaskDetailService taskDetailService;
+	@Autowired
+	private SdkChannelConfigService sdkChannelConfigService;
 
 	@RequestMapping("/")
 	public String greeting() {
@@ -139,10 +143,13 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryAppConfig")
 	public JsonResult queryAppConfig() {
-		Map<String, List<IncomeSetVo>> allMap = new HashMap<String, List<IncomeSetVo>>();
+		Map<String, Object> allMap = new HashMap<String, Object>();
 		// 提现金额配置
-		List<IncomeSetVo> incomeSetlist = this.incomeSetService.selectIncomeSetList();
-		allMap.put("incomeSet", incomeSetlist);
+		List<IncomeSetVo> incomeSetList = this.incomeSetService.selectIncomeSetList();
+		allMap.put("incomeSet", incomeSetList);
+		// SDK平台渠道分成配置
+		List<SdkChannelConfigVo> sdkChannelConfigList = this.sdkChannelConfigService.selectSdkChannelConfigList();
+		allMap.put("sdkChannelConfig", sdkChannelConfigList);
 		return new JsonResult(ResultCode.SUCCESS, allMap);
 	}
 
