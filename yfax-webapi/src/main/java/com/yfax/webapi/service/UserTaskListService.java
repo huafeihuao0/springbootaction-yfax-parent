@@ -140,7 +140,7 @@ public class UserTaskListService {
 			}
 			//2. 获得任务当前剩余数量
 			TaskListVo taskListVo = this.taskListDao.selectTaskListById(taskId);
-			//3. 任务当前剩余数量减1
+			//3. 任务当前剩余数量加1
 			taskListVo.setAmount(taskListVo.getAmount()+1);
 			taskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			//4. 记录用户任务操作历史
