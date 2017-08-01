@@ -15,6 +15,8 @@ public class TaskDetailVo implements Serializable {
 	private String stepUrl;
 	private String steps;
 	private String fields;
+	private Integer isUpload;
+	private Integer imagesNum;
 	private String createDate;
 	private String updateDate;
 	
@@ -59,5 +61,17 @@ public class TaskDetailVo implements Serializable {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	public Integer getIsUpload() {
+		return isUpload;
+	}
+	public void setIsUpload(Integer isUpload) {
+		this.isUpload = isUpload;
+	}
+	public Integer getImagesNum() {
+		return imagesNum;
+	}
+	public void setImagesNum(Integer imagesNum) {
+		this.imagesNum = imagesNum;
 	}
 }
