@@ -101,8 +101,10 @@ public class AppDoRest {
 	 * 提交审核任务接口
 	 */
 	@RequestMapping("/doProve")
-	public JsonResult doProve(String phoneId, String id) {
+	public JsonResult doProve(String phoneId, String id, String fields) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("")) {
+			//TODO 提交审核字段处理，arrayJson数组
+			logger.info("fields=" + fields);
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users != null) {
 				return this.userTaskListService.doProve(phoneId, id);

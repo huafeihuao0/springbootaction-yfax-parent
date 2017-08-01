@@ -21,6 +21,26 @@ import com.tencent.xinge.TagTokenPair;
 /**
  * 腾讯信鸽推送服务
  * @author Minbo
+ * 
+ * 通用返回码
+ * 值	含义	可采取措施
+	0	调用成功	
+	-1	参数错误	检查参数配置
+	-2	请求时间戳不在有效期内	检查设备当前时间
+	-3	sign校验无效	检查Access ID和Secret Key（注意不是Access Key）
+	2	参数错误	检查参数配置
+	14	收到非法token，例如iOS终端没能拿到正确的token	Android Token长度为40位iOS Token长度为64位
+	15	信鸽逻辑服务器繁忙	稍后重试
+	19	操作时序错误。例如进行tag操作前未获取到deviceToken	没有获取到deviceToken的原因：1.没有注册信鸽或者苹果推送2.provisioning profile制作不正确
+	20	鉴权错误，可能是由于Access ID和Access Key不匹配	检查Access ID和Access Key
+	40	推送的token没有在信鸽中注册	检查token是否注册
+	48	推送的账号没有绑定token	检查account和token是否有绑定关系见推送指南：绑定/设置账号见热门问题解答：账号和设备未绑定的解答
+	63	标签系统忙	检查标签是否设置成功见推送指南：设置标签
+	71	APNS服务器繁忙	苹果服务器繁忙，稍后重试
+	73	消息字符数超限	iOS目前是1000字节左右，苹果的额外推送设置如角标，也会占用字节数
+	76	请求过于频繁，请稍后再试	全量广播限频为每3秒一次
+	78	循环任务参数错误	
+	100	APNS证书错误。请重新提交正确的证书	证书格式是pem的，另外，注意区分生产证书、开发证书的区别
  *
  */
 public class XgServiceApi {
@@ -71,6 +91,12 @@ public class XgServiceApi {
 ////        System.out.println(t.demoDeleteTokenOfAccount());
 ////        System.out.println(t.demoDeleteAllTokensOfAccount());
 //    }
+	
+	public static String pushNotify(String phoneId, String title, String msg) {
+		String result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, title, msg, phoneId).toString();
+		return result;
+	}
+	
 
     /**
      * 调用简易接口
