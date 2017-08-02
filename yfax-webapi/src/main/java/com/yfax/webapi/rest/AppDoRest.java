@@ -161,14 +161,6 @@ public class AppDoRest {
 	}
 	
 	/**
-	 * rest推送测试用接口
-	 */
-	@RequestMapping("/testPushNotify")
-	public String testPushNotify(String phoneId) {
-		return this.userTaskListService.testPushNotify(phoneId);
-	}
-	
-	/**
 	 * 广告平台接口回调数据秘钥
 	 */
 	private final static String AD_SECRET="*#bUOyFBOI#(@BFW";
@@ -255,5 +247,16 @@ public class AppDoRest {
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
+	}
+	
+	/**
+	 * rest推送测试用接口
+	 * 说明：
+	 * phoneId，手机IMEI值
+	 * type，消息类型（1=通知栏消息，2=透传消息）
+	 */
+	@RequestMapping("/testPushNotify")
+	public String testPushNotify(String phoneId, int type) {
+		return this.userTaskListService.testPushNotify(phoneId, type);
 	}
 }

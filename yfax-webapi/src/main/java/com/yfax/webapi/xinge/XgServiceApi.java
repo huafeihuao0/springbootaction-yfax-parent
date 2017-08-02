@@ -52,9 +52,38 @@ public class XgServiceApi {
 	private final static String SECRET_KEY = "cb488973e809c94e4d8a97e6064d2d3d";
 	private final static String IMEI_NO = "860514034348291";
 	
+	/**
+	 * 推送栏通知消息
+	 * @param phoneId
+	 * @param title
+	 * @param msg
+	 * @return
+	 */
+	public static String pushNotify(String phoneId, String title, String msg) {
+		String result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, title, msg, phoneId).toString();
+		return result;
+	}
+	
+	/**
+	 * 推送透传消息，非通知栏
+	 * @param phoneId
+	 * @param title
+	 * @param msg
+	 * @return
+	 */
+	public static String pushNotifyByMessage(String phoneId, String title, String msg) {
+		XingeApp xinge = new XingeApp(ACCESS_ID, SECRET_KEY);
+		Message message = new Message();
+        message.setTitle(title);
+        message.setContent(msg);
+        message.setType(Message.TYPE_MESSAGE);
+        JSONObject ret = xinge.pushSingleAccount(0, phoneId, message);
+		return ret.toString();
+	}
+	
 //    public static void main(String[] args) {
 //        demoXingeSimple("");
-//
+
 ////        Demo t = new Demo();
 //        //Android单推
 ////        System.out.println(t.demoPushSingleDeviceMessage());
@@ -92,12 +121,6 @@ public class XgServiceApi {
 ////        System.out.println(t.demoDeleteAllTokensOfAccount());
 //    }
 	
-	public static String pushNotify(String phoneId, String title, String msg) {
-		String result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, title, msg, phoneId).toString();
-		return result;
-	}
-	
-
     /**
      * 调用简易接口
      */

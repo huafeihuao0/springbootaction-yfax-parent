@@ -120,7 +120,7 @@ public class AdvHisService{
 									+ ", point=" + point + ", earn=" + earn);
 							
 							//推送用户通知
-							String result =  XgServiceApi.pushNotify(advHis.getDeviceid(), "恭喜获得奖励", 
+							String result =  XgServiceApi.pushNotifyByMessage(advHis.getDeviceid(), "恭喜获得奖励", 
 									"任务[" + incomeHis.getTaskName() + "]已完成，获得收益：" + incomeHis.getIncome() + "元");
 							logger.info("推送通知给用户[phoneId=" + advHis.getDeviceid() + "]，推送发送结果result=" + result);
 						}else {
