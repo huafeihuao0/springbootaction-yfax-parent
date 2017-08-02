@@ -42,7 +42,7 @@ public class AdvHisService{
 	/**
 	 * 积分兑换比率，1比100
 	 */
-	private static final int POINT_RATE = 100;
+	private static final double POINT_RATE = 100;
 	
 	/**
 	 * 新增广告平台回调记录
@@ -52,13 +52,18 @@ public class AdvHisService{
 	public boolean addAdvHis(AdvHisVo advHis) {
 		try {
 			//1. 新增广告平台回调记录
+			AdvHisVo advHisTmp = this.advHisDao.selectByHashid(advHis.getHashid());
+			if(advHisTmp != null) {
+				logger.info("广告平台回调记录，跳过处理");
+				return false;
+			}
 			boolean flag1 = this.advHisDao.insertAdvHis(advHis);
 			if(flag1) {
-				logger.info("新增广告平台回调记录成功。");
+				logger.info("新增广告平台回调记录成功");
 				this.addUserBalance(advHis);
 				return true;
 			}else {
-				logger.error("新增广告平台回调记录失败。");
+				logger.error("新增广告平台回调记录失败");
 				return false;
 			}
 		} catch (Exception e) {
@@ -81,8 +86,8 @@ public class AdvHisService{
 			//更新数据
 			int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
 			int totalIncome = Integer.valueOf(usersVo.getTotalIncome());	//原累积收入
-			int point = Integer.valueOf(advHis.getPoint());	//本次获赠积分
-			int earn = point / POINT_RATE;	//本次获得的钱
+			double point = Integer.valueOf(advHis.getPoint());	//本次获赠积分
+			double earn = point / POINT_RATE;	//本次获得的钱
 			usersVo.setBalance(String.valueOf(balance + earn));
 			usersVo.setTotalIncome(String.valueOf(totalIncome + earn));
 			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());

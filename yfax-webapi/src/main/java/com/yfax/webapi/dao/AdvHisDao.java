@@ -4,4 +4,5 @@ import com.yfax.webapi.vo.AdvHisVo;
 
 public interface AdvHisDao {
 	public boolean insertAdvHis(AdvHisVo advHis) throws Exception;
+	public AdvHisVo selectByHashid(String hashid);
 }

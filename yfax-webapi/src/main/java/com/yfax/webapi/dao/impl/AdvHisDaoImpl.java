@@ -21,4 +21,9 @@ public class AdvHisDaoImpl implements AdvHisDao {
 		return i > 0 ? true : false;
 	}
 
+	@Override
+	public AdvHisVo selectByHashid(String hashid) {
+		return this.sqlSessionTemplate.selectOne("selectByHashid", hashid);
+	}
+
 }
