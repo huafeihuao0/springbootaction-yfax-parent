@@ -1,6 +1,9 @@
 package com.yfax.webapi.utils;
 
 import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MD5Util {
 	// 十六进制下数字到字符的映射数组
@@ -49,8 +52,10 @@ public class MD5Util {
 		return hexDigits[d1] + hexDigits[d2];
 	}
 	
-//	public static void main(String[] args) {
-//		//DC483E80A7A0BD9EF71D8CF973673924
-//		System.out.println(encodeByMD5("a123456"));
-//	}
+	public static void main(String[] args) throws ParseException {
+		String parameter = "?hashid=2635045594596635280&appid=9751&adid=11311&adname=995棋牌&userid=861305032211386&mac=d8:9a:34:18:ac:03&deviceid=861305032211386&source=dianru&point=60&time=1501646898&active_num=0&appsecret=*#bUOyFBOI#(@BFW";
+//		System.out.println(DateUtil.stampToDate(1501646898));
+		System.out.println(encodeByMD5(parameter).toLowerCase().equals("6d14631d36e9607a8e49a8f909c07e9e"));
+		//6d14631d36e9607a8e49a8f909c07e9e
+	}
 }

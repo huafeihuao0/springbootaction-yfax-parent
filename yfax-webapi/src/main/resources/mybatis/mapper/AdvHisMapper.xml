@@ -22,6 +22,9 @@
 		  <if test="appsecret != null" > appsecret, </if>
 		  <if test="checksum != null" > checksum, </if>
 		  <if test="createDate != null" > createDate, </if>
+		  <if test="result != null" > result, </if>
+		  <if test="activeNum != null" > activeNum, </if>
+		  <if test="resultSum != null" > resultSum, </if>
 		  
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -39,6 +42,9 @@
 		  <if test="appsecret != null" > #{appsecret}, </if>
 		  <if test="checksum != null" > #{checksum}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="result != null" > #{result}, </if>
+		  <if test="activeNum != null" > #{activeNum}, </if>
+		  <if test="resultSum != null" > #{resultSum}, </if>
 		  
         </trim>
 	</insert>

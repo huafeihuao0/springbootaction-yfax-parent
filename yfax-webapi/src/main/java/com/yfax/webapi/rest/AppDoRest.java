@@ -103,11 +103,9 @@ public class AppDoRest {
 	@RequestMapping("/doProve")
 	public JsonResult doProve(String phoneId, String id, String fields) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("")) {
-			//TODO 提交审核字段处理，arrayJson数组
-			logger.info("fields=" + fields);
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users != null) {
-				return this.userTaskListService.doProve(phoneId, id);
+				return this.userTaskListService.doProve(phoneId, id, fields);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_NO_USER);
 			}
@@ -171,42 +169,46 @@ public class AppDoRest {
 	@RequestMapping("/sendAdvInfo")
 	public String sendAdvInfo(String hashid,String appid,String adid,
 			String adname,String userid,String mac,String deviceid,
-			String source,String point,String time,String appsecret,
+			String source,String point,String time,String active_num,
 			String checksum) {
 		//1. 校验MD5数据内容
 		String parameter= "?hashid=" + hashid + "&appid=" + appid + "&adid=" + adid + "&adname=" + adname + ""
 				+ "&userid=" + userid + "&mac=" + mac + "&deviceid=" + deviceid + ""
-				+ "&source=" + source + "&point=" + point + "&time=" + time + "&appsecret=" + AD_SECRET + "";
-		logger.info("parameter=" + parameter);
+				+ "&source=" + source + "&point=" + point + "&time=" + time 
+				+ "&active_num=" + active_num + "&appsecret=" + AD_SECRET + "";
+		logger.info("parameter=[" + parameter+"]");
 		String md5Result = MD5Util.encodeByMD5(parameter)	.toLowerCase();	//小写比较	
 		if(hashid == null || appid == null || checksum == null) {
 			logger.error("参数错误");
 			return "{\"message\":\"参数错误\",\"success\":\"false\"}";
 		}
-		if(md5Result.equals(checksum.toLowerCase())) {	
-			//2. 保存广告平台回调记录
-			AdvHisVo advHis = new AdvHisVo();
-			advHis.setHashid(hashid);
-			advHis.setAppid(appid);;
-			advHis.setAdid(adid);
-			advHis.setAdname(adname);
-			advHis.setUserid(userid);
-			advHis.setMac(mac);
-			advHis.setDeviceid(deviceid);
-			advHis.setSource(source);
-			advHis.setPoint(point);
-			advHis.setTime(time);
-			advHis.setTimeStr(DateUtil.stampToDate(time));
-//			advHis.setAppsecret(appsecret);
-			advHis.setChecksum(checksum);
-			advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
-			boolean result = this.advHisService.addAdvHis(advHis);
-			if(result) {
-				return "{\"message\":\"成功\",\"success\":\"true\"}";
-			}else{
-				logger.error("服务异常");
-				return "{\"message\":\"服务异常\",\"success\":\"false\"}";
-			}
+		//md5校对结果
+		boolean flag = md5Result.equals(checksum.toLowerCase());
+		//2. 保存广告平台回调记录
+		AdvHisVo advHis = new AdvHisVo();
+		advHis.setHashid(hashid);
+		advHis.setAppid(appid);;
+		advHis.setAdid(adid);
+		advHis.setAdname(adname);
+		advHis.setUserid(userid);
+		advHis.setMac(mac);
+		advHis.setDeviceid(deviceid);
+		advHis.setSource(source);
+		advHis.setPoint(point);
+		advHis.setTime(time);
+		advHis.setTimeStr(DateUtil.stampToDate(Long.valueOf(time)));
+		advHis.setChecksum(checksum.toLowerCase());
+		advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
+		advHis.setActiveNum(active_num);
+		advHis.setResult(flag?"校验正确":"校验失败");
+		advHis.setResultSum(md5Result);
+		boolean flag2 = this.advHisService.addAdvHis(advHis);
+		if(!flag2) {
+			logger.warn("回调记录保存失败");
+		}
+		if(flag) {	
+			logger.info("数据校验正确");
+			return "{\"message\":\"成功\",\"success\":\"true\"}";
 		}else {
 			logger.warn("数据校验失败。md5Result=" + md5Result 
 					+ ", checksum=" + checksum.toLowerCase());

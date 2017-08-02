@@ -163,7 +163,7 @@ public class UserTaskListService {
 	 * @param id 用户任务列表主键ID
 	 * @return
 	 */
-	public JsonResult doProve(String phoneId, String id) {
+	public JsonResult doProve(String phoneId, String id, String fields) {
 		UserTaskListVo userTaskListVo = this.userTaskListDao.selectUserTaskListById(id);
 		if(userTaskListVo == null) {
 			return new JsonResult(ResultCode.SUCCESS_NO_DATA);
@@ -173,10 +173,11 @@ public class UserTaskListService {
 			userTaskListVo.setStatus("审核中");
 			userTaskListVo.setStatusFlag(2);
 			userTaskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
+			
+			//处理fields字段
 			try {
 				boolean flag = this.userTaskListDao.updateUserTaskById(userTaskListVo);
 				//3. 记录用户任务操作历史
-				//获得任务信息
 				TaskListVo taskListVo = this.taskListDao.selectTaskListById(userTaskListVo.getTaskId());
 				recordUserTaskHis(phoneId, taskListVo, 2);	//审核中
 				if (flag) {
