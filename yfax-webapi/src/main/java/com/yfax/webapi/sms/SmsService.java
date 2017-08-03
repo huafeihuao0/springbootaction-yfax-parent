@@ -32,15 +32,15 @@ public class SmsService {
 		//*沙盒环境（用于应用开发调试）：restAPI.init("sandboxapp.cloopen.com", "8883");*
 		//*生产环境（用户应用上线使用）：restAPI.init("app.cloopen.com", "8883");       *
 		//*******************************************************************************
-		restAPI.init("sandboxapp.cloopen.com", "8883");
-//		restAPI.init("app.cloopen.com", "8883");
+//		restAPI.init("sandboxapp.cloopen.com", "8883");
+		restAPI.init("app.cloopen.com", "8883");
 		
 		//******************************注释*********************************************
 		//*初始化主帐号和主帐号令牌,对应官网开发者主账号下的ACCOUNT SID和AUTH TOKEN     *
 		//*ACOUNT SID和AUTH TOKEN在登陆官网后，在“应用-管理控制台”中查看开发者主账号获取*
 		//*参数顺序：第一个参数是ACOUNT SID，第二个参数是AUTH TOKEN。                   *
 		//*******************************************************************************
-		restAPI.setAccount("aaf98f894dae9c16014db19d55b30188", "e2b1a9e74f4ec9acf2d569ef985c377c");
+		restAPI.setAccount("aaf98f894dae9c16014db19d55b30188", "2cebac51fb5f4e07b797f66a4068ffd5");
 		
 		
 		//******************************注释*********************************************

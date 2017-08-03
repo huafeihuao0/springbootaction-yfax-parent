@@ -301,13 +301,23 @@ public class AppDoRest {
 	/**
 	 * 短信验证码接口
 	 */
-	@RequestMapping("/doSms")
+	@RequestMapping(value = "/doSms", method = {RequestMethod.POST})
 	public JsonResult doSms(String phoneId, String phoneNum, String msgCode) {
-		boolean result = SmsService.sendSms(phoneNum, msgCode);;
-		if(result) {
-			return new JsonResult(ResultCode.SUCCESS);
-		}else{
-			return new JsonResult(ResultCode.SUCCESS_FAIL);
+		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(phoneNum).equals("") 
+				&& !StrUtil.null2Str(msgCode).equals("")) {
+			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+			if(users != null) {
+				boolean result = SmsService.sendSms(phoneNum, msgCode);;
+				if(result) {
+					return new JsonResult(ResultCode.SUCCESS);
+				}else{
+					return new JsonResult(ResultCode.SUCCESS_FAIL);
+				}
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 }
