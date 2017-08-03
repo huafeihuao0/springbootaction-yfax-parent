@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.service.AdvHisService;
@@ -104,7 +106,7 @@ public class AppDoRest {
 	/**
 	 * 提交审核任务接口
 	 */
-	@RequestMapping("/doProve")
+	@RequestMapping(value = "/doProve", method = {RequestMethod.GET, RequestMethod.POST})
 	public JsonResult doProve(String phoneId, String id, String fields) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("") 
 				&& !StrUtil.null2Str(fields).equals("")) {
