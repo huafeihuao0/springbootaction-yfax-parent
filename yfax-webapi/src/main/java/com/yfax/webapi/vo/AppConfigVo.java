@@ -2,49 +2,35 @@ package com.yfax.webapi.vo;
 
 import java.io.Serializable;
 
-public class AppUpgradeVo implements Serializable{
+public class AppConfigVo implements Serializable{
 
-	private static final long serialVersionUID = 415629974054068744L;
+	private static final long serialVersionUID = 1092476864194788812L;
 	
 	private String id;			//主键
-	private String version;		//版本号
-	private String vdesc;		//版本描述
-	private String apkUrl;		//包下载地址
-	private Integer status;		//版本状态
+	private String appFaqUrl;	//常见问题页面url
+	private String appLearnUrl;	//红包攻略图url
 	private String createDate;	//创建时间
 	private String updateDate;	//更新时间
 	private String createdBy;	//创建人
 	private String updatedBy;	//更新人
 	
-	public String getApkUrl() {
-		return apkUrl;
-	}
-	public void setApkUrl(String apkUrl) {
-		this.apkUrl = apkUrl;
-	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getVersion() {
-		return version;
+	public String getAppFaqUrl() {
+		return appFaqUrl;
 	}
-	public void setVersion(String version) {
-		this.version = version;
+	public void setAppFaqUrl(String appFaqUrl) {
+		this.appFaqUrl = appFaqUrl;
 	}
-	public String getVdesc() {
-		return vdesc;
+	public String getAppLearnUrl() {
+		return appLearnUrl;
 	}
-	public void setVdesc(String vdesc) {
-		this.vdesc = vdesc;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setAppLearnUrl(String appLearnUrl) {
+		this.appLearnUrl = appLearnUrl;
 	}
 	public String getCreateDate() {
 		return createDate;

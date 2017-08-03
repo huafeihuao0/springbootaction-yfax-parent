@@ -22,5 +22,6 @@
         <mapper resource="mybatis/mapper/UserFeedbackMapper.xml"/>
         <mapper resource="mybatis/mapper/AppBannerMapper.xml"/>
         <mapper resource="mybatis/mapper/AppUpgradeMapper.xml"/>
+        <mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
     </mappers>
 </configuration>
