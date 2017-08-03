@@ -92,6 +92,15 @@
 			<artifactId>PushJavaSDK</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<!-- 
+			需手机集成短信包，安装到本机库
+			mvn install:install-file -Dfile=CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar -DgroupId=CCP_REST_SMS_SDK -DartifactId=CCP_REST_SMS_SDK -Dversion=1.0 -Dpackaging=jar
+		-->
+		<dependency>
+			<groupId>CCP_REST_SMS_SDK</groupId>
+			<artifactId>CCP_REST_SMS_SDK</artifactId>
+			<version>1.0</version>
+		</dependency>
 		
 	</dependencies>
 

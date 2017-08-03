@@ -17,6 +17,7 @@ import com.yfax.webapi.service.UserFeedbackService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
+import com.yfax.webapi.sms.SmsService;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.MD5Util;
@@ -295,5 +296,18 @@ public class AppDoRest {
 	@RequestMapping("/testPushNotify")
 	public String testPushNotify(String phoneId, int type) {
 		return this.userTaskListService.testPushNotify(phoneId, type);
+	}
+	
+	/**
+	 * 短信验证码接口
+	 */
+	@RequestMapping("/doSms")
+	public JsonResult doSms(String phoneId, String phoneNum, String msgCode) {
+		boolean result = SmsService.sendSms(phoneNum, msgCode);;
+		if(result) {
+			return new JsonResult(ResultCode.SUCCESS);
+		}else{
+			return new JsonResult(ResultCode.SUCCESS_FAIL);
+		}
 	}
 }
