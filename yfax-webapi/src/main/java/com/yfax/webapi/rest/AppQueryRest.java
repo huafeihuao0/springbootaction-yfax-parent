@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.service.ApkUrlService;
 import com.yfax.webapi.service.AppBannerService;
+import com.yfax.webapi.service.AppUpgradeService;
 import com.yfax.webapi.service.IncomeHisService;
 import com.yfax.webapi.service.IncomeSetService;
 import com.yfax.webapi.service.SdkChannelConfigService;
@@ -25,6 +26,7 @@ import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.vo.ApkUrlVo;
 import com.yfax.webapi.vo.AppBannerVo;
+import com.yfax.webapi.vo.AppUpgradeVo;
 import com.yfax.webapi.vo.IncomeHisVo;
 import com.yfax.webapi.vo.IncomeSetVo;
 import com.yfax.webapi.vo.SdkChannelConfigVo;
@@ -60,6 +62,8 @@ public class AppQueryRest {
 	private SdkChannelConfigService sdkChannelConfigService;
 	@Autowired
 	private AppBannerService appBannerService;
+	@Autowired
+	private AppUpgradeService appUpgradeService;
 
 	@RequestMapping("/")
 	public String greeting() {
@@ -169,5 +173,15 @@ public class AppQueryRest {
 	public JsonResult getSharingUrl() {
 		ApkUrlVo apkUrlVo = this.apkUrlService.selectApkUrl();
 		return new JsonResult(ResultCode.SUCCESS, apkUrlVo);
+	}
+	
+	/**
+	 * 检查APP版本升级接口
+	 * @return
+	 */
+	@RequestMapping("/queryUpgrade")
+	public JsonResult queryUpgrade() {
+		AppUpgradeVo appUpgradeVo = this.appUpgradeService.selectAppUpgrade();
+		return new JsonResult(ResultCode.SUCCESS, appUpgradeVo);
 	}
 }
