@@ -1,8 +1,6 @@
 package com.yfax.webapi.sms;
 
 import java.util.HashMap;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,14 +67,16 @@ public class SmsService {
 		logger.info("短信发送结果result=" + result);
 		
 		if("000000".equals(result.get("statusCode"))){
-			//正常返回输出data包体信息（map）
-			HashMap<String,Object> data = (HashMap<String, Object>) result.get("data");
-			Set<String> keySet = data.keySet();
-			for(String key:keySet){
-				Object object = data.get(key);
-				logger.info(key +" = "+object);
-			}
+			logger.info("发送成功");
 			return true;
+			
+//			//正常返回输出data包体信息（map）
+//			HashMap<String,Object> data = (HashMap<String, Object>) result.get("data");
+//			Set<String> keySet = data.keySet();
+//			for(String key:keySet){
+//				Object object = data.get(key);
+//				logger.info(key +" = "+object);
+//			}
 		}else{
 			//异常返回输出错误码和错误信息
 			logger.warn("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));

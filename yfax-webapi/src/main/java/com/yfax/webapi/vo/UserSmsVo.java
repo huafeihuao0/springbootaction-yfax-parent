@@ -2,20 +2,17 @@ package com.yfax.webapi.vo;
 
 import java.io.Serializable;
 
-/**
- * 用户反馈信息
- * @author Minbo
- */
-public class UserFeedbackVo implements Serializable {
-
-	private static final long serialVersionUID = 8339535145488096614L;
+public class UserSmsVo implements Serializable{
+	
+	private static final long serialVersionUID = -4437044242209336030L;
 	
 	private String id;			//主键
 	private String phoneId;		//手机唯一标识码
-	private String info;			//反馈信息
+	private String phoneNum;		//手机号码
+	private String msgCode;		//验证码
 	private String createDate;	//创建时间
-	private String updateDate;	//更新时间
 	private String createdBy;	//创建人
+	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
 	public String getPhoneId() {
@@ -29,6 +26,18 @@ public class UserFeedbackVo implements Serializable {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	public String getMsgCode() {
+		return msgCode;
+	}
+	public void setMsgCode(String msgCode) {
+		this.msgCode = msgCode;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -53,11 +62,5 @@ public class UserFeedbackVo implements Serializable {
 	}
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
-	}
-	public String getInfo() {
-		return info;
-	}
-	public void setInfo(String info) {
-		this.info = info;
 	}
 }

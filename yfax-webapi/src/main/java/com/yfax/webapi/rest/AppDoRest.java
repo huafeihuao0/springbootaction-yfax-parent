@@ -2,18 +2,20 @@ package com.yfax.webapi.rest;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UserFeedbackService;
+import com.yfax.webapi.service.UserSmsService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
@@ -27,6 +29,7 @@ import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.AdvHisVo;
 import com.yfax.webapi.vo.SdkTasklistVo;
 import com.yfax.webapi.vo.UserFeedbackVo;
+import com.yfax.webapi.vo.UserSmsVo;
 import com.yfax.webapi.vo.UsersVo;
 
 /**
@@ -53,6 +56,8 @@ public class AppDoRest {
 	private SdkTasklistService sdkTasklistService;
 	@Autowired
 	private UserFeedbackService userFeedbackService;
+	@Autowired
+	private UserSmsService userSmsService;
 	
 	/**
 	 * 用户登录接口（限定手机IM码）
@@ -269,6 +274,7 @@ public class AppDoRest {
 			if(users != null) {
 				UserFeedbackVo userFeedbackVo = new UserFeedbackVo();
 				userFeedbackVo.setId(UUID.getUUID());
+				userFeedbackVo.setPhoneId(phoneId);
 				userFeedbackVo.setInfo(info);
 				String cTime = DateUtil.getCurrentLongDateTime();
 				userFeedbackVo.setCreateDate(cTime);
@@ -309,6 +315,18 @@ public class AppDoRest {
 			if(users != null) {
 				boolean result = SmsService.sendSms(phoneNum, msgCode);;
 				if(result) {
+					UserSmsVo userSms = new UserSmsVo();
+					userSms.setId(UUID.getUUID());
+					userSms.setPhoneId(phoneId);
+					userSms.setPhoneNum(phoneNum);
+					userSms.setMsgCode(msgCode);
+					String cTime = DateUtil.getCurrentLongDateTime();
+					userSms.setCreateDate(cTime);
+					userSms.setUpdateDate(cTime);
+					boolean flag = this.userSmsService.addUserSms(userSms);
+					if(!flag) {
+						logger.warn("短信记录失败，请查核");
+					}
 					return new JsonResult(ResultCode.SUCCESS);
 				}else{
 					return new JsonResult(ResultCode.SUCCESS_FAIL);
