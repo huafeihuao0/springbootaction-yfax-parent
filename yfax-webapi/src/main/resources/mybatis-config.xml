@@ -19,5 +19,6 @@
         <mapper resource="mybatis/mapper/SdkTasklistMapper.xml"/>
         <mapper resource="mybatis/mapper/UserTasklistHisMapper.xml"/>
         <mapper resource="mybatis/mapper/SdkChannelConfigMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserFeedbackMapper.xml"/>
     </mappers>
 </configuration>

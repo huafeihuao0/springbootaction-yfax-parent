@@ -51,7 +51,6 @@
 		  <if test="goUrl != null" > goUrl, </if>
 		  <if test="status != null" > status, </if>
 		  <if test="statusFlag != null" > statusFlag, </if>
-		  <if test="isChecked != null" > isChecked, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
 		  
@@ -69,7 +68,6 @@
 		  <if test="goUrl != null" > #{goUrl}, </if>
 		  <if test="status != null" > #{status}, </if>
 		  <if test="statusFlag != null" > #{statusFlag}, </if>
-		  <if test="isChecked != null" > #{isChecked}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>
 		  
@@ -84,6 +82,11 @@
 			<if test="status != null"> status = #{status}, </if>
 			<if test="statusFlag != null"> statusFlag = #{statusFlag}, </if>
 			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+			<if test="proveName != null"> proveName = #{proveName}, </if>
+			<if test="proveMobile != null"> proveMobile = #{proveMobile}, </if>
+			<if test="proveImagesUrl != null"> proveImagesUrl = #{proveImagesUrl}, </if>
+			<if test="proveColumn1 != null"> proveColumn1 = #{proveColumn1}, </if>
+			<if test="proveColumn2 != null"> proveColumn2 = #{proveColumn2}, </if>
 		</set>
 		where id = #{id}
 	</update>

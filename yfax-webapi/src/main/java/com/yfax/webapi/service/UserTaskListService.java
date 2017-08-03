@@ -1,5 +1,6 @@
 package com.yfax.webapi.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.dao.TaskDetailDao;
 import com.yfax.webapi.dao.TaskListDao;
 import com.yfax.webapi.dao.UserTaskListDao;
 import com.yfax.webapi.dao.UserTasklistHisDao;
@@ -22,6 +24,9 @@ import com.yfax.webapi.vo.TaskListVo;
 import com.yfax.webapi.vo.UserTaskListVo;
 import com.yfax.webapi.vo.UserTasklistHisVo;
 import com.yfax.webapi.xinge.XgServiceApi;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 用户任务管理
@@ -40,7 +45,7 @@ public class UserTaskListService {
 	private TaskListDao taskListDao;
 	
 	@Autowired
-	private TaskDetailService taskDetailService;
+	private TaskDetailDao taskDetailDao;
 	
 	@Autowired
 	private UserTasklistHisDao userTasklistHisDao;
@@ -109,7 +114,7 @@ public class UserTaskListService {
 				recordUserTaskHis(phoneId, taskListVo, 1);	//进行中
 				
 				//6. 返回任务详情数据返回APP
-				TaskDetailVo taskDetailVo = this.taskDetailService.selectTaskDetailByTaskId(taskId);
+				TaskDetailVo taskDetailVo = this.taskDetailDao.selectTaskDetailByTaskId(taskId);
 				map.put("id", id);
 				map.put("taskDetailVo", taskDetailVo);
 				return new JsonResult(ResultCode.SUCCESS, map);
@@ -163,7 +168,10 @@ public class UserTaskListService {
 	 * @param id 用户任务列表主键ID
 	 * @return
 	 */
+	@Transactional
 	public JsonResult doProve(String phoneId, String id, String fields) {
+//		fields = "[{\"name\":\"贺敏\",\"mobile\":\"18688200527\",\"imagesUrl\":[{\"1\":\"a.url\",\"2\":\"b.url\",\"3\":\"c.url\"}]}]";
+		
 		UserTaskListVo userTaskListVo = this.userTaskListDao.selectUserTaskListById(id);
 		if(userTaskListVo == null) {
 			return new JsonResult(ResultCode.SUCCESS_NO_DATA);
@@ -175,6 +183,54 @@ public class UserTaskListService {
 			userTaskListVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			
 			//处理fields字段
+			TaskDetailVo taskDetailVo = this.taskDetailDao.selectTaskDetailByTaskId(userTaskListVo.getTaskId());
+			//String config = "[{\"name\":\"name\",\"label\":\"姓名\",\"type\":\"string\",\"placeholder\":\"请输入姓名\"},{\"name\":\"mobile\",\"type\":\"string\",\"label\":\"手机号\",\"placeholder\":\"请输入手机号\"}]";
+			String configFields = taskDetailVo.getFields();
+			List<String> list = new ArrayList<String>();
+			JSONArray configArray = JSONArray.fromObject(configFields);
+			for (int j = 0; j < configArray.size(); j++) {
+				JSONObject jsonObj = configArray.getJSONObject(j);
+				list.add(jsonObj.getString("name"));
+			}
+			
+			JSONArray fieldsArray = JSONArray.fromObject(fields);
+			for (int j = 0; j < fieldsArray.size(); j++) {
+				JSONObject jsonObj = fieldsArray.getJSONObject(j);
+				
+				for (int i = 0; i < list.size(); i++) {
+					if(list.get(i).equals("name")) {	//姓名
+						userTaskListVo.setProveName((String) jsonObj.get(String.valueOf(list.get(i))));
+					}else if(list.get(i).equals("mobile")) {	//手机号码
+						userTaskListVo.setProveMobile((String) jsonObj.get(String.valueOf(list.get(i))));
+					}else {
+						if(userTaskListVo.getProveColumn1() == null) {
+							userTaskListVo.setProveColumn1((String) jsonObj.get(String.valueOf(list.get(i))));
+						}else {
+							userTaskListVo.setProveColumn2((String) jsonObj.get(String.valueOf(list.get(i))));
+						}
+						
+					}
+				}
+				
+				String proveImagesUrl = "";
+				String imagesUrl = jsonObj.get("imagesUrl")==null?"":jsonObj.get("imagesUrl").toString();
+				if(!imagesUrl.equals("")) {
+					JSONArray imagesUrlArray = JSONArray.fromObject(imagesUrl);
+					for (int m = 0; m < imagesUrlArray.size(); m++) {
+						JSONObject jsonObjImages = imagesUrlArray.getJSONObject(m);
+						for (int n = 0; n < jsonObjImages.size(); n++) {
+							proveImagesUrl += jsonObjImages.get(String.valueOf(n+1))+"#";
+						}
+					}
+				}else {
+					if(taskDetailVo.getIsUpload() == 1) {
+						logger.error("上传图片参数不能为空");
+						return new JsonResult(ResultCode.PARAMS_ERROR);
+					}
+				}
+				userTaskListVo.setProveImagesUrl(proveImagesUrl.substring(0, proveImagesUrl.length()-1));
+			}
+			
 			try {
 				boolean flag = this.userTaskListDao.updateUserTaskById(userTaskListVo);
 				//3. 记录用户任务操作历史

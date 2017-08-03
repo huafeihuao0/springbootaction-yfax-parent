@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.SdkTasklistService;
+import com.yfax.webapi.service.UserFeedbackService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
@@ -22,6 +23,7 @@ import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.AdvHisVo;
 import com.yfax.webapi.vo.SdkTasklistVo;
+import com.yfax.webapi.vo.UserFeedbackVo;
 import com.yfax.webapi.vo.UsersVo;
 
 /**
@@ -46,6 +48,8 @@ public class AppDoRest {
 	private AdvHisService advHisService;
 	@Autowired
 	private SdkTasklistService sdkTasklistService;
+	@Autowired
+	private UserFeedbackService userFeedbackService;
 	
 	/**
 	 * 用户登录接口（限定手机IM码）
@@ -102,7 +106,8 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doProve")
 	public JsonResult doProve(String phoneId, String id, String fields) {
-		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("")) {
+		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("") 
+				&& !StrUtil.null2Str(fields).equals("")) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users != null) {
 				return this.userTaskListService.doProve(phoneId, id, fields);
@@ -248,6 +253,34 @@ public class AppDoRest {
 			return this.sdkTasklistService.addSdkTasklist(sdkTasklistVo);
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
+		}
+	}
+	
+	/**
+	 * 用户反馈信息接口
+	 */
+	@RequestMapping("/doFeedback")
+	public JsonResult doFeedback(String phoneId, String info) {
+		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(info).equals("")) {
+			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
+			if(users != null) {
+				UserFeedbackVo userFeedbackVo = new UserFeedbackVo();
+				userFeedbackVo.setId(UUID.getUUID());
+				userFeedbackVo.setInfo(info);
+				String cTime = DateUtil.getCurrentLongDateTime();
+				userFeedbackVo.setCreateDate(cTime);
+				userFeedbackVo.setUpdateDate(cTime);
+				boolean result = this.userFeedbackService.addUserFeedback(userFeedbackVo);
+				if(result) {
+					return new JsonResult(ResultCode.SUCCESS);
+				}else{
+					return new JsonResult(ResultCode.SUCCESS_FAIL);
+				}
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 	

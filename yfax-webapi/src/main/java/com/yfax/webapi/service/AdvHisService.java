@@ -54,7 +54,7 @@ public class AdvHisService{
 			//1. 新增广告平台回调记录
 			AdvHisVo advHisTmp = this.advHisDao.selectByHashid(advHis.getHashid());
 			if(advHisTmp != null) {
-				logger.info("广告平台回调记录，跳过处理");
+				logger.info("广告平台回调记录已存在，跳过处理");
 				return false;
 			}
 			boolean flag1 = this.advHisDao.insertAdvHis(advHis);
@@ -92,9 +92,9 @@ public class AdvHisService{
 			usersVo.setTotalIncome(String.valueOf(totalIncome + earn));
 			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			
-			//3. 记录用户收益记录
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
 			if(sdkTasklistVo != null) {
+				//3. 记录用户收益记录
 				IncomeHisVo incomeHis = new IncomeHisVo();
 				String cTime = DateUtil.getCurrentLongDateTime();
 				incomeHis.setId(UUID.getUUID());
@@ -138,12 +138,12 @@ public class AdvHisService{
 							+ ", taskName=" + sdkTasklistVo.getTitle() + ", earn=" + earn);
 					}
 				}else {
-					logger.warn("该用户已记录过收益数据，跳过处理。taskId=" + incomeHis.getTaskId() 
+					logger.warn("用户该收益数据已存在，跳过处理。taskId=" + incomeHis.getTaskId() 
 							+ ", phoneId=" + incomeHis.getPhoneId());
 				}
 				
 			}else {
-				logger.warn("SDK平台广告数据不存在。adi=" + advHis.getAdid());
+				logger.warn("SDK平台广告数据不存在。adid=" + advHis.getAdid());
 			}
 			
 		}else {
