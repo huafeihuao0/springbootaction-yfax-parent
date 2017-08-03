@@ -1,5 +1,7 @@
 package com.yfax.webapi.service;
 
+import java.text.DecimalFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,13 +85,15 @@ public class AdvHisService{
 		UsersVo usersVo = this.usersDao.selectUsersByPhoneId(advHis.getDeviceid());	//IMEI手机码
 		
 		if(usersVo != null) {
+			//格式化，保留两位小数，四舍五入
+			DecimalFormat dFormat = new DecimalFormat("#.00"); 
 			//更新数据
 			double balance = Double.valueOf(usersVo.getBalance());	//原已有余额
 			double totalIncome = Double.valueOf(usersVo.getTotalIncome());	//原累积收入
 			double point = Double.valueOf(advHis.getPoint());	//本次获赠积分
 			double earn = point / POINT_RATE;	//本次获得的钱
-			usersVo.setBalance(String.valueOf(balance + earn));
-			usersVo.setTotalIncome(String.valueOf(totalIncome + earn));
+			usersVo.setBalance(dFormat.format(balance + earn));
+			usersVo.setTotalIncome(dFormat.format(totalIncome + earn));
 			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
