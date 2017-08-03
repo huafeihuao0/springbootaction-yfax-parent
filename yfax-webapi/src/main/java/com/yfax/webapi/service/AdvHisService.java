@@ -84,9 +84,9 @@ public class AdvHisService{
 		
 		if(usersVo != null) {
 			//更新数据
-			int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
-			int totalIncome = Integer.valueOf(usersVo.getTotalIncome());	//原累积收入
-			double point = Integer.valueOf(advHis.getPoint());	//本次获赠积分
+			double balance = Double.valueOf(usersVo.getBalance());	//原已有余额
+			double totalIncome = Double.valueOf(usersVo.getTotalIncome());	//原累积收入
+			double point = Double.valueOf(advHis.getPoint());	//本次获赠积分
 			double earn = point / POINT_RATE;	//本次获得的钱
 			usersVo.setBalance(String.valueOf(balance + earn));
 			usersVo.setTotalIncome(String.valueOf(totalIncome + earn));
