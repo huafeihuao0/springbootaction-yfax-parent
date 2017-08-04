@@ -199,14 +199,14 @@ public class UserTaskListService {
 				
 				for (int i = 0; i < list.size(); i++) {
 					if(list.get(i).equals("name")) {	//姓名
-						userTaskListVo.setProveName((String) jsonObj.get(String.valueOf(list.get(i))));
+						userTaskListVo.setProveName(String.valueOf(jsonObj.get(list.get(i))));
 					}else if(list.get(i).equals("mobile")) {	//手机号码
-						userTaskListVo.setProveMobile((String) jsonObj.get(String.valueOf(list.get(i))));
+						userTaskListVo.setProveMobile(String.valueOf(jsonObj.get(list.get(i))));
 					}else {
 						if(userTaskListVo.getProveColumn1() == null) {
-							userTaskListVo.setProveColumn1((String) jsonObj.get(String.valueOf(list.get(i))));
+							userTaskListVo.setProveColumn1(String.valueOf(jsonObj.get(list.get(i))));
 						}else {
-							userTaskListVo.setProveColumn2((String) jsonObj.get(String.valueOf(list.get(i))));
+							userTaskListVo.setProveColumn2(String.valueOf(jsonObj.get(list.get(i))));
 						}
 						
 					}

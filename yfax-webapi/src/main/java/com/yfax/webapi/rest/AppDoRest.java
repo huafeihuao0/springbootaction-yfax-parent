@@ -64,7 +64,7 @@ public class AppDoRest {
 	 */
 	@RequestMapping("/doLogin")
 	public JsonResult doLogin(String phoneId, HttpServletRequest request) {
-		if(phoneId.length() == IMEI_LENGTH) {
+		if(phoneId.length() == IMEI_LENGTH || phoneId.length() == 14) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users == null) {
 				boolean result = this.usersService.addUser(phoneId);
