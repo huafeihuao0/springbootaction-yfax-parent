@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableTransactionManagement
-public class Application {
+public class Application{
+	
 	// 服务启动入口
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

@@ -34,6 +34,11 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         if(uri.equals("/api/cfdb/sendAdvInfo")){
             return true;
         }
+        
+        //关于页不做拦截
+        if(uri.equals("/api/cfdb/about")){
+            return true;
+        }
 		
 		//拦截请求
 		String phoneId = request.getParameter("phoneId");

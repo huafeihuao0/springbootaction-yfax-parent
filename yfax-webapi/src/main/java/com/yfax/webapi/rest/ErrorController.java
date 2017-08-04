@@ -8,7 +8,7 @@ public class ErrorController extends BasicErrorController {
 
 	public ErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
 		super(errorAttributes, errorProperties);
-		// TODO Auto-generated constructor stub
+
 	}
 
 }

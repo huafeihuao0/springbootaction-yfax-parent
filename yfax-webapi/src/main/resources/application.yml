@@ -4,7 +4,7 @@
 # 生产环境：java -jar xxx.jar --spring.profiles.active=prod
 spring: 
   profiles: 
-    active: test
+    active: dev
   datasource: 
     # mysql
     username: root
@@ -20,15 +20,17 @@ spring:
     test-on-borrow: false
     test-while-idle: true
     time-between-eviction-runs-millis: 18800
-    
   jpa: 
     hibernate: 
       ddl-auto: update
     show-sql: true
-    
   jackson: 
     serialization:
       indent_output: true
+  mvc: 
+    view:
+      prefix: /pages/
+      suffix: .html
 
 # tomcat
 server:
