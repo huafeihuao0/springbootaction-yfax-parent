@@ -71,8 +71,8 @@ public class WithdrawHisService{
 			//2. 提现，则需要扣减用户余额
 			UsersVo usersVo = this.usersDao.selectUsersByPhoneId(withdrawHisVo.getPhoneId());
 			//更新数据
-			int balance = Integer.valueOf(usersVo.getBalance());	//原已有余额
-			int incomeTmp = Integer.valueOf(withdrawHisVo.getIncome());	//提现金额
+			double balance = Double.valueOf(usersVo.getBalance());	//原已有余额
+			double incomeTmp = Double.valueOf(withdrawHisVo.getIncome());	//提现金额
 			usersVo.setUpdateDate(cTime);
 			usersVo.setBalance(String.valueOf(balance-incomeTmp));
 			logger.info("用户提现申请后，余额=" + (balance-incomeTmp) 

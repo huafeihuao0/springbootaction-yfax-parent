@@ -137,8 +137,8 @@ public class AppDoRest {
 				&& !StrUtil.null2Str(income).equals("")) {
 			UsersVo user = this.usersService.selectUsersByPhoneId(phoneId);
 			if(user != null) {
-				int incomeTmp = Integer.valueOf(income);
-				int balance = Integer.valueOf(user.getBalance());
+				double incomeTmp = Double.valueOf(income);
+				double balance = Double.valueOf(user.getBalance());
 				if(balance - incomeTmp >= 0) {
 					return this.withdrawHisService.addWithdrawHis(phoneId, withdrawType, 
 							name, account, income);

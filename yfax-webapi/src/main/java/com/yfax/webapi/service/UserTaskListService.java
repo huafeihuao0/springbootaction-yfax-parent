@@ -222,13 +222,14 @@ public class UserTaskListService {
 							proveImagesUrl += jsonObjImages.get(String.valueOf(n+1))+"#";
 						}
 					}
+					userTaskListVo.setProveImagesUrl(proveImagesUrl.substring(0, proveImagesUrl.length()-1));
 				}else {
-					if(taskDetailVo.getIsUpload() == 1) {
+					if(taskDetailVo.getIsUpload()!=null && 
+							taskDetailVo.getIsUpload() == 1) {
 						logger.error("上传图片参数不能为空");
 						return new JsonResult(ResultCode.PARAMS_ERROR);
 					}
 				}
-				userTaskListVo.setProveImagesUrl(proveImagesUrl.substring(0, proveImagesUrl.length()-1));
 			}
 			
 			try {
