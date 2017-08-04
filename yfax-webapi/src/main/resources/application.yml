@@ -27,10 +27,12 @@ spring:
   jackson: 
     serialization:
       indent_output: true
-  mvc: 
-    view:
-      prefix: /pages/
-      suffix: .html
+  #mvc: 
+  #  view:
+  #    prefix: /pages/
+  #    suffix: .html
+  thymeleaf: 
+    prefix: classpath:/templates/
 
 # tomcat
 server:
