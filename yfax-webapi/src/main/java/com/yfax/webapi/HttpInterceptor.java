@@ -35,8 +35,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         
-        //关于页不做拦截
-        if(uri.equals("/api/cfdb/about")){
+        //faq页不做拦截
+        if(uri.equals("/api/cfdb/faq")){
             return true;
         }
 		

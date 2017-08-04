@@ -17,10 +17,10 @@ public class AppConfig {
 	protected static Logger logger = LoggerFactory.getLogger(AppConfig.class);
 	
 	/**
-	 * APP关于页
+	 * APP的faq页面
 	 */
-	@RequestMapping("/about")
-    public String about(Map<String, Object> model) {
-        return "about";
+	@RequestMapping("/faq")
+    public String pageFaq(Map<String, Object> model) {
+        return "faq";
     }
 }
