@@ -13,6 +13,7 @@ import com.yfax.webapi.dao.IncomeHisDao;
 import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.utils.DateUtil;
+import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.AdvHisVo;
 import com.yfax.webapi.vo.IncomeHisVo;
@@ -92,8 +93,8 @@ public class AdvHisService{
 			double totalIncome = Double.valueOf(usersVo.getTotalIncome());	//原累积收入
 			double point = Double.valueOf(advHis.getPoint());	//本次获赠积分
 			double earn = point / POINT_RATE;	//本次获得的钱
-			usersVo.setBalance(dFormat.format(balance + earn));
-			usersVo.setTotalIncome(dFormat.format(totalIncome + earn));
+			usersVo.setBalance(StrUtil.zero2Str(dFormat.format(balance + earn)));
+			usersVo.setTotalIncome(StrUtil.zero2Str(dFormat.format(totalIncome + earn)));
 			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
