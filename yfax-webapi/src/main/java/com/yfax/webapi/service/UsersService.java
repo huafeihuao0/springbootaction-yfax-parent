@@ -1,5 +1,8 @@
 package com.yfax.webapi.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,10 @@ public class UsersService{
 	protected static Logger logger = LoggerFactory.getLogger(UsersService.class);
 	
 	@Autowired
-	private UsersDao dao;
+	private UsersDao usersDao;
 	
 	public UsersVo selectUsersByPhoneId(String phoneId){
-		return this.dao.selectUsersByPhoneId(phoneId);
+		return this.usersDao.selectUsersByPhoneId(phoneId);
 	}
 	
 	/**
@@ -30,7 +33,7 @@ public class UsersService{
 	 * @return
 	 */
 	public String selectUsersTodayIncome(UsersVo usersVo){
-		return this.dao.selectUsersTodayIncome(usersVo);
+		return this.usersDao.selectUsersTodayIncome(usersVo);
 	}
 	
 	/**
@@ -45,9 +48,8 @@ public class UsersService{
 		usersVo.setTotalIncome("0");
 		String cTime = DateUtil.getCurrentLongDateTime();
 		usersVo.setCreateDate(cTime);
-		usersVo.setUpdateDate(cTime);
 		try {
-			return this.dao.insertUser(usersVo);
+			return this.usersDao.insert(usersVo);
 		} catch (Exception e) {
 			logger.error("新增手机IM用户异常：" + e.getMessage(), e);
 			return false;

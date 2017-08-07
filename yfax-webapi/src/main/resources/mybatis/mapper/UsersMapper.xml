@@ -8,12 +8,12 @@
 		select phoneId,balance,totalIncome from cfdb_users where phoneId = #{phoneId}
 	</select>
 	
-	<insert id="insertUser" parameterType="com.yfax.webapi.vo.UsersVo">
+	<insert id="insert" parameterType="com.yfax.webapi.vo.UsersVo">
 		insert into cfdb_users(phoneId, balance, totalIncome, createDate, updateDate) 
 			values(#{phoneId}, #{balance}, #{totalIncome}, #{createDate}, null)
 	</insert>
 	
-	<update id="updateUser" parameterType="com.yfax.webapi.vo.UsersVo">
+	<update id="update" parameterType="com.yfax.webapi.vo.UsersVo">
 		update cfdb_users 
 		<set>
 			<if test="balance != null"> balance = #{balance}, </if>

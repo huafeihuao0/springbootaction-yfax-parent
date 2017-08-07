@@ -79,7 +79,7 @@ public class WithdrawHisService{
 					+ "。balance=" + balance + ", incomeTmp=" + incomeTmp);
 			
 			this.withdrawHisDao.insertWithdrawHis(withdrawHisVo);
-			boolean flag = this.usersDao.updateUser(usersVo);
+			boolean flag = this.usersDao.update(usersVo);
 			if(flag) {
 				return new JsonResult(ResultCode.SUCCESS);
 			}else {

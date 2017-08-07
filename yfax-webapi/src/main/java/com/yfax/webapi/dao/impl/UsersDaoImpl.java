@@ -22,15 +22,15 @@ public class UsersDaoImpl implements UsersDao {
 
 	@Override
 	@Transactional
-	public boolean insertUser(UsersVo usersVo) throws Exception{
-		int i = this.sqlSessionTemplate.insert("insertUser", usersVo);
+	public boolean insert(UsersVo usersVo) throws Exception{
+		int i = this.sqlSessionTemplate.insert("insert", usersVo);
 		return i > 0 ? true : false;
 	}
 
 	@Override
 	@Transactional
-	public boolean updateUser(UsersVo usersVo) throws Exception {
-		int i = this.sqlSessionTemplate.insert("updateUser", usersVo);
+	public boolean update(UsersVo usersVo) throws Exception {
+		int i = this.sqlSessionTemplate.update("update", usersVo);
 		return i > 0 ? true : false;
 	}
 

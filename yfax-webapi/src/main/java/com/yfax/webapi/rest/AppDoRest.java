@@ -1,10 +1,6 @@
 package com.yfax.webapi.rest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +58,7 @@ public class AppDoRest {
 	/**
 	 * 用户登录接口（限定手机IM码）
 	 */
-	@RequestMapping("/doLogin")
+	@RequestMapping(value = "/doLogin", method = {RequestMethod.POST})
 	public JsonResult doLogin(String phoneId, HttpServletRequest request) {
 		if(phoneId.length() == IMEI_LENGTH || phoneId.length() == 14) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
@@ -72,12 +68,7 @@ public class AppDoRest {
 					return new JsonResult(ResultCode.SUCCESS_FAIL);
 				}
 			}
-			Map<String,String> map = new HashMap<String, String>();
-			String tokenId = UUID.getUUID();
-			map.put("tokenId", tokenId);
-			//默认session失效时间为30分钟
-			request.getSession().setAttribute("_session_tokenId", tokenId);
-			return new JsonResult(ResultCode.SUCCESS, map);
+			return new JsonResult(ResultCode.SUCCESS);
 		}else {
 			return new JsonResult(ResultCode.IMEI_ERROR);
 		}
@@ -86,7 +77,7 @@ public class AppDoRest {
 	/**
 	 * 用户抢购任务接口
 	 */
-	@RequestMapping("/doPanicBuying")
+	@RequestMapping(value = "/doPanicBuying", method = {RequestMethod.POST})
 	public JsonResult doPanicBuying(String phoneId, String taskId) {
 		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 		if(users != null) {
@@ -99,7 +90,7 @@ public class AppDoRest {
 	/**
 	 * 用户放弃任务接口
 	 */
-	@RequestMapping("/doAbandonTask")
+	@RequestMapping(value = "/doAbandonTask", method = {RequestMethod.POST})
 	public JsonResult doAbandonTask(String phoneId, String taskId) {
 		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 		if(users != null) {
@@ -112,7 +103,7 @@ public class AppDoRest {
 	/**
 	 * 提交审核任务接口
 	 */
-	@RequestMapping(value = "/doProve", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/doProve", method = {RequestMethod.POST})
 	public JsonResult doProve(String phoneId, String id, String fields) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(id).equals("") 
 				&& !StrUtil.null2Str(fields).equals("")) {
@@ -130,7 +121,7 @@ public class AppDoRest {
 	/**
 	 * 提现发起接口
 	 */
-	@RequestMapping("/doWithdraw")
+	@RequestMapping(value = "/doWithdraw", method = {RequestMethod.POST})
 	public JsonResult doWithdraw(String phoneId, int withdrawType, 
 			String name, String account, String income) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(account).equals("") 
@@ -156,7 +147,7 @@ public class AppDoRest {
 	/**
 	 * 用户已点击任务查看记录接口
 	 */
-	@RequestMapping("/doCheck")
+	@RequestMapping(value = "/doCheck", method = {RequestMethod.POST})
 	public JsonResult doCheck(String phoneId, String id) {
 		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 		if(users != null) {
@@ -232,7 +223,7 @@ public class AppDoRest {
 	/**
 	 * 新增平台SDK广告记录
 	 */
-	@RequestMapping("/doSdkTasklist")
+	@RequestMapping(value = "/doSdkTasklist", method = {RequestMethod.POST})
 	public JsonResult doSdkTasklist(String phoneId, String adid,String cid,
 			String intro,String url,String icon,String psize,String title,
 			String text1,String text2,String android_url,String active_time,
@@ -267,7 +258,7 @@ public class AppDoRest {
 	/**
 	 * 用户反馈信息接口
 	 */
-	@RequestMapping("/doFeedback")
+	@RequestMapping(value = "/doFeedback", method = {RequestMethod.POST})
 	public JsonResult doFeedback(String phoneId, String info) {
 		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(info).equals("")) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);

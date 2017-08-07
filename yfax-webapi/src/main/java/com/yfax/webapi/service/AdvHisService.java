@@ -123,7 +123,7 @@ public class AdvHisService{
 							+ ", taskName=" + sdkTasklistVo.getTitle() + ", earn=" + earn);
 						
 						//4. 更新用户余额数据
-						boolean flag2 = usersDao.updateUser(usersVo);
+						boolean flag2 = usersDao.update(usersVo);
 						if(flag2) {
 							logger.info("回调用户加钱成功。balance=" + balance 
 									+ ", totalIncome=" + totalIncome 

@@ -47,22 +47,6 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 	        if(uri.equals("/api/cfdb/doLogin")){
 	            return true;
 	        }
-	        
-	        //TODO tokenId还没验证，待app测试后再看要如何验证
-//	        String tokenId = request.getParameter("tokenId");
-//	        if (StrUtil.null2Str(tokenId).equals("")) {
-//	        		String result = new JsonResult(ResultCode.PARAMS_ERROR).toJsonString();
-//				this.output(response, result);
-//				return false;
-//	        }
-	        
-			//验证session是否存在
-//	        Object obj = request.getSession().getAttribute("_session_tokenId");
-//	        if(obj == null) {
-//	        		String result = new JsonResult(ResultCode.NOT_LOGIN).toJsonString();
-//				this.output(response, result);
-//	            return false;
-//	        }
 			return true;
 		} else {
 			String result = new JsonResult(ResultCode.PARAMS_ERROR).toJsonString();
