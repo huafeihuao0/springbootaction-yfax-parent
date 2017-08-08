@@ -131,7 +131,7 @@ public class AppSdkRest {
 	/**
 	 * 有米-广告平台接口回调数据秘钥
 	 */
-	private final static String AD_SECRET_YOUMI="";
+	private final static String AD_SECRET_YOUMI="7ac98f773f334334";
 	
 	/**
 	 * 有米-广告平台状态回调接口
@@ -139,8 +139,44 @@ public class AppSdkRest {
 	@RequestMapping("/sendAdvInfoYm")
 	public String sendAdvInfoYm(String order, String app, String ad, String user, String chn, String points, String sig,
 			String adid, String pkg, String device, String time, String price, String trade_type, String _fb) {
-		logger.info("||" + order + "||" + app + "||" + user + "||" + chn + "||" + ad + "||" + points);
-//		String sigMd5 = md5(dev_server_secret + "||" + order + "||" + app + "||" + user + "||" + chn + "||" + ad + "||" + points).substring(12, 20);
-		return "{\"message\":\"成功\",\"success\":\"true\"}";
+		//1. 校验MD5数据内容
+		String parameter= AD_SECRET_YOUMI + "||" + order + "||" + app + "||" + user + "||" + chn + "||" + ad + "||" + points;
+		logger.info("parameter=[" + parameter+"]");
+		//截取长度
+		String md5Result = MD5Util.encodeByMD5(parameter)	.substring(12, 20).toLowerCase();
+		if(order == null || app == null || sig == null) {
+			logger.error("参数错误");
+			return "{\"message\":\"参数错误\",\"success\":\"false\"}";
+		}
+		//md5校对结果
+		boolean flag = md5Result.equals(sig.toLowerCase());	//小写比较
+		//2. 保存广告平台回调记录
+		AdvHisVo advHis = new AdvHisVo();
+		advHis.setHashid(order);
+		advHis.setAppid(app);;
+		advHis.setAdid(adid);
+		advHis.setAdname(ad);
+		advHis.setUserid(user);
+		advHis.setDeviceid(device);
+		advHis.setSource(chn);
+		advHis.setPoint(points);
+		advHis.setTime(time);
+		advHis.setTimeStr(DateUtil.stampToDate(Long.valueOf(time)));
+		advHis.setChecksum(sig.toLowerCase());
+		advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
+		advHis.setResult(flag?"校验正确":"校验失败");
+		advHis.setResultSum(md5Result);
+		boolean flag2 = this.advHisService.addAdvHis(advHis);
+		if(!flag2) {
+			logger.warn("回调记录保存失败");
+		}
+		if(flag) {	
+			logger.info("数据校验正确");
+			return "{\"message\":\"成功\",\"success\":\"true\"}";
+		}else {
+			logger.warn("数据校验失败。md5Result=" + md5Result 
+					+ ", checksum=" + sig.toLowerCase());
+			return "{\"message\":\"数据校验失败\",\"success\":\"false\"}";
+		}
 	}
 }
