@@ -11,11 +11,18 @@ public class SdkChannelConfigVo implements Serializable{
 	private String channelName;	//SDK广告渠道名称
 	private String cRate;		//换算比例
 	private String sRate;		//分成比例
+	private Integer orderNo;		//排序编号
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
+	public Integer getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(Integer orderNo) {
+		this.orderNo = orderNo;
+	}
 	public String getId() {
 		return id;
 	}
