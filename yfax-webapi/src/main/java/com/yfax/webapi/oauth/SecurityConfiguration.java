@@ -43,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     		//广告平台回调不做拦截
     		//faq页不做拦截
     		//登录不做拦截（因为同时要创建新用户）
-        web.ignoring().antMatchers("/hello", "/api/cfdb/sendAdvInfo", "/api/cfdb/faq", "/api/cfdb/doLogin");
+        web.ignoring().antMatchers("/hello", "/api/cfdb/sendAdvInfo","/api/cfdb/sendAdvInfoYm"
+        		, "/api/cfdb/faq", "/api/cfdb/doLogin");
     }
     
     @Override

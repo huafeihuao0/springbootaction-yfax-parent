@@ -1,4 +1,4 @@
-package com.yfax.webapi.rest;
+package com.yfax.webapi.rest.cfdb;
 
 import java.util.Map;
 
