@@ -2,7 +2,7 @@
 <configuration status="DEBUG">
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern=" %-d{HH:mm:ss}[%p %c] %m%n"/>
+            <PatternLayout pattern="%d [%t] [%c] [%p] (%file:%line\)- %m%n"/>
         </Console>
         <RollingFile name="RollingFile" fileName="ship.log"
                      filePattern="ship-%d{yyyy-MM-dd}-%i.log"
