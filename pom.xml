@@ -9,7 +9,6 @@
   
   <modules>
   	<module>yfax-webapi</module>
-	<module>yfax-spider</module>
   </modules>
   
 </project>
