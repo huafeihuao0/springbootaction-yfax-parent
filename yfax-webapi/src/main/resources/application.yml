@@ -77,4 +77,4 @@ spring:
 spring: 
   profiles: prod
   datasource: 
-    url: jdbc:mysql://182.92.82.188:3406/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://182.92.82.188:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
