@@ -11,7 +11,7 @@ public class HelloWorldController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String sayHello() {
-        return "Hello，Greetings from 冲返单包 开放Api!!";
+        return "Hello，Greetings from 开放Api平台!!!";
     }
 
 }
