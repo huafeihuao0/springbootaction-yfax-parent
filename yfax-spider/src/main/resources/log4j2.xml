@@ -4,7 +4,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d [%t] [%c] [%p] (%file:%line\)- %m%n"/>
         </Console>
-        <RollingFile name="RollingFile" fileName="ship.log"
+        <RollingFile name="RollingFile" fileName="log/ship.log"
                      filePattern="ship-%d{yyyy-MM-dd}-%i.log"
                      immediateFlush="false" append="true">
             <PatternLayout>
