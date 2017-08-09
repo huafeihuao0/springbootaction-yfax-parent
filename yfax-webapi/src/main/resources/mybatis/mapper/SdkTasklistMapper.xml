@@ -25,6 +25,7 @@
 		  <if test="score != null" > score, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
+		  <if test="sdkType != null" > sdkType, </if>
 		  
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -45,6 +46,7 @@
 		  <if test="score != null" > #{score}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>
+		  <if test="sdkType != null" > #{sdkType}, </if>
 		  
         </trim>
 	</insert>

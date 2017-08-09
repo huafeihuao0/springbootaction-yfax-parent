@@ -21,6 +21,7 @@
 		  <if test="deviceid != null" > deviceid, </if>
 		  <if test="source != null" > source, </if>
 		  <if test="point != null" > point, </if>
+		  <if test="price != null" > price, </if>
 		  <if test="time != null" > time, </if>
 		  <if test="timeStr != null" > timeStr, </if>
 		  <if test="appsecret != null" > appsecret, </if>
@@ -41,6 +42,7 @@
 		  <if test="deviceid != null" > #{deviceid}, </if>
 		  <if test="source != null" > #{source}, </if>
 		  <if test="point != null" > #{point}, </if>
+		  <if test="price != null" > #{price}, </if>
 		  <if test="time != null" > #{time}, </if>
 		  <if test="timeStr != null" > #{timeStr}, </if>
 		  <if test="appsecret != null" > #{appsecret}, </if>

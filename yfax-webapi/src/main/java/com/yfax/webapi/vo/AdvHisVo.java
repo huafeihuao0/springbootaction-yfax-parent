@@ -19,6 +19,7 @@ public class AdvHisVo implements Serializable {
 	private String deviceid;	//设备唯一标识(IMEI)
 	private String source;	//渠道来源
 	private String point;	//积分
+	private String price;	//奖励金额
 	private String time;		//时间戳
 	private String timeStr;		//转译后时间戳
 	private String appsecret;	//开发者设置的密钥
@@ -129,5 +130,11 @@ public class AdvHisVo implements Serializable {
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 }

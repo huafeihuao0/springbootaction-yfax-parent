@@ -23,7 +23,14 @@ public class SdkTasklistVo implements Serializable{
 	private String score;		//任务总积分
 	private String createDate;	//创建时间
 	private String updateDate;	//更新时间
+	private String sdkType;		//广告来源类型
 	
+	public String getSdkType() {
+		return sdkType;
+	}
+	public void setSdkType(String sdkType) {
+		this.sdkType = sdkType;
+	}
 	public String getAdid() {
 		return adid;
 	}

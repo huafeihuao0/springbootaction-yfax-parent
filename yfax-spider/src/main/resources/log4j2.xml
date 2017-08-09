@@ -11,7 +11,7 @@
                 <Pattern>%d [%t] [%c] [%p] (%file:%line\)- %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="3" modulate="true"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="5 MB"/>
             </Policies>
         </RollingFile>

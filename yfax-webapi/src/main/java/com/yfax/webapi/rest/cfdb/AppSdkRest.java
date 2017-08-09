@@ -100,7 +100,11 @@ public class AppSdkRest {
 	public JsonResult doSdkTasklist(String phoneId, String adid,String cid,
 			String intro,String url,String icon,String psize,String title,
 			String text1,String text2,String android_url,String active_time,
-			String runtime,String curr_note,String active_num,String score) {
+			String runtime,String curr_note,String active_num,String score, 
+			String sdkType) {
+		if(sdkType == null) {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
 		UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 		if(users != null) {
 			SdkTasklistVo sdkTasklistVo = new SdkTasklistVo();
@@ -122,6 +126,7 @@ public class AppSdkRest {
 			String cTime = DateUtil.getCurrentLongDateTime();
 			sdkTasklistVo.setCreateDate(cTime);
 			sdkTasklistVo.setUpdateDate(cTime);
+			sdkTasklistVo.setSdkType(sdkType);
 			return this.sdkTasklistService.addSdkTasklist(sdkTasklistVo);
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
@@ -158,8 +163,9 @@ public class AppSdkRest {
 		advHis.setAdname(ad);
 		advHis.setUserid(user);
 		advHis.setDeviceid(device);
-		advHis.setSource(chn);
+		advHis.setSource("youmi");	//有米
 		advHis.setPoint(points);
+		advHis.setPrice(price);
 		advHis.setTime(time);
 		advHis.setTimeStr(DateUtil.stampToDate(Long.valueOf(time)));
 		advHis.setChecksum(sig.toLowerCase());
