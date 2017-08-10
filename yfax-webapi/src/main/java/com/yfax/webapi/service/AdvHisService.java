@@ -113,6 +113,7 @@ public class AdvHisService{
 				incomeHis.setUpdateDate(cTime);
 				incomeHis.setFlag(1);	//1=加钱；2=扣钱
 				incomeHis.setChannel(2);		//1=后台系统广告；2=SDK平台广告
+				//TODO 收益新增广告渠道名称
 				
 				//仅限第一次记录，重复则跳过
 				IncomeHisVo isExistVo = this.incomeHisDao.selectIncomeHisByCondition(incomeHis);

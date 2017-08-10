@@ -5,7 +5,7 @@
 	<groupId>com.yfax.webapi</groupId>
 	<artifactId>yfax-webapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>yfax-webapi</name>
 	<description>Spring Boot, MVC, Rest API for App</description>
@@ -44,6 +44,19 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 移除嵌入式tomcat插件 -->
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-tomcat</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- servlet-api的依赖 -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <scope>provided</scope>
 		</dependency>
 		<!-- Redis集成 -->
 		<dependency>
@@ -126,6 +139,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>yfax-webapi</finalName>  
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

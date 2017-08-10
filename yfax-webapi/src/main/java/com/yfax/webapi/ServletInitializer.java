@@ -1,9 +1,7 @@
-package com.yfax.webapi.oauth;
+package com.yfax.webapi;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-
-import com.yfax.webapi.Application;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 
