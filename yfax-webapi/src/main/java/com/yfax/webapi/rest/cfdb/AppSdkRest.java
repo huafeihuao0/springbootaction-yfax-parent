@@ -136,7 +136,7 @@ public class AppSdkRest {
 	/**
 	 * 有米-广告平台接口回调数据秘钥
 	 */
-	private final static String AD_SECRET_YOUMI="63537dd95a209d4d";	//生产
+	private final static String AD_SECRET_YOUMI="42c851c244ff8ba0";	//生产
 	
 	/**
 	 * 有米-广告平台状态回调接口

@@ -33,6 +33,8 @@ spring:
   #    suffix: .html
   thymeleaf: 
     prefix: classpath:/templates/
+  jmx: 
+    default-domain: agentservice
 
 # tomcat
 server:
@@ -46,7 +48,13 @@ server:
   #自定义session失效时间
   session: 
     timeout: 60
-
+    
+# 设置jmx注册不同名
+endpoints: 
+  jmx: 
+    domain: agentservice
+    unique-names: true
+    
 #自定义属性
 name: zhangsan
 age: 30
