@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.vo.UsersVo;
 
@@ -21,11 +22,6 @@ import com.yfax.webapi.vo.UsersVo;
 public class CfdbUserDetailsService implements UserDetailsService {
 	
 	protected static Logger logger = LoggerFactory.getLogger(CfdbUserDetailsService.class);
-	
-	/**
-	 * app用户统一密码
-	 */
-	private final static String CFDB_PWD="D6Z6ek1STzQnRSNg";
 	
     @Autowired
 	private UsersDao dao;
@@ -47,7 +43,7 @@ public class CfdbUserDetailsService implements UserDetailsService {
         //返回一个SpringSecurity需要的用户对象
         return new org.springframework.security.core.userdetails.User(
                 userFromDatabase.getPhoneId(),
-                CFDB_PWD,
+                GlobalUtils.CFDB_PWD,
                 grantedAuthorities);
     }
 }

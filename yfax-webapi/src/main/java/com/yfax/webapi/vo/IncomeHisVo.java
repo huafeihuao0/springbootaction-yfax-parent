@@ -17,6 +17,7 @@ public class IncomeHisVo implements Serializable {
 	private String taskName;
 	private String incomeTime;
 	private String income;
+	private String sysIncome;
 	private String createDate;
 	private String updateDate;
 	private int flag;	//1=加钱；2=扣钱
@@ -87,5 +88,11 @@ public class IncomeHisVo implements Serializable {
 	}
 	public void setChannel(int channel) {
 		this.channel = channel;
+	}
+	public String getSysIncome() {
+		return sysIncome;
+	}
+	public void setSysIncome(String sysIncome) {
+		this.sysIncome = sysIncome;
 	}
 }

@@ -12,6 +12,7 @@
 		<result column="taskName" property="taskName" jdbcType="VARCHAR" />
 		<result column="incomeTime" property="incomeTime" jdbcType="VARCHAR" />
 		<result column="income" property="income" jdbcType="VARCHAR" />
+		<result column="sysIncome" property="sysIncome" jdbcType="VARCHAR" />
 		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
 		<result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
 		<result column="flag" property="flag" jdbcType="INTEGER" />
@@ -20,7 +21,7 @@
 	</resultMap>
 
     <select id="selectIncomeHis" resultMap="result">
-		select id,phoneId,taskId,logoUrl,taskName,income,
+		select id,phoneId,taskId,logoUrl,taskName,income,sysIncome,
 		date_format(incomeTime,'%Y-%m-%d %H:%i:%s') as incomeTime,
 		date_format(createDate,'%Y-%m-%d %H:%i:%s') as createDate,
 		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate,
@@ -46,6 +47,7 @@
 		  <if test="taskName != null" > taskName, </if>
 		  <if test="incomeTime != null" > incomeTime, </if>
 		  <if test="income != null" > income, </if>
+		  <if test="sysIncome != null" > sysIncome, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
 		  <if test="flag != null" > flag, </if>
@@ -60,6 +62,7 @@
 		  <if test="taskName != null" > #{taskName}, </if>
 		  <if test="incomeTime != null" > #{incomeTime}, </if>
 		  <if test="income != null" > #{income}, </if>
+		  <if test="sysIncome != null" > #{sysIncome}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>
 		  <if test="flag != null" > #{flag}, </if>

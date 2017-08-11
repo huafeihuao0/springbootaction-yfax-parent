@@ -374,13 +374,4 @@ public class StrUtil {
 		}
 		return "未知";
 	}
-	
-	/**
-	 * 如果为.00，则处理成0.00：
-	 * @param str
-	 * @return
-	 */
-	public static String zero2Str(String str){
-		return (null2Str(str).equals(".00")?"0.00":str);
-	}
 }

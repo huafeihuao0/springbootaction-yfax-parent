@@ -7,4 +7,8 @@
     <select id="selectSdkChannelConfig" resultType="com.yfax.webapi.vo.SdkChannelConfigVo">
 		select * from cfdb_sdk_channel_config
 	</select>
+	
+	<select id="selectSdkChannelConfigByFlag" resultType="com.yfax.webapi.vo.SdkChannelConfigVo">
+		select * from cfdb_sdk_channel_config where channelFlag = #{channelFlag}
+	</select>
 </mapper>

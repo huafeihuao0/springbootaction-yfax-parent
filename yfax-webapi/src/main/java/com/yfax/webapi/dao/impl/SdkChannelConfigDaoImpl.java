@@ -19,4 +19,9 @@ public class SdkChannelConfigDaoImpl implements SdkChannelConfigDao {
 	public List<SdkChannelConfigVo> selectSdkChannelConfigList() {
 		return this.sqlSessionTemplate.selectList("selectSdkChannelConfig");
 	}
+
+	@Override
+	public SdkChannelConfigVo selectSdkChannelConfigByFlag(String channelFlag) {
+		return this.sqlSessionTemplate.selectOne("selectSdkChannelConfigByFlag", channelFlag);
+	}
 }

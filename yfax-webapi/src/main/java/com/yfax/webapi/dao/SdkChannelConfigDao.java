@@ -6,4 +6,5 @@ import com.yfax.webapi.vo.SdkChannelConfigVo;
 
 public interface SdkChannelConfigDao {
 	public List<SdkChannelConfigVo> selectSdkChannelConfigList();
+	public SdkChannelConfigVo selectSdkChannelConfigByFlag(String channelFlag);
 }

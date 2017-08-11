@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UsersService;
@@ -79,7 +80,7 @@ public class AppSdkRest {
 		advHis.setActiveNum(active_num);
 		advHis.setResult(flag?"校验正确":"校验失败");
 		advHis.setResultSum(md5Result);
-		boolean flag2 = this.advHisService.addAdvHis(advHis);
+		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.DIANRU);
 		if(!flag2) {
 			logger.warn("回调记录保存失败");
 		}
@@ -163,7 +164,7 @@ public class AppSdkRest {
 		advHis.setAdname(ad);
 		advHis.setUserid(user);
 		advHis.setDeviceid(device);
-		advHis.setSource("youmi");	//有米
+		advHis.setSource(GlobalUtils.YOUMI_CN);	//有米
 		advHis.setPoint(points);
 		advHis.setPrice(price);
 		advHis.setTime(time);
@@ -172,7 +173,7 @@ public class AppSdkRest {
 		advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
 		advHis.setResult(flag?"校验正确":"校验失败");
 		advHis.setResultSum(md5Result);
-		boolean flag2 = this.advHisService.addAdvHis(advHis);
+		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.YOUMI);
 		if(!flag2) {
 			logger.warn("回调记录保存失败");
 		}

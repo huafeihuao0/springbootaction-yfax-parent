@@ -8,15 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.dao.AdvHisDao;
 import com.yfax.webapi.dao.IncomeHisDao;
+import com.yfax.webapi.dao.SdkChannelConfigDao;
 import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.StrUtil;
 import com.yfax.webapi.utils.UUID;
 import com.yfax.webapi.vo.AdvHisVo;
 import com.yfax.webapi.vo.IncomeHisVo;
+import com.yfax.webapi.vo.SdkChannelConfigVo;
 import com.yfax.webapi.vo.SdkTasklistVo;
 import com.yfax.webapi.vo.UsersVo;
 import com.yfax.webapi.xinge.XgServiceApi;
@@ -42,17 +44,15 @@ public class AdvHisService{
 	@Autowired
 	private IncomeHisDao incomeHisDao;
 	
-	/**
-	 * 积分兑换比率，1比100
-	 */
-	private static final double POINT_RATE = 100;
+	@Autowired
+	private SdkChannelConfigDao sdkChannelConfigDao;
 	
 	/**
 	 * 新增广告平台回调记录
 	 * @return
 	 */
 	@Transactional
-	public boolean addAdvHis(AdvHisVo advHis) {
+	public boolean addAdvHis(AdvHisVo advHis, int channelFlag) {
 		try {
 			//1. 新增广告平台回调记录
 			AdvHisVo advHisTmp = this.advHisDao.selectByHashid(advHis.getHashid());
@@ -63,7 +63,7 @@ public class AdvHisService{
 			boolean flag1 = this.advHisDao.insertAdvHis(advHis);
 			if(flag1) {
 				logger.info("新增广告平台回调记录成功");
-				this.addUserBalance(advHis);
+				this.addUserBalance(advHis, channelFlag);
 				return true;
 			}else {
 				logger.error("新增广告平台回调记录失败");
@@ -81,22 +81,40 @@ public class AdvHisService{
 	 * @throws Exception 
 	 */
 	@Transactional
-	private void addUserBalance(AdvHisVo advHis) throws Exception {
-		//2. 增加用户余额，1比100
+	private void addUserBalance(AdvHisVo advHis, int channelFlag) throws Exception {
+		//2. 取用户余额
 		UsersVo usersVo = this.usersDao.selectUsersByPhoneId(advHis.getDeviceid());	//IMEI手机码
-		
+		String sdkChannelFlag = "";
+		if(channelFlag == 4) {
+			sdkChannelFlag = GlobalUtils.DIANRU_CN;
+		}else if(channelFlag == 5) {
+			sdkChannelFlag = GlobalUtils.YOUMI_CN;
+		}
+		//3. 取对应渠道的换算和分成比例
+		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigDao.selectSdkChannelConfigByFlag(sdkChannelFlag);
+		//初始默认值
+		double cRate = 0;
+		double sRate = 0;
+		if(sdkChannelConfigVo != null) {
+			cRate = Double.valueOf(sdkChannelConfigVo.getcRate());	//换算比例
+			sRate = Double.valueOf(sdkChannelConfigVo.getsRate());	//分成比例
+		}
 		if(usersVo != null) {
 			//格式化，保留两位小数，四舍五入
-			DecimalFormat dFormat = new DecimalFormat("#.00"); 
-			//更新数据
-			double balance = Double.valueOf(usersVo.getBalance());	//原已有余额
-			double totalIncome = Double.valueOf(usersVo.getTotalIncome());	//原累积收入
-			double point = Double.valueOf(advHis.getPoint());	//本次获赠积分
-			double earn = point / POINT_RATE;	//本次获得的钱
-			usersVo.setBalance(StrUtil.zero2Str(dFormat.format(balance + earn)));
-			usersVo.setTotalIncome(StrUtil.zero2Str(dFormat.format(totalIncome + earn)));
-			usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
-			
+			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+			//用户原已有余额
+			double balance = Double.valueOf(usersVo.getBalance());
+			//用户原累积收入
+			double totalIncome = Double.valueOf(usersVo.getTotalIncome());	
+			//平台返赠总积分
+			double point = Double.valueOf(advHis.getPoint());		
+			//用户本次收益金额
+			double earn = (point/cRate)*(sRate/100);
+			usersVo.setBalance(dFormat.format(balance + earn));
+			usersVo.setTotalIncome(dFormat.format(totalIncome + earn));
+			//平台本次收益金额
+			double sysEarn = (point/cRate)*((100-sRate)/100);
+			//检查是否存在该广告
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
 			if(sdkTasklistVo != null) {
 				//3. 记录用户收益记录
@@ -108,12 +126,12 @@ public class AdvHisService{
 				incomeHis.setLogoUrl(sdkTasklistVo.getIcon());
 				incomeHis.setTaskName(sdkTasklistVo.getTitle());
 				incomeHis.setIncomeTime(cTime);
-				incomeHis.setIncome(String.valueOf(earn));
+				incomeHis.setIncome(dFormat.format(earn));		//用户收益金额
+				incomeHis.setSysIncome(dFormat.format(sysEarn));	//平台收益金额
 				incomeHis.setCreateDate(cTime);
 				incomeHis.setUpdateDate(cTime);
 				incomeHis.setFlag(1);	//1=加钱；2=扣钱
-				incomeHis.setChannel(2);		//1=后台系统广告；2=SDK平台广告
-				//TODO 收益新增广告渠道名称
+				incomeHis.setChannel(channelFlag);
 				
 				//仅限第一次记录，重复则跳过
 				IncomeHisVo isExistVo = this.incomeHisDao.selectIncomeHisByCondition(incomeHis);
@@ -124,6 +142,7 @@ public class AdvHisService{
 							+ ", taskName=" + sdkTasklistVo.getTitle() + ", earn=" + earn);
 						
 						//4. 更新用户余额数据
+						usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 						boolean flag2 = usersDao.update(usersVo);
 						if(flag2) {
 							logger.info("回调用户加钱成功。balance=" + balance 
@@ -156,4 +175,18 @@ public class AdvHisService{
 			logger.warn("IMEI手机码数据不存在。phoneId=" + advHis.getDeviceid());
 		}
 	}
+	
+//	public static void main(String[] args) {
+//		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+//		double cRate = 50;	//换算比例
+//		double sRate = 10;	//分成比例
+//		double point = Double.valueOf("100");	//本次获赠积分
+//		//用户收益
+//		double userPoint = (sRate/100)*point;	//用户本次获得积分
+//		double earn = (point/cRate)*(sRate/100);	//用户本次收益金额
+//		System.out.println("userPoint=" + userPoint);
+//		System.out.println("earn=" + earn);
+//		//平台本次收益金额
+//		System.out.println("sysEarn=" + (point/cRate)*((100-sRate)/100));
+//	}
 }
