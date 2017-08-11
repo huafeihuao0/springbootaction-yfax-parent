@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+import com.yfax.webapi.GlobalUtils;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -45,8 +47,10 @@ public class OAuth2Configuration {
                     .logoutSuccessHandler(customLogoutSuccessHandler)
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/hello/", "/api/cfdb/doLogin").permitAll()
-                    .antMatchers("/secure/**", "/api/cfdb/**").authenticated();
+                    .antMatchers("/hello/", 
+                    		GlobalUtils.PROJECT_CFDB + "/doLogin").permitAll()
+                    .antMatchers("/secure/**", 
+                    		GlobalUtils.PROJECT_CFDB + "/**").authenticated();
 
         }
 

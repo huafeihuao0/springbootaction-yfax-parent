@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.yfax.webapi.utils.JsonResult;
@@ -18,6 +19,7 @@ import com.yfax.webapi.utils.StrUtil;
  * 
  * @author Minbo.He
  */
+@Component
 public class HttpInterceptor extends HandlerInterceptorAdapter {
 	
 	protected static Logger logger = LoggerFactory.getLogger(HttpInterceptor.class);
@@ -31,12 +33,14 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s", url, method, uri, queryString));
 		
 		//广告平台回调不做拦截
-        if(uri.startsWith("/api/cfdb/sendAdvInfo")){
+        if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
+        		+ "/sendAdvInfo")){
             return true;
         }
         
-        //faq页不做拦截
-        if(uri.equals("/api/cfdb/faq")){
+        //常见问题faq页不做拦截
+        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
+        		+ "/faq")){
             return true;
         }
 		
@@ -44,7 +48,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String phoneId = request.getParameter("phoneId");
 		if (!StrUtil.null2Str(phoneId).equals("")) {
 			//登录不做拦截
-	        if(uri.equals("/api/cfdb/doLogin")){
+	        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
+	        		+ "/doLogin")){
 	            return true;
 	        }
 			return true;

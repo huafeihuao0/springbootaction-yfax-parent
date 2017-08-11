@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.oauth.service.CfdbUserDetailsService;
 
 @Configuration
@@ -44,9 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     		//faq页不做拦截
     		//登录不做拦截（因为同时要创建新用户）
         web.ignoring().antMatchers("/hello"
-        		, "/api/cfdb/sendAdvInfo","/api/cfdb/sendAdvInfoYm"
-        		, "/api/cfdb/faq"
-        		, "/api/cfdb/doLogin");
+        		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfo"
+        		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfoYm"
+        		, GlobalUtils.PROJECT_CFDB + "/faq"
+        		, GlobalUtils.PROJECT_CFDB + "/doLogin");
     }
     
     @Override

@@ -14,7 +14,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//定义过滤拦截的url名称，例如/api/cfdb/**，表示cfdb下所有的名称请求
-		registry.addInterceptor(new HttpInterceptor()).addPathPatterns("/api/cfdb/**");
+		registry.addInterceptor(new HttpInterceptor()).addPathPatterns(GlobalUtils.PROJECT_CFDB + "/**");
 	}
 	
 }
