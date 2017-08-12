@@ -1,4 +1,4 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 

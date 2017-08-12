@@ -4,8 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yfax.webapi.cfdb.vo.AppUpgradeVo;
 import com.yfax.webapi.dao.AppUpgradeDao;
-import com.yfax.webapi.vo.AppUpgradeVo;
 
 @Component
 public class AppUpgradeDaoImpl implements AppUpgradeDao {

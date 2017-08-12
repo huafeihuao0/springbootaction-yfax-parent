@@ -2,8 +2,9 @@ package com.yfax.webapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yfax.webapi.cfdb.vo.AppConfigVo;
 import com.yfax.webapi.dao.AppConfigDao;
-import com.yfax.webapi.vo.AppConfigVo;
 
 /**
  * APP初始化配置

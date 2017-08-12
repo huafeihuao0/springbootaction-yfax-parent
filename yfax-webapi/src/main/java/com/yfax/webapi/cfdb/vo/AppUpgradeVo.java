@@ -1,34 +1,50 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
-/**
- * 用户反馈信息
- * @author Minbo
- */
-public class UserFeedbackVo implements Serializable {
+public class AppUpgradeVo implements Serializable{
 
-	private static final long serialVersionUID = 8339535145488096614L;
+	private static final long serialVersionUID = 415629974054068744L;
 	
 	private String id;			//主键
-	private String phoneId;		//手机唯一标识码
-	private String info;			//反馈信息
+	private String version;		//版本号
+	private String vdesc;		//版本描述
+	private String apkUrl;		//包下载地址
+	private Integer status;		//版本状态
 	private String createDate;	//创建时间
 	private String updateDate;	//更新时间
 	private String createdBy;	//创建人
 	private String updatedBy;	//更新人
 	
-	public String getPhoneId() {
-		return phoneId;
+	public String getApkUrl() {
+		return apkUrl;
 	}
-	public void setPhoneId(String phoneId) {
-		this.phoneId = phoneId;
+	public void setApkUrl(String apkUrl) {
+		this.apkUrl = apkUrl;
 	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getVdesc() {
+		return vdesc;
+	}
+	public void setVdesc(String vdesc) {
+		this.vdesc = vdesc;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -53,11 +69,5 @@ public class UserFeedbackVo implements Serializable {
 	}
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
-	}
-	public String getInfo() {
-		return info;
-	}
-	public void setInfo(String info) {
-		this.info = info;
 	}
 }

@@ -1,5 +1,8 @@
 package com.yfax.webapi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface GlobalUtils {
 	/**
 	 * 统一访问前缀：/yfax-webapi
@@ -33,4 +36,9 @@ public interface GlobalUtils {
 	 * app用户统一密码
 	 */
 	public final static String CFDB_PWD="D6Z6ek1STzQnRSNg";
+	/**
+	 * 内存-缓存
+	 */
+	public static Map<String, Object> dataCache = new HashMap<String, Object>();
+	public static Map<String, Object> flagCache = new HashMap<String, Object>();
 }

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.UserTasklistHisVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.UserTasklistHisVo">
 	
 	<!-- 添加 -->
-	<insert id="insertUserTasklistHis" parameterType="com.yfax.webapi.vo.UserTasklistHisVo">
+	<insert id="insertUserTasklistHis" parameterType="com.yfax.webapi.cfdb.vo.UserTasklistHisVo">
 		insert into cfdb_user_tasklist_his
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="id != null" > id, </if>

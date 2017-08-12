@@ -1,4 +1,4 @@
-package com.yfax.webapi.rest.cfdb;
+package com.yfax.webapi.cfdb.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.cfdb.vo.AdvHisVo;
+import com.yfax.webapi.cfdb.vo.SdkTasklistVo;
+import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UsersService;
@@ -15,13 +18,10 @@ import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.MD5Util;
 import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.vo.AdvHisVo;
-import com.yfax.webapi.vo.SdkTasklistVo;
-import com.yfax.webapi.vo.UsersVo;
 
 /**
  * @author Minbo.He
- * 平台广告接口
+ * 冲返单包，平台广告接口
  */
 @RestController
 @RequestMapping("/api/cfdb")

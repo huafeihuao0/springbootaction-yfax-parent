@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.AdvHisVo;
 import com.yfax.webapi.dao.AdvHisDao;
-import com.yfax.webapi.vo.AdvHisVo;
 
 @Component
 public class AdvHisDaoImpl implements AdvHisDao {

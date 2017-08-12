@@ -2,8 +2,9 @@ package com.yfax.webapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yfax.webapi.cfdb.vo.ApkUrlVo;
 import com.yfax.webapi.dao.ApkUrlDao;
-import com.yfax.webapi.vo.ApkUrlVo;
 
 /**
  * 分享APK下载链接

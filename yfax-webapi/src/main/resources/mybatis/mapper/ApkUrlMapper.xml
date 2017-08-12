@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.ApkUrlVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.ApkUrlVo">
 
-    <select id="selectApkUrl" resultType="com.yfax.webapi.vo.ApkUrlVo">
+    <select id="selectApkUrl" resultType="com.yfax.webapi.cfdb.vo.ApkUrlVo">
 		select id,appName,apkUrl from cfdb_apk_url
 	</select>
 </mapper>

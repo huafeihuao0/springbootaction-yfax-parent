@@ -1,4 +1,4 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
@@ -20,8 +20,8 @@ public class IncomeHisVo implements Serializable {
 	private String sysIncome;
 	private String createDate;
 	private String updateDate;
-	private int flag;	//1=加钱；2=扣钱
-	private int channel;
+	private Integer flag;	//1=加钱；2=扣钱
+	private Integer channel;
 	
 	public String getId() {
 		return id;
@@ -77,16 +77,16 @@ public class IncomeHisVo implements Serializable {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-	public int getFlag() {
+	public Integer getFlag() {
 		return flag;
 	}
-	public void setFlag(int flag) {
+	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
-	public int getChannel() {
+	public Integer getChannel() {
 		return channel;
 	}
-	public void setChannel(int channel) {
+	public void setChannel(Integer channel) {
 		this.channel = channel;
 	}
 	public String getSysIncome() {

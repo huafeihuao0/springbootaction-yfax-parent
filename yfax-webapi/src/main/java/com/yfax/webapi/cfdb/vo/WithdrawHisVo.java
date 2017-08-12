@@ -1,4 +1,4 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
@@ -12,14 +12,14 @@ public class WithdrawHisVo implements Serializable {
 	
 	private String id;
 	private String phoneId;
-	private int withdrawType;
+	private Integer withdrawType;
 	private String withdrawName;
 	private String name;
 	private String account;
 	private String income;
 	private String withdrawTime;
 	private String status;
-	private int statusType;
+	private Integer statusType;
 	private String createDate;
 	private String updateDate;
 	
@@ -35,10 +35,10 @@ public class WithdrawHisVo implements Serializable {
 	public void setPhoneId(String phoneId) {
 		this.phoneId = phoneId;
 	}
-	public int getWithdrawType() {
+	public Integer getWithdrawType() {
 		return withdrawType;
 	}
-	public void setWithdrawType(int withdrawType) {
+	public void setWithdrawType(Integer withdrawType) {
 		this.withdrawType = withdrawType;
 	}
 	public String getWithdrawName() {
@@ -77,10 +77,10 @@ public class WithdrawHisVo implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getStatusType() {
+	public Integer getStatusType() {
 		return statusType;
 	}
-	public void setStatusType(int statusType) {
+	public void setStatusType(Integer statusType) {
 		this.statusType = statusType;
 	}
 	public String getCreateDate() {

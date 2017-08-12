@@ -1,4 +1,4 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
@@ -14,9 +14,9 @@ public class TaskListVo implements Serializable {
 	private String logoUrl;
 	private String taskName;
 	private String taskTag;
-	private int amount;
+	private Integer amount;
 	private String income;
-	private int orderNo;
+	private Integer orderNo;
 	private String goUrl;
 	private String createDate;
 	private String updateDate;
@@ -45,10 +45,10 @@ public class TaskListVo implements Serializable {
 	public void setTaskTag(String taskTag) {
 		this.taskTag = taskTag;
 	}
-	public int getAmount() {
+	public Integer getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 	public String getIncome() {
@@ -57,10 +57,10 @@ public class TaskListVo implements Serializable {
 	public void setIncome(String income) {
 		this.income = income;
 	}
-	public int getOrderNo() {
+	public Integer getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
 	public String getGoUrl() {

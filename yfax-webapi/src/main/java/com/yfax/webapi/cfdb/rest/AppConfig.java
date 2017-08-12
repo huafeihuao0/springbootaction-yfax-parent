@@ -1,4 +1,4 @@
-package com.yfax.webapi.rest.cfdb;
+package com.yfax.webapi.cfdb.rest;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Minbo.He
- * 配置接口
+ * 冲返单包，配置接口
  */
 @Controller
 @RequestMapping("/api/cfdb")

@@ -6,8 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yfax.webapi.cfdb.vo.IncomeSetVo;
 import com.yfax.webapi.dao.IncomeSetDao;
-import com.yfax.webapi.vo.IncomeSetVo;
 
 @Component
 public class IncomeSetDaoImpl implements IncomeSetDao {

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.SdkTasklistVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.SdkTasklistVo">
     
     <!-- 添加 -->
-	<insert id="insertSdkTasklist" parameterType="com.yfax.webapi.vo.SdkTasklistVo">
+	<insert id="insertSdkTasklist" parameterType="com.yfax.webapi.cfdb.vo.SdkTasklistVo">
 		insert into cfdb_sdk_tasklist
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="adid != null" > adid, </if>
@@ -51,7 +51,7 @@
         </trim>
 	</insert>
 	
-	 <select id="selectSdkTasklistByAdid" resultType="com.yfax.webapi.vo.SdkTasklistVo">
+	 <select id="selectSdkTasklistByAdid" resultType="com.yfax.webapi.cfdb.vo.SdkTasklistVo">
 		select * from cfdb_sdk_tasklist where adid = #{adid}
 	</select>
 </mapper>

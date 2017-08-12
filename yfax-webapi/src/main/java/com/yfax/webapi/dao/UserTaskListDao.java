@@ -3,7 +3,7 @@ package com.yfax.webapi.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.yfax.webapi.vo.UserTaskListVo;
+import com.yfax.webapi.cfdb.vo.UserTaskListVo;
 
 public interface UserTaskListDao {
 	public boolean selectCountIsExist(Map<Object, Object> map);

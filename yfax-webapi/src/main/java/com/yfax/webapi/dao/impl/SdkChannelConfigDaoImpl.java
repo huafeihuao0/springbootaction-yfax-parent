@@ -6,8 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
 import com.yfax.webapi.dao.SdkChannelConfigDao;
-import com.yfax.webapi.vo.SdkChannelConfigVo;
 
 @Component
 public class SdkChannelConfigDaoImpl implements SdkChannelConfigDao {

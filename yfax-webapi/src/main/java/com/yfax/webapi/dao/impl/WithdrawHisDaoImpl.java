@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.WithdrawHisVo;
 import com.yfax.webapi.dao.WithdrawHisDao;
-import com.yfax.webapi.vo.WithdrawHisVo;
 
 @Component
 public class WithdrawHisDaoImpl implements WithdrawHisDao {

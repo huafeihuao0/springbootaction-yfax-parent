@@ -1,43 +1,43 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
-public class AppBannerVo implements Serializable{
+public class UserSmsVo implements Serializable{
 	
-	private static final long serialVersionUID = -2819920427546087312L;
+	private static final long serialVersionUID = -4437044242209336030L;
 	
 	private String id;			//主键
-	private String vdesc;		//广告说明
-	private String url;			//图片Url
-	private Integer orderNo;		//排序编号
+	private String phoneId;		//手机唯一标识码
+	private String phoneNum;		//手机号码
+	private String msgCode;		//验证码
 	private String createDate;	//创建时间
-	private String updateDate;	//更新时间
 	private String createdBy;	//创建人
+	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
+	public String getPhoneId() {
+		return phoneId;
+	}
+	public void setPhoneId(String phoneId) {
+		this.phoneId = phoneId;
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getVdesc() {
-		return vdesc;
+	public String getPhoneNum() {
+		return phoneNum;
 	}
-	public void setVdesc(String vdesc) {
-		this.vdesc = vdesc;
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
-	public String getUrl() {
-		return url;
+	public String getMsgCode() {
+		return msgCode;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public Integer getOrderNo() {
-		return orderNo;
-	}
-	public void setOrderNo(Integer orderNo) {
-		this.orderNo = orderNo;
+	public void setMsgCode(String msgCode) {
+		this.msgCode = msgCode;
 	}
 	public String getCreateDate() {
 		return createDate;

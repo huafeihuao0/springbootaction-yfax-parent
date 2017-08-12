@@ -2,7 +2,7 @@ package com.yfax.webapi.dao;
 
 import java.util.Map;
 
-import com.yfax.webapi.vo.UsersVo;
+import com.yfax.webapi.cfdb.vo.UsersVo;
 
 public interface UsersDao {
 	public UsersVo selectUsersByPhoneId(String phoneId);

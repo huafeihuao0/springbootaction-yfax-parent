@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yfax.webapi.cfdb.vo.UserSmsVo;
 import com.yfax.webapi.dao.UserSmsDao;
-import com.yfax.webapi.vo.UserSmsVo;
 
 /**
  * 记录短信验证码发送历史

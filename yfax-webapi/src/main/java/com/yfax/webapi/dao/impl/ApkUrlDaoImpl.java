@@ -4,8 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yfax.webapi.cfdb.vo.ApkUrlVo;
 import com.yfax.webapi.dao.ApkUrlDao;
-import com.yfax.webapi.vo.ApkUrlVo;
 
 @Component
 public class ApkUrlDaoImpl implements ApkUrlDao {

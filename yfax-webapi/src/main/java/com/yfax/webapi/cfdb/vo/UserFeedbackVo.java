@@ -1,33 +1,34 @@
-package com.yfax.webapi.vo;
+package com.yfax.webapi.cfdb.vo;
 
 import java.io.Serializable;
 
 /**
- * 提现金额配置
+ * 用户反馈信息
  * @author Minbo
  */
-public class IncomeSetVo implements Serializable {
+public class UserFeedbackVo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8339535145488096614L;
 	
 	private String id;			//主键
-	private String income;		//提现金额
+	private String phoneId;		//手机唯一标识码
+	private String info;			//反馈信息
 	private String createDate;	//创建时间
 	private String updateDate;	//更新时间
 	private String createdBy;	//创建人
 	private String updatedBy;	//更新人
 	
+	public String getPhoneId() {
+		return phoneId;
+	}
+	public void setPhoneId(String phoneId) {
+		this.phoneId = phoneId;
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getIncome() {
-		return income;
-	}
-	public void setIncome(String income) {
-		this.income = income;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -52,5 +53,11 @@ public class IncomeSetVo implements Serializable {
 	}
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
 	}
 }

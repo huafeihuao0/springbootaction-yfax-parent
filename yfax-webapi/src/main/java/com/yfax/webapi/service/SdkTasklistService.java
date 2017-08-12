@@ -4,11 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yfax.webapi.cfdb.vo.SdkTasklistVo;
+import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.vo.SdkTasklistVo;
-import com.yfax.webapi.vo.UsersVo;
 
 /**
  * 平台SDK广告记录

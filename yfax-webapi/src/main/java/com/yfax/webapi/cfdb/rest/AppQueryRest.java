@@ -1,4 +1,4 @@
-package com.yfax.webapi.rest.cfdb;
+package com.yfax.webapi.cfdb.rest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yfax.webapi.cfdb.vo.ApkUrlVo;
+import com.yfax.webapi.cfdb.vo.AppBannerVo;
+import com.yfax.webapi.cfdb.vo.AppConfigVo;
+import com.yfax.webapi.cfdb.vo.AppUpgradeVo;
+import com.yfax.webapi.cfdb.vo.IncomeHisVo;
+import com.yfax.webapi.cfdb.vo.IncomeSetVo;
+import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
+import com.yfax.webapi.cfdb.vo.TaskDetailVo;
+import com.yfax.webapi.cfdb.vo.UserTaskListVo;
+import com.yfax.webapi.cfdb.vo.UsersVo;
+import com.yfax.webapi.cfdb.vo.WithdrawHisVo;
 import com.yfax.webapi.service.ApkUrlService;
 import com.yfax.webapi.service.AppBannerService;
 import com.yfax.webapi.service.AppConfigService;
@@ -25,20 +36,10 @@ import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.StrUtil;
-import com.yfax.webapi.vo.ApkUrlVo;
-import com.yfax.webapi.vo.AppBannerVo;
-import com.yfax.webapi.vo.AppConfigVo;
-import com.yfax.webapi.vo.AppUpgradeVo;
-import com.yfax.webapi.vo.IncomeHisVo;
-import com.yfax.webapi.vo.IncomeSetVo;
-import com.yfax.webapi.vo.SdkChannelConfigVo;
-import com.yfax.webapi.vo.TaskDetailVo;
-import com.yfax.webapi.vo.UserTaskListVo;
-import com.yfax.webapi.vo.UsersVo;
-import com.yfax.webapi.vo.WithdrawHisVo;
 
 /**
- * @author Minbo.He 查询接口
+ * @author Minbo.He 
+ * 冲返单包，查询接口
  */
 @RestController
 @RequestMapping("/api/cfdb")
@@ -68,11 +69,6 @@ public class AppQueryRest {
 	private AppUpgradeService appUpgradeService;
 	@Autowired
 	private AppConfigService appConfigService;
-
-	@RequestMapping("/")
-	public String greeting() {
-		return "Greetings from 冲返单包 开放Api!";
-	}
 
 	/**
 	 * 收益记录接口

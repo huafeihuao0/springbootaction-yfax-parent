@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.UserSmsVo;
 import com.yfax.webapi.dao.UserSmsDao;
-import com.yfax.webapi.vo.UserSmsVo;
 
 @Component
 public class UserSmsDaoImpl implements UserSmsDao {

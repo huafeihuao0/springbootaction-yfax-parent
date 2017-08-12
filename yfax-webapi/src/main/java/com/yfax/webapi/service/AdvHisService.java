@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.cfdb.vo.AdvHisVo;
+import com.yfax.webapi.cfdb.vo.IncomeHisVo;
+import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
+import com.yfax.webapi.cfdb.vo.SdkTasklistVo;
+import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.dao.AdvHisDao;
 import com.yfax.webapi.dao.IncomeHisDao;
 import com.yfax.webapi.dao.SdkChannelConfigDao;
@@ -16,11 +21,6 @@ import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.UUID;
-import com.yfax.webapi.vo.AdvHisVo;
-import com.yfax.webapi.vo.IncomeHisVo;
-import com.yfax.webapi.vo.SdkChannelConfigVo;
-import com.yfax.webapi.vo.SdkTasklistVo;
-import com.yfax.webapi.vo.UsersVo;
 import com.yfax.webapi.xinge.XgServiceApi;
 
 /**
@@ -117,9 +117,9 @@ public class AdvHisService{
 			//检查是否存在该广告
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
 			if(sdkTasklistVo != null) {
+				String cTime = DateUtil.getCurrentLongDateTime();
 				//3. 记录用户收益记录
 				IncomeHisVo incomeHis = new IncomeHisVo();
-				String cTime = DateUtil.getCurrentLongDateTime();
 				incomeHis.setId(UUID.getUUID());
 				incomeHis.setPhoneId(advHis.getDeviceid());
 				incomeHis.setTaskId(advHis.getAdid());
@@ -142,7 +142,7 @@ public class AdvHisService{
 							+ ", taskName=" + sdkTasklistVo.getTitle() + ", earn=" + earn);
 						
 						//4. 更新用户余额数据
-						usersVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
+						usersVo.setUpdateDate(cTime);
 						boolean flag2 = usersDao.update(usersVo);
 						if(flag2) {
 							logger.info("回调用户加钱成功。balance=" + balance 

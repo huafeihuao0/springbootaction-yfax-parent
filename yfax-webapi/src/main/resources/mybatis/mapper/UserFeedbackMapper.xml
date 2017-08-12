@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.UserFeedbackVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.UserFeedbackVo">
 
     <!-- 添加 -->
-	<insert id="insertUserFeedback" parameterType="com.yfax.webapi.vo.UserFeedbackVo">
+	<insert id="insertUserFeedback" parameterType="com.yfax.webapi.cfdb.vo.UserFeedbackVo">
 		insert into cfdb_user_feekback
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="id != null" > id, </if>

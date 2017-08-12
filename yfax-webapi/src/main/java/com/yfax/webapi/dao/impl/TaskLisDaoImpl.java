@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.TaskListVo;
 import com.yfax.webapi.dao.TaskListDao;
-import com.yfax.webapi.vo.TaskListVo;
 
 @Component
 public class TaskLisDaoImpl implements TaskListDao {

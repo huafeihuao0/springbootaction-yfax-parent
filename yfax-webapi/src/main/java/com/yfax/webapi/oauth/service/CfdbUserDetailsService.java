@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.dao.UsersDao;
-import com.yfax.webapi.vo.UsersVo;
 
 @Component("userDetailsService")
 public class CfdbUserDetailsService implements UserDetailsService {

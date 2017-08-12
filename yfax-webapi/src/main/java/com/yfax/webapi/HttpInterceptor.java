@@ -32,32 +32,34 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String queryString = request.getQueryString();
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s", url, method, uri, queryString));
 		
-		//广告平台回调不做拦截
-        if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
-        		+ "/sendAdvInfo")){
+		//冲返单包，广告平台回调不做拦截
+        if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB + "/sendAdvInfo")){
             return true;
         }
         
-        //常见问题faq页不做拦截
-        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
-        		+ "/faq")){
+        //冲返单包，常见问题faq页不做拦截
+        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB + "/faq")){
             return true;
         }
 		
-		//拦截请求
-		String phoneId = request.getParameter("phoneId");
-		if (!StrUtil.null2Str(phoneId).equals("")) {
-			//登录不做拦截
-	        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB
-	        		+ "/doLogin")){
-	            return true;
-	        }
-			return true;
-		} else {
-			String result = new JsonResult(ResultCode.PARAMS_ERROR).toJsonString();
-			this.output(response, result);
-			return false;
-		}
+        //冲返单包，请求拦截
+        if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB)) {
+	        	//拦截请求
+	    		String phoneId = request.getParameter("phoneId");
+	    		if (!StrUtil.null2Str(phoneId).equals("")) {
+	    			//登录不做拦截
+	    	        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB + "/doLogin")){
+	    	            return true;
+	    	        }
+	    			return true;
+	    		} else {
+	    			String result = new JsonResult(ResultCode.PARAMS_ERROR).toJsonString();
+	    			this.output(response, result);
+	    			return false;
+	    		}
+        }else {
+        		return true;
+        }
 	}
 	
 	/**

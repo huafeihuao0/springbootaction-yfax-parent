@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.TaskDetailVo;
+import com.yfax.webapi.cfdb.vo.TaskListVo;
+import com.yfax.webapi.cfdb.vo.UserTaskListVo;
+import com.yfax.webapi.cfdb.vo.UserTasklistHisVo;
 import com.yfax.webapi.dao.TaskDetailDao;
 import com.yfax.webapi.dao.TaskListDao;
 import com.yfax.webapi.dao.UserTaskListDao;
@@ -19,10 +23,6 @@ import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.UUID;
-import com.yfax.webapi.vo.TaskDetailVo;
-import com.yfax.webapi.vo.TaskListVo;
-import com.yfax.webapi.vo.UserTaskListVo;
-import com.yfax.webapi.vo.UserTasklistHisVo;
 import com.yfax.webapi.xinge.XgServiceApi;
 
 import net.sf.json.JSONArray;

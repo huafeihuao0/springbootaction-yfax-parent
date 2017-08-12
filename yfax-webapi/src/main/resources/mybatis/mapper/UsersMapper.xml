@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.UsersVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.UsersVo">
 
-    <select id="selectUsersByPhoneId" resultType="com.yfax.webapi.vo.UsersVo">
+    <select id="selectUsersByPhoneId" resultType="com.yfax.webapi.cfdb.vo.UsersVo">
 		select phoneId,balance,totalIncome from cfdb_users where phoneId = #{phoneId}
 	</select>
 	
-	<insert id="insert" parameterType="com.yfax.webapi.vo.UsersVo">
+	<insert id="insert" parameterType="com.yfax.webapi.cfdb.vo.UsersVo">
 		insert into cfdb_users(phoneId, balance, totalIncome, createDate, updateDate) 
 			values(#{phoneId}, #{balance}, #{totalIncome}, #{createDate}, null)
 	</insert>
 	
-	<update id="update" parameterType="com.yfax.webapi.vo.UsersVo">
+	<update id="update" parameterType="com.yfax.webapi.cfdb.vo.UsersVo">
 		update cfdb_users 
 		<set>
 			<if test="balance != null"> balance = #{balance}, </if>
@@ -24,7 +24,7 @@
 	</update>
     
     <!-- 增加与扣减的差，即为今日收入 -->
-    <select id="selectUsersTodayIncome" parameterType="com.yfax.webapi.vo.UsersVo" 
+    <select id="selectUsersTodayIncome" parameterType="com.yfax.webapi.cfdb.vo.UsersVo" 
     			resultType="java.lang.String">
 		select ifnull((select sum(income) from cfdb_income_his where phoneId=#{phoneId} 
 		and date_format(incomeTime,'%Y-%m-%d')=#{currentTime} and flag=1),0) - 

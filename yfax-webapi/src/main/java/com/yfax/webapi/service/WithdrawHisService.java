@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.cfdb.vo.UsersVo;
+import com.yfax.webapi.cfdb.vo.WithdrawHisVo;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.dao.WithdrawHisDao;
 import com.yfax.webapi.utils.DateUtil;
 import com.yfax.webapi.utils.JsonResult;
 import com.yfax.webapi.utils.ResultCode;
 import com.yfax.webapi.utils.UUID;
-import com.yfax.webapi.vo.UsersVo;
-import com.yfax.webapi.vo.WithdrawHisVo;
 
 /**
  * 兑换提现记录

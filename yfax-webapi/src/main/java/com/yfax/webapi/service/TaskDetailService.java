@@ -2,8 +2,9 @@ package com.yfax.webapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yfax.webapi.cfdb.vo.TaskDetailVo;
 import com.yfax.webapi.dao.TaskDetailDao;
-import com.yfax.webapi.vo.TaskDetailVo;
 
 /**
  * 任务详情

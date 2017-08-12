@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.vo.TaskListVo">
+<mapper namespace="com.yfax.webapi.cfdb.vo.TaskListVo">
 
-    <select id="selectTaskListById" resultType="com.yfax.webapi.vo.TaskListVo">
+    <select id="selectTaskListById" resultType="com.yfax.webapi.cfdb.vo.TaskListVo">
 		select * from cfdb_tasklist where taskId=#{taskId}
 	</select>
 	
-	<update id="updateTaskListById" parameterType="com.yfax.webapi.vo.TaskListVo">
+	<update id="updateTaskListById" parameterType="com.yfax.webapi.cfdb.vo.TaskListVo">
 		update cfdb_tasklist set amount=#{amount},updateDate=#{updateDate} 
 				where taskId=#{taskId}
 	</update>
