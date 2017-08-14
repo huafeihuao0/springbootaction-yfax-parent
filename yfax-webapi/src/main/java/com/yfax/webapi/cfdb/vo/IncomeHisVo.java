@@ -22,7 +22,14 @@ public class IncomeHisVo implements Serializable {
 	private String updateDate;
 	private Integer flag;	//1=加钱；2=扣钱
 	private Integer channel;
+	private String hashid;
 	
+	public String getHashid() {
+		return hashid;
+	}
+	public void setHashid(String hashid) {
+		this.hashid = hashid;
+	}
 	public String getId() {
 		return id;
 	}

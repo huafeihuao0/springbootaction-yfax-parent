@@ -98,9 +98,10 @@ public class AdvHisService{
 		if(sdkChannelConfigVo != null) {
 			cRate = Double.valueOf(sdkChannelConfigVo.getcRate());	//换算比例
 			sRate = Double.valueOf(sdkChannelConfigVo.getsRate());	//分成比例
+			logger.info("换算比例cRate=" + cRate + ", 分成比例sRate=" + sRate);
 		}
 		if(usersVo != null) {
-			//格式化，保留两位小数，四舍五入
+			//格式化，保留三位小数，四舍五入
 			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 			//用户原已有余额
 			double balance = Double.valueOf(usersVo.getBalance());
@@ -110,10 +111,12 @@ public class AdvHisService{
 			double point = Double.valueOf(advHis.getPoint());		
 			//用户本次收益金额
 			double earn = (point/cRate)*(sRate/100);
+			logger.info("用户本次收益金额earn=" + dFormat.format(earn));
 			usersVo.setBalance(dFormat.format(balance + earn));
 			usersVo.setTotalIncome(dFormat.format(totalIncome + earn));
 			//平台本次收益金额
 			double sysEarn = (point/cRate)*((100-sRate)/100);
+			logger.info("平台本次收益金额sysEarn=" + dFormat.format(sysEarn));
 			//检查是否存在该广告
 			SdkTasklistVo sdkTasklistVo = this.sdkTasklistDao.selectSdkTasklistByAdid(advHis.getAdid());
 			if(sdkTasklistVo != null) {
@@ -132,6 +135,7 @@ public class AdvHisService{
 				incomeHis.setUpdateDate(cTime);
 				incomeHis.setFlag(1);	//1=加钱；2=扣钱
 				incomeHis.setChannel(channelFlag);
+				incomeHis.setHashid(advHis.getHashid());
 				
 				//仅限第一次记录，重复则跳过
 				IncomeHisVo isExistVo = this.incomeHisDao.selectIncomeHisByCondition(incomeHis);
@@ -177,16 +181,16 @@ public class AdvHisService{
 	}
 	
 //	public static void main(String[] args) {
-//		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
-//		double cRate = 50;	//换算比例
-//		double sRate = 10;	//分成比例
-//		double point = Double.valueOf("100");	//本次获赠积分
+//		DecimalFormat dFormat = new DecimalFormat("#0.000"); 
+//		double cRate = 100;	//换算比例
+//		double sRate = 50;	//分成比例
+//		double point = Double.valueOf("21");	//本次获赠积分
 //		//用户收益
 //		double userPoint = (sRate/100)*point;	//用户本次获得积分
 //		double earn = (point/cRate)*(sRate/100);	//用户本次收益金额
-//		System.out.println("userPoint=" + userPoint);
-//		System.out.println("earn=" + earn);
+//		System.out.println("userPoint=" + dFormat.format(userPoint));
+//		System.out.println("earn=" + dFormat.format(earn));
 //		//平台本次收益金额
-//		System.out.println("sysEarn=" + (point/cRate)*((100-sRate)/100));
+//		System.out.println("sysEarn=" + dFormat.format((point/cRate)*((100-sRate)/100)));
 //	}
 }

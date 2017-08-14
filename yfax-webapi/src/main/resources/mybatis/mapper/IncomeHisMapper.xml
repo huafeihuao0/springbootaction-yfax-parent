@@ -17,6 +17,7 @@
 		<result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
 		<result column="flag" property="flag" jdbcType="INTEGER" />
 		<result column="channel" property="channel" jdbcType="INTEGER" />
+		<result column="hashid" property="hashid" jdbcType="VARCHAR" />
 		
 	</resultMap>
 
@@ -25,15 +26,15 @@
 		date_format(incomeTime,'%Y-%m-%d %H:%i:%s') as incomeTime,
 		date_format(createDate,'%Y-%m-%d %H:%i:%s') as createDate,
 		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate,
-		flag,channel
+		flag,channel,hashid
 		from cfdb_income_his where phoneId = #{phoneId}
 		order by incometime desc
     </select>
     
      <select id="selectIncomeHisByCondition" parameterType="com.yfax.webapi.cfdb.vo.IncomeHisVo" 
      		resultType="com.yfax.webapi.cfdb.vo.IncomeHisVo">
-		select * from cfdb_income_his where taskId = #{taskId} and phoneId = #{phoneId} 
-				and flag = #{flag} and channel = #{channel}
+		select * from cfdb_income_his where hashid = #{hashid} and taskId = #{taskId} 
+			and phoneId = #{phoneId} and flag = #{flag} and channel = #{channel}
 	</select>
     
     <!-- 添加 -->
@@ -52,6 +53,7 @@
 		  <if test="updateDate != null" > updateDate, </if>
 		  <if test="flag != null" > flag, </if>
 		  <if test="channel != null" > channel, </if>
+		  <if test="hashid != null" > hashid, </if>
 		  
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -67,6 +69,7 @@
 		  <if test="updateDate != null" > null, </if>
 		  <if test="flag != null" > #{flag}, </if>
 		  <if test="channel != null" > #{channel}, </if>
+		  <if test="hashid != null" > #{hashid}, </if>
 		  
         </trim>
 	</insert>

@@ -31,7 +31,7 @@ public interface GlobalUtils {
 	/**
 	 * 格式化
 	 */
-	public static final String DECIMAL_FORMAT = "#0.00";
+	public static final String DECIMAL_FORMAT = "#0.000";
 	/**
 	 * app用户统一密码
 	 */
