@@ -32,20 +32,20 @@ public class WdkzAppQueryRest {
 	/**
 	 * 获取app配置数据（修改数据需隔天生效）
 	 */
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	@RequestMapping("/queryAppConfig")
 	public JsonResult queryAppConfig(String version) {
-		String cTime = DateUtil.getCurrentDate();
-		String cacheKey = cTime+"#"+version;
+//		String cTime = DateUtil.getCurrentDate();
+//		String cacheKey = cTime + "#" + version;
 		Map<String, Object> allMap = new HashMap<String, Object>();
-		if(GlobalUtils.flagCache.get(cacheKey)==null) {
+//		if(GlobalUtils.flagCache.get(cacheKey)==null) {
 			WdkzAppConfigVo wdkzAppConfigVo = this.wdkzAppConfigService.selectAppConfigByVersion(version);
 			allMap.put("wdkzAppConfigVo", wdkzAppConfigVo);
-			GlobalUtils.flagCache.put(cacheKey, cacheKey);
-			GlobalUtils.dataCache.put(version, allMap);
-		}else {
-			allMap = (Map<String, Object>) GlobalUtils.dataCache.get(version);
-		}
+//			GlobalUtils.flagCache.put(cacheKey, cacheKey);
+//			GlobalUtils.dataCache.put(version, allMap);
+//		}else {
+//			allMap = (Map<String, Object>) GlobalUtils.dataCache.get(version);
+//		}
 		return new JsonResult(ResultCode.SUCCESS, allMap);
 	}
 }
