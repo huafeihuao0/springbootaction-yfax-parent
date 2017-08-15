@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.cfdb.vo.AdvHisVo;
+import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
 import com.yfax.webapi.cfdb.vo.SdkTasklistVo;
 import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.service.AdvHisService;
+import com.yfax.webapi.service.SdkChannelConfigService;
 import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.utils.DateUtil;
@@ -35,11 +37,13 @@ public class AppSdkRest {
 	private AdvHisService advHisService;
 	@Autowired
 	private SdkTasklistService sdkTasklistService;
+	@Autowired
+	private SdkChannelConfigService sdkChannelConfigService;
 	
 	/**
 	 * 点入-广告平台接口回调数据秘钥
 	 */
-	private final static String AD_SECRET_DIANRU="*#bUOyFBOI#(@BFW";
+	private static String AD_SECRET_DIANRU="*#bUOyFBOI#(@BFW";
 	
 	/**
 	 * 点入-广告平台状态回调接口
@@ -49,6 +53,11 @@ public class AppSdkRest {
 			String adname,String userid,String mac,String deviceid,
 			String source,String point,String time,String active_num,
 			String checksum) {
+		//取对应渠道的后台配置秘钥，为空则使用默认值
+		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.DIANRU_CN);
+		if(sdkChannelConfigVo != null) {
+			AD_SECRET_DIANRU = sdkChannelConfigVo.getSdkPwd();
+		}
 		//1. 校验MD5数据内容
 		String parameter= "?hashid=" + hashid + "&appid=" + appid + "&adid=" + adid + "&adname=" + adname + ""
 				+ "&userid=" + userid + "&mac=" + mac + "&deviceid=" + deviceid + ""
@@ -137,7 +146,7 @@ public class AppSdkRest {
 	/**
 	 * 有米-广告平台接口回调数据秘钥
 	 */
-	private final static String AD_SECRET_YOUMI="a2c677d637c86f62";	//生产
+	private static String AD_SECRET_YOUMI="a2c677d637c86f62";	//生产
 	
 	/**
 	 * 有米-广告平台状态回调接口
@@ -145,6 +154,11 @@ public class AppSdkRest {
 	@RequestMapping("/sendAdvInfoYm")
 	public String sendAdvInfoYm(String order, String app, String ad, String user, String chn, String points, String sig,
 			String adid, String pkg, String device, String time, String price, String trade_type, String _fb) {
+		//取对应渠道的后台配置秘钥，为空则使用默认值
+		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.YOUMI_CN);
+		if(sdkChannelConfigVo != null) {
+			AD_SECRET_YOUMI = sdkChannelConfigVo.getSdkPwd();
+		}
 		//1. 校验MD5数据内容
 		String parameter= AD_SECRET_YOUMI + "||" + order + "||" + app + "||" + user + "||" + chn + "||" + ad + "||" + points;
 		logger.info("parameter=[" + parameter+"]");

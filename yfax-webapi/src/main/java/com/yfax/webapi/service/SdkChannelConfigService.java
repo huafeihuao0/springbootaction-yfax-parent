@@ -9,7 +9,7 @@ import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
 import com.yfax.webapi.dao.SdkChannelConfigDao;
 
 /**
- * SDK平台渠道分成配置
+ * SDK平台渠道配置
  * @author Minbo
  */
 @Service
@@ -20,6 +20,10 @@ public class SdkChannelConfigService{
 	
 	public List<SdkChannelConfigVo> selectSdkChannelConfigList(){
 		return this.dao.selectSdkChannelConfigList();
+	}
+	
+	public SdkChannelConfigVo selectSdkChannelConfigByFlag(String channelFlag){
+		return this.dao.selectSdkChannelConfigByFlag(channelFlag);
 	}
 
 }
