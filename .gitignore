@@ -3,11 +3,11 @@ yfax-webapi/.classpath
 yfax-webapi/.project
 yfax-webapi/.settings
 yfax-webapi/log
-yfax-spider/log
-yfax-spider/target
-yfax-spider/.classpath
-yfax-spider/.project
-yfax-spider/.settings
+yfax-qmtt-api/log
+yfax-qmtt-api/target
+yfax-qmtt-api/.classpath
+yfax-qmtt-api/.project
+yfax-qmtt-api/.settings
 .project
 .settings
 log/

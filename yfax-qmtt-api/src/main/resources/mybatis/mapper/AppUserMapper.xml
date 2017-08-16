@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.qmtt.vo.AppUserVo">
+
+	<select id="selectByPhoneNumAndPwd" resultType="com.yfax.webapi.qmtt.vo.AppUserVo">
+        select * from qmtt_app_user where phoneNum=#{phoneNum} and userPwd=#{userPwd}
+    </select>
+    
+    <select id="selectByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.AppUserVo">
+        select * from qmtt_app_user where phoneNum=#{phoneNum}
+    </select>
+    
+	<delete id="deleteByPhoneNum" parameterType="java.lang.String">
+		delete from oauth_access_token where user_name = #{phoneNum}
+	</delete>
+	
+	<insert id="insertUser" parameterType="com.yfax.webapi.qmtt.vo.AppUserVo">
+		insert into qmtt_app_user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="phoneNum != null" > phoneNum, </if>
+		  <if test="userPwd != null" > userPwd, </if>
+		  <if test="gold != null" > gold, </if>
+		  <if test="balance != null" > balance, </if>
+		  <if test="userName != null" > userName, </if>
+		  <if test="address != null" > address, </if>
+		  <if test="wechat != null" > wechat, </if>
+		  <if test="qq != null" > qq, </if>
+		  <if test="email != null" > email, </if>
+		  <if test="registerDate != null" > registerDate, </if>
+		  <if test="lastLoginDate != null" > lastLoginDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="phoneNum != null" > #{phoneNum}, </if>
+		  <if test="userPwd != null" > #{userPwd}, </if>
+		  <if test="gold != null" > #{gold}, </if>
+		  <if test="balance != null" > #{balance}, </if>
+		  <if test="userName != null" > #{userName}, </if>
+		  <if test="address != null" > #{address}, </if>
+		  <if test="wechat != null" > #{wechat}, </if>
+		  <if test="qq != null" > #{qq}, </if>
+		  <if test="email != null" > #{email}, </if>
+		  <if test="registerDate != null" > #{registerDate}, </if>
+		  <if test="lastLoginDate != null" > null, </if>
+		  <if test="updateDate != null" > #{updateDate}, </if>
+		  
+        </trim>
+	</insert>
+	
+	<update id="updateUser" parameterType="com.yfax.webapi.qmtt.vo.AppUserVo">
+		update qmtt_app_user 
+		<set>
+			<if test="userPwd != null"> userPwd = #{userPwd}, </if>
+			<if test="gold != null"> gold = #{gold}, </if>
+			<if test="balance != null"> balance = #{balance}, </if>
+			<if test="userName != null"> userName = #{userName}, </if>
+			<if test="address != null"> address = #{address}, </if>
+			<if test="wechat != null"> wechat = #{wechat}, </if>
+			<if test="qq != null"> qq = #{qq}, </if>
+			<if test="email != null"> email = #{email}, </if>
+			<if test="lastLoginDate != null"> lastLoginDate = #{lastLoginDate}, </if>
+			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+			
+		</set>
+		where phoneNum = #{phoneNum} 
+	</update>
+   
+</mapper>
