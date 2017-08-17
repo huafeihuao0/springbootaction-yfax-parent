@@ -1,4 +1,4 @@
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

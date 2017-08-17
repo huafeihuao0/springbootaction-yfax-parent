@@ -19,11 +19,11 @@ import com.yfax.webapi.dao.TaskDetailDao;
 import com.yfax.webapi.dao.TaskListDao;
 import com.yfax.webapi.dao.UserTaskListDao;
 import com.yfax.webapi.dao.UserTasklistHisDao;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.utils.UUID;
-import com.yfax.webapi.xinge.XgServiceApi;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.UUID;
+import com.yfax.common.xinge.XgServiceApi;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

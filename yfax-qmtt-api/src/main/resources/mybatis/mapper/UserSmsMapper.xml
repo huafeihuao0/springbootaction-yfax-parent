@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.webapi.cfdb.vo.UserSmsVo">
+<mapper namespace="com.yfax.webapi.qmtt.vo.UserSmsVo">
 
     <!-- 添加 -->
-	<insert id="insertUserSms" parameterType="com.yfax.webapi.cfdb.vo.UserSmsVo">
+	<insert id="insertUserSms" parameterType="com.yfax.webapi.qmtt.vo.UserSmsVo">
 		insert into cfdb_user_sms
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="id != null" > id, </if>

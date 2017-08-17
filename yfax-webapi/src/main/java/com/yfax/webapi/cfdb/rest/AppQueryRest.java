@@ -32,10 +32,10 @@ import com.yfax.webapi.service.TaskDetailService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.utils.StrUtil;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
 
 /**
  * @author Minbo.He 

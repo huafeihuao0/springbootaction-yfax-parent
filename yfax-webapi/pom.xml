@@ -2,9 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.yfax.webapi</groupId>
+	<parent>
+		<groupId>com.yfax</groupId>
+		<artifactId>yfax-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>yfax-webapi</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>yfax-webapi</name>
@@ -15,17 +19,11 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.2.RELEASE</version>
-	</parent>
-	
 	<repositories>
 		<repository>
-		    <id>in-project</id>
-		    <name>In Project Repo</name>
-		    <url>file://${project.basedir}/libs</url>
+			<id>in-project</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/libs</url>
 		</repository>
 	</repositories>
 
@@ -45,18 +43,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<!-- 移除嵌入式tomcat插件 -->
-		    <exclusions>
-		        <exclusion>
-		            <groupId>org.springframework.boot</groupId>
-		            <artifactId>spring-boot-starter-tomcat</artifactId>
-		        </exclusion>
-		    </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- servlet-api的依赖 -->
 		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <scope>provided</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Redis集成 -->
 		<dependency>
@@ -69,11 +67,8 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- 数据库操作API集成 自带的tomcat数据连接池 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>-->
+		<!-- 数据库操作API集成 自带的tomcat数据连接池 <dependency> <groupId>org.springframework.boot</groupId> 
+			<artifactId>spring-boot-starter-data-jpa</artifactId> </dependency> -->
 		<!--添加适用于生产环境的功能，如性能指标和监测等功能。 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -89,57 +84,59 @@
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib-ext-spring</artifactId>
-			<version>1.0.2</version>
 		</dependency>
-		<!-- 
-			需手机集成信鸽依赖，安装到本机库
-			mvn install:install-file -Dfile=PushJavaSDK.jar -DgroupId=PushJavaSDK -DartifactId=PushJavaSDK -Dversion=1.0 -Dpackaging=jar
-		-->
+		<!-- 需手机集成信鸽依赖，安装到本机库 mvn install:install-file -Dfile=PushJavaSDK.jar -DgroupId=PushJavaSDK 
+			-DartifactId=PushJavaSDK -Dversion=1.0 -Dpackaging=jar -->
 		<dependency>
 			<groupId>PushJavaSDK</groupId>
 			<artifactId>PushJavaSDK</artifactId>
-			<version>1.0</version>
 		</dependency>
-		<!-- 
-			需手机集成短信包，安装到本机库
-			mvn install:install-file -Dfile=CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar -DgroupId=CCP_REST_SMS_SDK -DartifactId=CCP_REST_SMS_SDK -Dversion=1.0 -Dpackaging=jar
-		-->
+		<!-- 需手机集成短信包，安装到本机库 mvn install:install-file -Dfile=CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar 
+			-DgroupId=CCP_REST_SMS_SDK -DartifactId=CCP_REST_SMS_SDK -Dversion=1.0 -Dpackaging=jar -->
 		<dependency>
 			<groupId>CCP_REST_SMS_SDK</groupId>
 			<artifactId>CCP_REST_SMS_SDK</artifactId>
-			<version>1.0</version>
 		</dependency>
-		
+
 		<dependency>
-   			<groupId>org.springframework.boot</groupId>
-   			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		<!--引入druid最新maven依赖-->
+		<!--引入druid最新maven依赖 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.29</version>
 		</dependency>
-		<!--SpringSecurity-->
+		<!--SpringSecurity -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!--SpringSecurityOAuth2-->
+		<!--SpringSecurityOAuth2 -->
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.yfax</groupId>
+			<artifactId>yfax-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yfax</groupId>
+			<artifactId>yfax-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>yfax-webapi</finalName>  
+		<finalName>yfax-webapi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

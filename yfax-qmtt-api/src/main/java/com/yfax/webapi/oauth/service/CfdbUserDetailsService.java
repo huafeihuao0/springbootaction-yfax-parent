@@ -13,11 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
-//import com.yfax.webapi.dao.UsersDao;
 
 @Component("userDetailsService")
 public class CfdbUserDetailsService implements UserDetailsService {

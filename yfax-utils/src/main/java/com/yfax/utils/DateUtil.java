@@ -1,4 +1,4 @@
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,6 @@ import org.apache.commons.lang.time.DateUtils;
  */
 public final class DateUtil {
 
-	// 由于AbleCloud时间设置，需加8个小时
 	public static final int DATE_NUM = 0;
 
 	public static final String LONG_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";

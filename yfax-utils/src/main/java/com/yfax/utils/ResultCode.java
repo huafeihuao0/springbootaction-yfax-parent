@@ -1,4 +1,4 @@
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 public enum ResultCode {
 	
@@ -28,6 +28,9 @@ public enum ResultCode {
 	
 	/** 重复记录 */
 	SUCCESS_DUPLICATE("208", "重复记录"),
+	
+	/** 账户已注册 */
+	SUCCESS_EXIST("209", "账户已注册"),
 
 	/** 没有登录 */
 	NOT_LOGIN("400", "没有登录"),

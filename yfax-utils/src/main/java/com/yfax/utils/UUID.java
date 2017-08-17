@@ -1,4 +1,4 @@
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 /**
  * 生成随机字符串

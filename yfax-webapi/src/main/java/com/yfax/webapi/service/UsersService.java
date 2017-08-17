@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.dao.UsersDao;
-import com.yfax.webapi.utils.DateUtil;
+import com.yfax.utils.DateUtil;
 
 /**
  * 用户管理

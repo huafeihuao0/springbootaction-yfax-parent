@@ -19,9 +19,9 @@ import com.yfax.webapi.dao.IncomeHisDao;
 import com.yfax.webapi.dao.SdkChannelConfigDao;
 import com.yfax.webapi.dao.SdkTasklistDao;
 import com.yfax.webapi.dao.UsersDao;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.UUID;
-import com.yfax.webapi.xinge.XgServiceApi;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.UUID;
+import com.yfax.common.xinge.XgServiceApi;
 
 /**
  * 广告平台回调记录

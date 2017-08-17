@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yfax.webapi.GlobalUtils;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
 import com.yfax.webapi.wdkz.service.WdkzAppConfigService;
 import com.yfax.webapi.wdkz.vo.WdkzAppConfigVo;
 

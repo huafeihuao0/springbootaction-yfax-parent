@@ -16,10 +16,10 @@ import com.yfax.webapi.service.AdvHisService;
 import com.yfax.webapi.service.SdkChannelConfigService;
 import com.yfax.webapi.service.SdkTasklistService;
 import com.yfax.webapi.service.UsersService;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.MD5Util;
-import com.yfax.webapi.utils.ResultCode;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.MD5Util;
+import com.yfax.utils.ResultCode;
 
 /**
  * @author Minbo.He
@@ -146,7 +146,7 @@ public class AppSdkRest {
 	/**
 	 * 有米-广告平台接口回调数据秘钥
 	 */
-	private static String AD_SECRET_YOUMI="a2c677d637c86f62";	//生产
+	private static String AD_SECRET_YOUMI="7a57ab415882ce70";	//生产
 	
 	/**
 	 * 有米-广告平台状态回调接口

@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yfax.webapi.cfdb.vo.SdkTasklistVo;
-import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.dao.SdkTasklistDao;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
 
 /**
  * 平台SDK广告记录

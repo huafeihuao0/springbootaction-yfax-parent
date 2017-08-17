@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.utils.StrUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
 
 /**
  * 拦截处理类

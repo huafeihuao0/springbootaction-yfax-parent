@@ -12,10 +12,10 @@ import com.yfax.webapi.cfdb.vo.UsersVo;
 import com.yfax.webapi.cfdb.vo.WithdrawHisVo;
 import com.yfax.webapi.dao.UsersDao;
 import com.yfax.webapi.dao.WithdrawHisDao;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.utils.UUID;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.UUID;
 
 /**
  * 兑换提现记录

@@ -1,6 +1,9 @@
 package com.yfax.webapi.cfdb.rest;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yfax.common.sms.SmsService;
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
+import com.yfax.utils.UUID;
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.cfdb.vo.UserFeedbackVo;
 import com.yfax.webapi.cfdb.vo.UserSmsVo;
 import com.yfax.webapi.cfdb.vo.UsersVo;
@@ -16,12 +26,6 @@ import com.yfax.webapi.service.UserSmsService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
-import com.yfax.webapi.sms.SmsService;
-import com.yfax.webapi.utils.DateUtil;
-import com.yfax.webapi.utils.JsonResult;
-import com.yfax.webapi.utils.ResultCode;
-import com.yfax.webapi.utils.StrUtil;
-import com.yfax.webapi.utils.UUID;
 
 /**
  * @author Minbo.He
@@ -204,13 +208,14 @@ public class AppDoRest {
 				&& !StrUtil.null2Str(msgCode).equals("")) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users != null) {
-				boolean result = SmsService.sendSms(phoneNum, msgCode);;
-				if(result) {
+				HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
+				if("000000".equals(result.get("statusCode"))){
 					UserSmsVo userSms = new UserSmsVo();
 					userSms.setId(UUID.getUUID());
 					userSms.setPhoneId(phoneId);
 					userSms.setPhoneNum(phoneNum);
 					userSms.setMsgCode(msgCode);
+					userSms.setProjectCode(GlobalUtils.PROJECT_CFDB);
 					String cTime = DateUtil.getCurrentLongDateTime();
 					userSms.setCreateDate(cTime);
 					userSms.setUpdateDate(cTime);
@@ -218,9 +223,9 @@ public class AppDoRest {
 					if(!flag) {
 						logger.warn("短信记录失败，请查核");
 					}
-					return new JsonResult(ResultCode.SUCCESS);
+					return new JsonResult(ResultCode.SUCCESS, result);
 				}else{
-					return new JsonResult(ResultCode.SUCCESS_FAIL);
+					return new JsonResult(ResultCode.SUCCESS_FAIL, result);
 				}
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_NO_USER);

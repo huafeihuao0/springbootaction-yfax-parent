@@ -1,6 +1,7 @@
-package com.yfax.webapi.sms;
+package com.yfax.common.sms;
 
 import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public class SmsService {
 	 * @param phoneNum	手机号码
 	 * @param msgCode	验证码
 	 */
-	public static boolean sendSms(String phoneNum, String msgCode) {
+	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode) {
 		logger.info("发送短信，phoneNum=" + phoneNum + ", msgCode=" + msgCode);
 		
 		//初始化SDK
@@ -64,11 +65,10 @@ public class SmsService {
 		//*则13800000000手机号收到的短信内容是：【云通讯】您使用的是云通讯短信模板，您的验证码是6532，请于5分钟内正确输入     *
 		//*********************************************************************************************************************
 		HashMap<String, Object> result = restAPI.sendTemplateSMS(phoneNum, "195930", new String[]{msgCode, "10"});
-		logger.info("短信发送结果result=" + result);
+		logger.info("短信发送结果，result=" + result);
 		
 		if("000000".equals(result.get("statusCode"))){
-			logger.info("发送成功");
-			return true;
+			logger.info("发送成功。");
 			
 //			//正常返回输出data包体信息（map）
 //			HashMap<String,Object> data = (HashMap<String, Object>) result.get("data");
@@ -79,9 +79,9 @@ public class SmsService {
 //			}
 		}else{
 			//异常返回输出错误码和错误信息
-			logger.warn("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
-			return false;
+			logger.warn("发送失败。错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
 		}
+		return result;
 	}
 
 }

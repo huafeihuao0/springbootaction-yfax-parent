@@ -1,10 +1,10 @@
-package com.yfax.webapi.cfdb.vo;
+package com.yfax.webapi.qmtt.vo;
 
 import java.io.Serializable;
 
 public class UserSmsVo implements Serializable{
 	
-	private static final long serialVersionUID = -4437044242209336030L;
+	private static final long serialVersionUID = -6169232107859955945L;
 	
 	private String id;			//主键
 	private String phoneId;		//手机唯一标识码

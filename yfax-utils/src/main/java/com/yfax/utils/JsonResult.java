@@ -1,4 +1,4 @@
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 import net.sf.json.JSONObject;
 

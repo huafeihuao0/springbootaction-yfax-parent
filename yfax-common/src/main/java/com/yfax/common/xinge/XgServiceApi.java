@@ -1,4 +1,4 @@
-package com.yfax.webapi.xinge;
+package com.yfax.common.xinge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import com.tencent.xinge.MessageIOS;
 import com.tencent.xinge.Style;
 import com.tencent.xinge.TimeInterval;
 import com.tencent.xinge.XingeApp;
-import com.yfax.webapi.utils.StrUtil;
+import com.yfax.utils.StrUtil;
 import com.tencent.xinge.TagTokenPair;
 
 /**

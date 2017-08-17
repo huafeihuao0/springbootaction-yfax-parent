@@ -1,22 +1,10 @@
-/*
- * @(#)StrUtil.java  
- *       
- * Version 1.0.1
- * 
- * Date 2010/04/12
- * 
- * Copyright (c)  Sunyard 
- * All rights reserved.
- */
-
-package com.yfax.webapi.utils;
+package com.yfax.utils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.log4j.Logger;
 
 
 /**
@@ -36,7 +24,6 @@ import org.apache.log4j.Logger;
  *         </ul>
  */
 public class StrUtil {
-	static Logger log = Logger.getLogger(StrUtil.class);
 
 	/**
 	 * 处理json解析不了的特殊字符
