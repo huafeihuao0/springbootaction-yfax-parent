@@ -49,7 +49,8 @@ public class OAuth2Configuration {
                     .authorizeRequests()
                     .antMatchers("/hello/", 
                     		GlobalUtils.PROJECT_QMTT + "/doRegister",
-                    		GlobalUtils.PROJECT_QMTT + "/doLogin").permitAll()
+                    		GlobalUtils.PROJECT_QMTT + "/doLogin", 
+                    		GlobalUtils.PROJECT_QMTT + "/doSms").permitAll()
                     .antMatchers("/secure/**", 
                     		GlobalUtils.PROJECT_QMTT + "/**").authenticated();
 

@@ -117,16 +117,14 @@ public class AppDoRest {
 	 * 短信验证码接口
 	 */
 	@RequestMapping(value = "/doSms", method = {RequestMethod.POST})
-	public JsonResult doSms(String phoneId, String phoneNum, String msgCode) {
-		if(!StrUtil.null2Str(phoneId).equals("") && !StrUtil.null2Str(phoneNum).equals("") 
-				&& !StrUtil.null2Str(msgCode).equals("")) {
+	public JsonResult doSms(String phoneNum, String msgCode) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(msgCode).equals("")) {
 			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
 			if(appUserVo != null) {
 				HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
 				if("000000".equals(result.get("statusCode"))){
 					UserSmsVo userSms = new UserSmsVo();
 					userSms.setId(UUID.getUUID());
-					userSms.setPhoneId(phoneId);
 					userSms.setPhoneNum(phoneNum);
 					userSms.setMsgCode(msgCode);
 					userSms.setProjectCode(GlobalUtils.PROJECT_QMTT);

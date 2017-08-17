@@ -43,9 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     		//排除/hello路径拦截
     		//faq页不做拦截
     		//登录不做拦截
+    		//注册验证码
         web.ignoring().antMatchers("/hello"
         		, GlobalUtils.PROJECT_QMTT + "/faq"
-        		, GlobalUtils.PROJECT_QMTT + "/doLogin");
+        		, GlobalUtils.PROJECT_QMTT + "/doLogin"
+        		, GlobalUtils.PROJECT_QMTT + "/doSms");
     }
     
     @Override

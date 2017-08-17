@@ -1,5 +1,7 @@
 package com.yfax.webapi.cfdb.rest;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.yfax.webapi.service.UsersService;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.MD5Util;
+import com.yfax.utils.NetworkUtil;
 import com.yfax.utils.ResultCode;
 
 /**
@@ -52,7 +55,9 @@ public class AppSdkRest {
 	public String sendAdvInfo(String hashid,String appid,String adid,
 			String adname,String userid,String mac,String deviceid,
 			String source,String point,String time,String active_num,
-			String checksum) {
+			String checksum, HttpServletRequest request) {
+		logger.info("NetworkUtil.getIpAddr,获取访问者IP=" + NetworkUtil.getIpAddr(request));
+		logger.info("NetworkUtil.getIpAddress,获取访问者IP=" + NetworkUtil.getIpAddress(request));
 		//取对应渠道的后台配置秘钥，为空则使用默认值
 		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.DIANRU_CN);
 		if(sdkChannelConfigVo != null) {
@@ -70,7 +75,8 @@ public class AppSdkRest {
 			return "{\"message\":\"参数错误\",\"success\":\"false\"}";
 		}
 		//md5校对结果
-		boolean flag = md5Result.equals(checksum.toLowerCase());
+		boolean md5flag = md5Result.equals(checksum.toLowerCase());
+		logger.info("md5校对结果" + (md5flag?"校验正确":"校验失败"));
 		//2. 保存广告平台回调记录
 		AdvHisVo advHis = new AdvHisVo();
 		advHis.setHashid(hashid);
@@ -87,13 +93,13 @@ public class AppSdkRest {
 		advHis.setChecksum(checksum.toLowerCase());
 		advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
 		advHis.setActiveNum(active_num);
-		advHis.setResult(flag?"校验正确":"校验失败");
+		advHis.setResult(md5flag?"校验正确":"校验失败");
 		advHis.setResultSum(md5Result);
-		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.DIANRU);
+		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.DIANRU, md5flag);
 		if(!flag2) {
 			logger.warn("回调记录保存失败");
 		}
-		if(flag) {	
+		if(md5flag) {	
 			logger.info("数据校验正确");
 			return "{\"message\":\"成功\",\"success\":\"true\"}";
 		}else {
@@ -153,7 +159,10 @@ public class AppSdkRest {
 	 */
 	@RequestMapping("/sendAdvInfoYm")
 	public String sendAdvInfoYm(String order, String app, String ad, String user, String chn, String points, String sig,
-			String adid, String pkg, String device, String time, String price, String trade_type, String _fb) {
+			String adid, String pkg, String device, String time, String price, String trade_type, String _fb, 
+			HttpServletRequest request) {
+		logger.info("NetworkUtil.getIpAddr,获取访问者IP=" + NetworkUtil.getIpAddr(request));
+		logger.info("NetworkUtil.getIpAddress,获取访问者IP=" + NetworkUtil.getIpAddress(request));
 		//取对应渠道的后台配置秘钥，为空则使用默认值
 		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.YOUMI_CN);
 		if(sdkChannelConfigVo != null) {
@@ -169,7 +178,8 @@ public class AppSdkRest {
 			return "{\"message\":\"参数错误\",\"success\":\"false\"}";
 		}
 		//md5校对结果
-		boolean flag = md5Result.equals(sig.toLowerCase());	//小写比较
+		boolean md5flag = md5Result.equals(sig.toLowerCase());	//小写比较
+		logger.info("md5校对结果" + (md5flag?"校验正确":"校验失败"));
 		//2. 保存广告平台回调记录
 		AdvHisVo advHis = new AdvHisVo();
 		advHis.setHashid(order);
@@ -185,13 +195,13 @@ public class AppSdkRest {
 		advHis.setTimeStr(DateUtil.stampToDate(Long.valueOf(time)));
 		advHis.setChecksum(sig.toLowerCase());
 		advHis.setCreateDate(DateUtil.getCurrentLongDateTime());
-		advHis.setResult(flag?"校验正确":"校验失败");
+		advHis.setResult(md5flag?"校验正确":"校验失败");
 		advHis.setResultSum(md5Result);
-		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.YOUMI);
+		boolean flag2 = this.advHisService.addAdvHis(advHis, GlobalUtils.YOUMI, md5flag);
 		if(!flag2) {
 			logger.warn("回调记录保存失败");
 		}
-		if(flag) {	
+		if(md5flag) {	
 			logger.info("数据校验正确");
 			return "{\"message\":\"成功\",\"success\":\"true\"}";
 		}else {

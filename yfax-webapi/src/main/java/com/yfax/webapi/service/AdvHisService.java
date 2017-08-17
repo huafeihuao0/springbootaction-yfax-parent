@@ -52,7 +52,7 @@ public class AdvHisService{
 	 * @return
 	 */
 	@Transactional
-	public boolean addAdvHis(AdvHisVo advHis, int channelFlag) {
+	public boolean addAdvHis(AdvHisVo advHis, int channelFlag, boolean md5flag) {
 		try {
 			//1. 新增广告平台回调记录
 			AdvHisVo advHisTmp = this.advHisDao.selectByHashid(advHis.getHashid());
@@ -61,7 +61,7 @@ public class AdvHisService{
 				return false;
 			}
 			boolean flag1 = this.advHisDao.insertAdvHis(advHis);
-			if(flag1) {
+			if(flag1 && md5flag) {
 				logger.info("新增广告平台回调记录成功");
 				this.addUserBalance(advHis, channelFlag);
 				return true;
