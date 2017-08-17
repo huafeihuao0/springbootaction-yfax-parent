@@ -119,7 +119,7 @@ public class AppDoRest {
 	@RequestMapping(value = "/doSms", method = {RequestMethod.POST})
 	public JsonResult doSms(String phoneNum, String msgCode) {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(msgCode).equals("")) {
-			HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
+			HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode, GlobalUtils.PROJECT_QMTT);
 			if("000000".equals(result.get("statusCode"))){
 				UserSmsVo userSms = new UserSmsVo();
 				userSms.setId(UUID.getUUID());

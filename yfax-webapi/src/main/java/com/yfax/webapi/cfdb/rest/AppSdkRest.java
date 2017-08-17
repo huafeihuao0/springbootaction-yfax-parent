@@ -23,6 +23,7 @@ import com.yfax.utils.JsonResult;
 import com.yfax.utils.MD5Util;
 import com.yfax.utils.NetworkUtil;
 import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
 
 /**
  * @author Minbo.He
@@ -159,6 +160,11 @@ public class AppSdkRest {
 	public String sendAdvInfoYm(String order, String app, String ad, String user, String chn, String points, String sig,
 			String adid, String pkg, String device, String time, String price, String trade_type, String _fb, 
 			HttpServletRequest request) {
+		String ip = NetworkUtil.getIpAddress(request);
+		if(!validIpListOfYm(ip)) {
+			logger.error("非法请求 from ip=" + ip);
+			return "{\"message\":\"非法请求\",\"success\":\"false\"}";
+		}
 		//取对应渠道的后台配置秘钥，为空则使用默认值
 		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.YOUMI_CN);
 		if(sdkChannelConfigVo != null) {
@@ -205,5 +211,25 @@ public class AppSdkRest {
 					+ ", checksum=" + sig.toLowerCase());
 			return "{\"message\":\"数据校验失败\",\"success\":\"false\"}";
 		}
+	}
+	
+	/**
+	 * 有米有效的ip服务器地址
+	 * @param ip
+	 * @return
+	 */
+	private boolean validIpListOfYm(String ip) {
+		String myIps = "182.92.82.188,47.94.37.146,";
+		//有米服务器ip
+		String ips =  myIps + "54.64.29.23,122.226.199.26,58.63.244.57,58.63.244.58,54.223.128.154,54.223.174.146,58.63.244.232,58.63.244.233";
+		String[] ipsArr = ips.split(",");
+		boolean flag = false;
+		for (int i = 0; i < ipsArr.length; i++) {
+			if(ipsArr[i].equals(StrUtil.null2Str(ip))) {
+				flag = true;
+				break;
+			}
+		}
+		return flag;
 	}
 }

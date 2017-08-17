@@ -208,7 +208,7 @@ public class AppDoRest {
 				&& !StrUtil.null2Str(msgCode).equals("")) {
 			UsersVo users = this.usersService.selectUsersByPhoneId(phoneId);
 			if(users != null) {
-				HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
+				HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode, GlobalUtils.PROJECT_CFDB);
 				if("000000".equals(result.get("statusCode"))){
 					UserSmsVo userSms = new UserSmsVo();
 					userSms.setId(UUID.getUUID());

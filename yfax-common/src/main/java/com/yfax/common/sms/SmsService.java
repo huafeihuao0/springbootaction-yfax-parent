@@ -19,9 +19,10 @@ public class SmsService {
 	 * 发送短信
 	 * @param phoneNum	手机号码
 	 * @param msgCode	验证码
+	 * @param project	项目标识
 	 */
-	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode) {
-		logger.info("发送短信，phoneNum=" + phoneNum + ", msgCode=" + msgCode);
+	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode, String project) {
+		logger.info("发送短信，phoneNum=" + phoneNum + ", msgCode=" + msgCode + ", project=" + project);
 		
 		//初始化SDK
 		CCPRestSmsSDK restAPI = new CCPRestSmsSDK();
