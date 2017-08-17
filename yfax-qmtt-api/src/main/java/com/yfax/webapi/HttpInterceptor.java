@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.yfax.utils.JsonResult;
+import com.yfax.utils.NetworkUtil;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.StrUtil;
 
@@ -30,7 +31,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String method = request.getMethod();
 		String uri = request.getRequestURI();
 		String queryString = request.getQueryString();
-		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s", url, method, uri, queryString));
+		String ip = NetworkUtil.getIpAddress(request);
+		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s, ip: %s", url, method, uri, queryString, ip));
 		
         //常见问题faq页不做拦截
         if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/faq")){

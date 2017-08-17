@@ -12,16 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 public class NetworkUtil {
 	
 	/**
-	 * 获取用户真实IP地址，不使用request.getRemoteAddr();的原因是有可能用户使用了代理软件方式避免真实IP地址, 参考文章：
-	 * http://developer.51cto.com/art/201111/305181.htm
-	 * 
-	 * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
-	 * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串。
-	 * 
-	 * 如：X-Forwarded-For：192.168.1.110, 192.168.1.120, 192.168.1.130, 192.168.1.100
-	 * 
-	 * 用户真实IP为： 192.168.1.110
-	 * 
+	 * 获取用户真实IP地址
+	 * http://blog.csdn.net/zhenzhendeblog/article/details/49702575
 	 * @param request
 	 * @return
 	 */
@@ -42,33 +34,8 @@ public class NetworkUtil {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ip;
-	}
-
-	/**
-	 * 获取访问者IP 在一般情况下使用Request.getRemoteAddr()即可，但是经过nginx等反向代理软件后，这个方法会失效。
-	 * 本方法先从Header中获取X-Real-IP，如果不存在再从X-Forwarded-For获得第一个IP(用,分割)， 
-	 * 如果还不存在则调用Request.getRemoteAddr()。
-	 * @param request
-	 * @return
-	 */
-	public static String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("X-Real-IP");
-		if (ip != null && !"".equals(ip) && !"unknown".equalsIgnoreCase(ip)) {
-			return ip;
-		}
-		ip = request.getHeader("X-Forwarded-For");
-		if (ip != null && !"".equals(ip) && !"unknown".equalsIgnoreCase(ip)) {
-			// 多次反向代理后会有多个IP值，第一个为真实IP。
-			int index = ip.indexOf(',');
-			if (index != -1) {
-				return ip.substring(0, index);
-			} else {
-				return ip;
-			}
-		} else {
-			return request.getRemoteAddr();
-		}
+		//如果转发多少次，取第一位
+		return ip.split(",")[0];
 	}
 
 	/**

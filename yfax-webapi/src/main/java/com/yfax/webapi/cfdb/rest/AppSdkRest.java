@@ -56,8 +56,6 @@ public class AppSdkRest {
 			String adname,String userid,String mac,String deviceid,
 			String source,String point,String time,String active_num,
 			String checksum, HttpServletRequest request) {
-		logger.info("NetworkUtil.getIpAddr,获取访问者IP=" + NetworkUtil.getIpAddr(request));
-		logger.info("NetworkUtil.getIpAddress,获取访问者IP=" + NetworkUtil.getIpAddress(request));
 		//取对应渠道的后台配置秘钥，为空则使用默认值
 		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.DIANRU_CN);
 		if(sdkChannelConfigVo != null) {
@@ -161,8 +159,6 @@ public class AppSdkRest {
 	public String sendAdvInfoYm(String order, String app, String ad, String user, String chn, String points, String sig,
 			String adid, String pkg, String device, String time, String price, String trade_type, String _fb, 
 			HttpServletRequest request) {
-		logger.info("NetworkUtil.getIpAddr,获取访问者IP=" + NetworkUtil.getIpAddr(request));
-		logger.info("NetworkUtil.getIpAddress,获取访问者IP=" + NetworkUtil.getIpAddress(request));
 		//取对应渠道的后台配置秘钥，为空则使用默认值
 		SdkChannelConfigVo sdkChannelConfigVo = this.sdkChannelConfigService.selectSdkChannelConfigByFlag(GlobalUtils.YOUMI_CN);
 		if(sdkChannelConfigVo != null) {

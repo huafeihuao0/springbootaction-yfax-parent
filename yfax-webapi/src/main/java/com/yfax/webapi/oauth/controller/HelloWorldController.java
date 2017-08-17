@@ -18,8 +18,7 @@ public class HelloWorldController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String sayHello(HttpServletRequest request) {
-    		logger.info("NetworkUtil.getIpAddr,获取访问者IP=" + NetworkUtil.getIpAddr(request));
-		logger.info("NetworkUtil.getIpAddress,获取访问者IP=" + NetworkUtil.getIpAddress(request));
+		logger.info("NetworkUtil.getIpAddress, 获取访问者IP=" + NetworkUtil.getIpAddress(request));
         return "Hello，Greetings from 开放Api平台!!!";
     }
 
