@@ -146,4 +146,22 @@ public class AppDoRest {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
+	
+	/**
+	 * 记录用户登录数据接口
+	 */
+	@RequestMapping(value = "/doLoginHis", method = {RequestMethod.POST})
+	public JsonResult doLoginHis(String phoneNum, String deviceName, String imei, String ip, 
+			String mac, String location, String wifi) {
+		if(!StrUtil.null2Str(phoneNum).equals("")) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo != null) {
+				return new JsonResult(ResultCode.SUCCESS);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
 }
