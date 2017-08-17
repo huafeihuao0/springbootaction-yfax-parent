@@ -119,28 +119,23 @@ public class AppDoRest {
 	@RequestMapping(value = "/doSms", method = {RequestMethod.POST})
 	public JsonResult doSms(String phoneNum, String msgCode) {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(msgCode).equals("")) {
-			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
-			if(appUserVo != null) {
-				HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
-				if("000000".equals(result.get("statusCode"))){
-					UserSmsVo userSms = new UserSmsVo();
-					userSms.setId(UUID.getUUID());
-					userSms.setPhoneNum(phoneNum);
-					userSms.setMsgCode(msgCode);
-					userSms.setProjectCode(GlobalUtils.PROJECT_QMTT);
-					String cTime = DateUtil.getCurrentLongDateTime();
-					userSms.setCreateDate(cTime);
-					userSms.setUpdateDate(cTime);
-					boolean flag = this.userSmsService.addUserSms(userSms);
-					if(!flag) {
-						logger.warn("短信记录失败，请查核");
-					}
-					return new JsonResult(ResultCode.SUCCESS, result);
-				}else{
-					return new JsonResult(ResultCode.SUCCESS_FAIL, result);
+			HashMap<String, Object> result = SmsService.sendSms(phoneNum, msgCode);
+			if("000000".equals(result.get("statusCode"))){
+				UserSmsVo userSms = new UserSmsVo();
+				userSms.setId(UUID.getUUID());
+				userSms.setPhoneNum(phoneNum);
+				userSms.setMsgCode(msgCode);
+				userSms.setProjectCode(GlobalUtils.PROJECT_QMTT);
+				String cTime = DateUtil.getCurrentLongDateTime();
+				userSms.setCreateDate(cTime);
+				userSms.setUpdateDate(cTime);
+				boolean flag = this.userSmsService.addUserSms(userSms);
+				if(!flag) {
+					logger.warn("短信记录失败，请查核");
 				}
-			}else {
-				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+				return new JsonResult(ResultCode.SUCCESS, result);
+			}else{
+				return new JsonResult(ResultCode.SUCCESS_FAIL, result);
 			}
 		}else {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
