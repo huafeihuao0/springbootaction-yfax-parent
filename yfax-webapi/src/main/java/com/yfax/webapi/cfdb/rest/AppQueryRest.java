@@ -193,11 +193,22 @@ public class AppQueryRest {
 	 * @return
 	 */
 	@RequestMapping("/queryUpgradeByVersion")
-	public JsonResult queryUpgradeByVersion(String version) {
+	public JsonResult queryUpgradeByVersion(String version, String platform) {
 		if(version == null) {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
-		AppUpgradeVo appUpgradeVo = this.appUpgradeService.selectAppUpgradeByVersion(version);
+		AppUpgradeVo appUpgradeVo = new AppUpgradeVo();
+		appUpgradeVo.setVersion(version);
+		boolean flag = false;
+		if(platform != null) {
+			appUpgradeVo.setPlatform(platform);
+			flag = true;
+		}
+		if(flag) {
+			appUpgradeVo = this.appUpgradeService.selectAppUpgradeByVersionAndPlatform(appUpgradeVo);
+		}else {
+			appUpgradeVo = this.appUpgradeService.selectAppUpgradeByVersion(appUpgradeVo);
+		}
 		if(appUpgradeVo == null) {
 			return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 		}

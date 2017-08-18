@@ -18,7 +18,7 @@ public class MD5Util {
 				byte[] results = md.digest(originString.getBytes());
 				// 将得到的字节数组变成字符串返回
 				String resultString = byteArrayToHexString(results);
-				return resultString.toUpperCase();
+				return resultString.toLowerCase();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -55,6 +55,6 @@ public class MD5Util {
 //		System.out.println(DateUtil.stampToDate(1501646898));
 //		System.out.println(encodeByMD5(parameter).toLowerCase().equals("6d14631d36e9607a8e49a8f909c07e9e"));
 		//6d14631d36e9607a8e49a8f909c07e9e
-//		System.out.println(encodeByMD5("123456").toLowerCase());
+//		System.out.println(encodeByMD5("123456"));
 	}
 }

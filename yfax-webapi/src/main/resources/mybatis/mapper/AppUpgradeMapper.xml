@@ -5,11 +5,15 @@
 <mapper namespace="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
 
     <select id="selectAppUpgrade" resultType="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
-		select * from cfdb_app_upgrade where status=2 order by updateDate desc,createDate desc limit 1
+		select * from cfdb_app_upgrade where status=2 order by version desc, updateDate desc limit 1
 	</select>
 	
 	<select id="selectAppUpgradeByVersion" resultType="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
-		select * from cfdb_app_upgrade where version=#{version}
+		select * from cfdb_app_upgrade where version=#{version} and status=2
+	</select>
+	
+	<select id="selectAppUpgradeByVersionAndPlatform" resultType="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
+		select * from cfdb_app_upgrade where version=#{version} and status=2 and platform like CONCAT('%',#{platform},'%')
 	</select>
 	
 </mapper>

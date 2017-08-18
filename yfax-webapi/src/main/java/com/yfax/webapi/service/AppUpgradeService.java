@@ -20,8 +20,12 @@ public class AppUpgradeService{
 		return this.dao.selectAppUpgrade();
 	}
 	
-	public AppUpgradeVo selectAppUpgradeByVersion(String version) {
-		return this.dao.selectAppUpgradeByVersion(version);
+	public AppUpgradeVo selectAppUpgradeByVersion(AppUpgradeVo appUpgradeVo) {
+		return this.dao.selectAppUpgradeByVersion(appUpgradeVo);
+	}
+	
+	public AppUpgradeVo selectAppUpgradeByVersionAndPlatform(AppUpgradeVo appUpgradeVo) {
+		return this.dao.selectAppUpgradeByVersionAndPlatform(appUpgradeVo);
 	}
 
 }
