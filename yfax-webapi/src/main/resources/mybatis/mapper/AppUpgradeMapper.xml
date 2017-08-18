@@ -7,4 +7,9 @@
     <select id="selectAppUpgrade" resultType="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
 		select * from cfdb_app_upgrade where status=2 order by updateDate desc,createDate desc limit 1
 	</select>
+	
+	<select id="selectAppUpgradeByVersion" resultType="com.yfax.webapi.cfdb.vo.AppUpgradeVo">
+		select * from cfdb_app_upgrade where version=#{version}
+	</select>
+	
 </mapper>

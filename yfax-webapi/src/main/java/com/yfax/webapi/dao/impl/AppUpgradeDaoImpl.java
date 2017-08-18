@@ -17,4 +17,9 @@ public class AppUpgradeDaoImpl implements AppUpgradeDao {
 	public AppUpgradeVo selectAppUpgrade() {
 		return this.sqlSessionTemplate.selectOne("selectAppUpgrade");
 	}
+
+	@Override
+	public AppUpgradeVo selectAppUpgradeByVersion(String version) {
+		return this.sqlSessionTemplate.selectOne("selectAppUpgradeByVersion", version);
+	}
 }

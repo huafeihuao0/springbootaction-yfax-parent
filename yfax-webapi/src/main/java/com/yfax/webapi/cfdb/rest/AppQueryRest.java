@@ -187,4 +187,20 @@ public class AppQueryRest {
 		AppUpgradeVo appUpgradeVo = this.appUpgradeService.selectAppUpgrade();
 		return new JsonResult(ResultCode.SUCCESS, appUpgradeVo);
 	}
+	
+	/**
+	 * 获取APP版本升级信息接口
+	 * @return
+	 */
+	@RequestMapping("/queryUpgradeByVersion")
+	public JsonResult queryUpgradeByVersion(String version) {
+		if(version == null) {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+		AppUpgradeVo appUpgradeVo = this.appUpgradeService.selectAppUpgradeByVersion(version);
+		if(appUpgradeVo == null) {
+			return new JsonResult(ResultCode.SUCCESS_NO_DATA);
+		}
+		return new JsonResult(ResultCode.SUCCESS, appUpgradeVo);
+	}
 }

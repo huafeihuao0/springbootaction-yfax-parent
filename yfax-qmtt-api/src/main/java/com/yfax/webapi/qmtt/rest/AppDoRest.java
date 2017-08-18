@@ -17,8 +17,10 @@ import com.yfax.utils.StrUtil;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppUserService;
+import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
+import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
 /**
@@ -35,6 +37,8 @@ public class AppDoRest {
 	private AppUserService appUserService;
 	@Autowired
 	private UserSmsService userSmsService;
+	@Autowired
+	private LoginHisService loginHisService;
 	
 	/**
 	 * 用户退出登录接口
@@ -151,12 +155,37 @@ public class AppDoRest {
 		if(!StrUtil.null2Str(phoneNum).equals("")) {
 			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
 			if(appUserVo != null) {
-				return new JsonResult(ResultCode.SUCCESS);
+				LoginHisVo loginHisVo = new LoginHisVo();
+				loginHisVo.setId(UUID.getUUID());
+				loginHisVo.setPhoneNum(phoneNum);
+				loginHisVo.setDeviceName(deviceName);
+				loginHisVo.setImei(imei);
+				loginHisVo.setIp(ip);
+				loginHisVo.setMac(mac);
+				loginHisVo.setLocation(location);
+				loginHisVo.setWifi(wifi);
+				String cTime = DateUtil.getCurrentLongDateTime();
+				loginHisVo.setCreateDate(cTime);
+				loginHisVo.setUpdateDate(cTime);
+				boolean flag = this.loginHisService.addLoginHis(loginHisVo);
+				if(flag) {
+					return new JsonResult(ResultCode.SUCCESS);
+				}else {
+					return new JsonResult(ResultCode.SUCCESS_FAIL);
+				}
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_NO_USER);
 			}
 		}else {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
+	}
+	
+	/**
+	 * 生成分享邀请链接
+	 */
+	@RequestMapping(value = "/doShareUrl", method = {RequestMethod.POST})
+	public JsonResult doShareUrl() {
+		return new JsonResult(ResultCode.SUCCESS);
 	}
 }

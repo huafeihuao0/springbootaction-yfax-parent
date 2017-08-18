@@ -19,5 +19,9 @@ public class AppUpgradeService{
 	public AppUpgradeVo selectAppUpgrade(){
 		return this.dao.selectAppUpgrade();
 	}
+	
+	public AppUpgradeVo selectAppUpgradeByVersion(String version) {
+		return this.dao.selectAppUpgradeByVersion(version);
+	}
 
 }
