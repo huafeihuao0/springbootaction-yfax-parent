@@ -8,5 +8,8 @@
     </typeAliases>
     <mappers>
         <mapper resource="mybatis/mapper/AppUserMapper.xml"/>
+        <mapper resource="mybatis/mapper/AwardHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/LoginHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserSmsMapper.xml"/>
     </mappers>
 </configuration>

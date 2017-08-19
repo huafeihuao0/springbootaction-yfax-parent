@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.rest;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,11 @@ import com.yfax.utils.StrUtil;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppUserService;
+import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
+import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
@@ -39,6 +42,8 @@ public class AppDoRest {
 	private UserSmsService userSmsService;
 	@Autowired
 	private LoginHisService loginHisService;
+	@Autowired
+	private AwardHisService awardHisService;
 	
 	/**
 	 * 用户退出登录接口
@@ -148,7 +153,7 @@ public class AppDoRest {
 	}
 	
 	/**
-	 * 记录用户登录数据接口
+	 * 记录用户登录设备数据接口
 	 */
 	@RequestMapping(value = "/doLoginHis", method = {RequestMethod.POST})
 	public JsonResult doLoginHis(String phoneNum, String deviceName, String imei, String ip, 
@@ -188,5 +193,29 @@ public class AppDoRest {
 	@RequestMapping(value = "/doShareUrl", method = {RequestMethod.POST})
 	public JsonResult doShareUrl() {
 		return new JsonResult(ResultCode.SUCCESS);
+	}
+	
+	private static int[] a = new int[] {20,21,22,23,24,25,26,27,28,29,30};
+	
+	/**
+	 * 获得阅读文章随机金币
+	 */
+	@RequestMapping(value = "/doRandomAward", method = {RequestMethod.POST})
+	public JsonResult doRandomAward(String phoneNum) {
+		int gold = a[new Random().nextInt(9)];	//随机金币奖励
+		AwardHisVo awardHisVo = new AwardHisVo();
+		awardHisVo.setId(UUID.getUUID());
+		awardHisVo.setPhoneNum(phoneNum);
+		awardHisVo.setAwardType(4);
+		awardHisVo.setGold(String.valueOf(gold));
+		String cTime = DateUtil.getCurrentLongDateTime();
+		awardHisVo.setCreateDate(cTime);
+		awardHisVo.setUpdateDate(cTime);
+		boolean flag = this.awardHisService.addAwardHis(awardHisVo);
+		if(flag) {
+			return new JsonResult(ResultCode.SUCCESS, awardHisVo);
+		}else {
+			return new JsonResult(ResultCode.SUCCESS_FAIL);
+		}
 	}
 }
