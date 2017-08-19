@@ -90,10 +90,11 @@ public class AppDoRest {
 	 * 用户个人信息接口（限定手机号码）
 	 */
 	@RequestMapping(value = "/doUserInfo", method = {RequestMethod.POST})
-	public JsonResult doUserInfo(String phoneNum, String userName, String address, 
+	public JsonResult doUserInfo(String phoneNum, String userPwd, String userName, String address, 
 			String wechat, String qq, String email) {
 		AppUserVo appUserVo = new AppUserVo();
 		appUserVo.setPhoneNum(phoneNum);
+		appUserVo.setUserPwd(userPwd);
 		appUserVo.setUserName(userName);
 		appUserVo.setAddress(address);
 		appUserVo.setWechat(wechat);
