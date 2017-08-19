@@ -19,10 +19,12 @@ import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
+import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
+import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
@@ -44,6 +46,8 @@ public class AppDoRest {
 	private LoginHisService loginHisService;
 	@Autowired
 	private AwardHisService awardHisService;
+	@Autowired
+	private BalanceHisService balanceHisService;
 	
 	/**
 	 * 用户退出登录接口
@@ -214,6 +218,30 @@ public class AppDoRest {
 		boolean flag = this.awardHisService.addAwardHis(awardHisVo);
 		if(flag) {
 			return new JsonResult(ResultCode.SUCCESS, awardHisVo);
+		}else {
+			return new JsonResult(ResultCode.SUCCESS_FAIL);
+		}
+	}
+	
+	/**
+	 * 用户发起零钱兑换接口
+	 */
+	@RequestMapping(value = "/doBalanceHis", method = {RequestMethod.POST})
+	public JsonResult doBalanceHis(String phoneNum, String gold) {
+		BalanceHisVo balanceHisVo = new BalanceHisVo();
+		balanceHisVo.setId(UUID.getUUID());
+		balanceHisVo.setPhoneNum(phoneNum);
+		balanceHisVo.setBalanceType(1);
+		balanceHisVo.setGold(gold);
+		//TODO 需要根据汇率计算，实时扣减个人金币，目前写死配合app测试
+		balanceHisVo.setBalance(gold);
+		balanceHisVo.setRate("1");
+		String cTime = DateUtil.getCurrentLongDateTime();
+		balanceHisVo.setCreateDate(cTime);
+		balanceHisVo.setUpdateDate(cTime);
+		boolean flag = this.balanceHisService.addBalanceHis(balanceHisVo);
+		if(flag) {
+			return new JsonResult(ResultCode.SUCCESS, balanceHisVo);
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_FAIL);
 		}

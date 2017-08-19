@@ -5,6 +5,6 @@ import java.util.List;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 
 public interface AwardHisDao {
-	public boolean insertAwardHis(AwardHisVo loginHis) throws Exception;
+	public boolean insertAwardHis(AwardHisVo awardHisVo) throws Exception;
 	public List<AwardHisVo> selectAwardHisByPhoneNum(String phoneNum);
 }

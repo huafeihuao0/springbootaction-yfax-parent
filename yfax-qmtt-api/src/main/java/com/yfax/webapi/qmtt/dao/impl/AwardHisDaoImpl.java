@@ -19,8 +19,8 @@ public class AwardHisDaoImpl implements AwardHisDao {
 	
 	@Override
 	@Transactional
-	public boolean insertAwardHis(AwardHisVo userSms) throws Exception {
-		int i = this.sqlSessionTemplate.insert("insertAwardHis", userSms);
+	public boolean insertAwardHis(AwardHisVo awardHisVo) throws Exception {
+		int i = this.sqlSessionTemplate.insert("insertAwardHis", awardHisVo);
 		return i > 0 ? true : false;
 	}
 

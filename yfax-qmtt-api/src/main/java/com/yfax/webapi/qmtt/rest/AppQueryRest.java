@@ -1,6 +1,5 @@
 package com.yfax.webapi.qmtt.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.webapi.qmtt.service.AwardHisService;
+import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
+import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 
 /**
  * @author Minbo.He 
@@ -26,6 +27,8 @@ public class AppQueryRest {
 
 	@Autowired
 	private AwardHisService awardHisService;
+	@Autowired
+	private BalanceHisService balanceHisService;
 	
 	/**
 	 * 个人资产接口
@@ -41,6 +44,15 @@ public class AppQueryRest {
 	@RequestMapping("/queryAwardHis")
 	public JsonResult queryAwardHis(String phoneNum) {
 		List<AwardHisVo> list = this.awardHisService.selectAwardHisByPhoneNum(phoneNum);
+		return new JsonResult(ResultCode.SUCCESS, list);
+	}
+	
+	/**
+	 * 零钱兑换记录接口
+	 */
+	@RequestMapping("/queryBalanceHis")
+	public JsonResult queryBalanceHis(String phoneNum) {
+		List<BalanceHisVo> list = this.balanceHisService.selectBalanceHisByPhoneNum(phoneNum);
 		return new JsonResult(ResultCode.SUCCESS, list);
 	}
 }
