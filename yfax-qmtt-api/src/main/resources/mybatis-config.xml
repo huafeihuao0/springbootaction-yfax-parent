@@ -12,5 +12,6 @@
         <mapper resource="mybatis/mapper/LoginHisMapper.xml"/>
         <mapper resource="mybatis/mapper/UserSmsMapper.xml"/>
         <mapper resource="mybatis/mapper/BalanceHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/IncomeSetMapper.xml"/>
     </mappers>
 </configuration>

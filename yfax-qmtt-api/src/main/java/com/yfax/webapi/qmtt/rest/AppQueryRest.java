@@ -12,8 +12,10 @@ import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
+import com.yfax.webapi.qmtt.service.IncomeSetService;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
+import com.yfax.webapi.qmtt.vo.IncomeSetVo;
 
 /**
  * @author Minbo.He 
@@ -29,6 +31,8 @@ public class AppQueryRest {
 	private AwardHisService awardHisService;
 	@Autowired
 	private BalanceHisService balanceHisService;
+	@Autowired
+	private IncomeSetService incomeSetService;
 	
 	/**
 	 * 个人资产接口
@@ -53,6 +57,15 @@ public class AppQueryRest {
 	@RequestMapping("/queryBalanceHis")
 	public JsonResult queryBalanceHis(String phoneNum) {
 		List<BalanceHisVo> list = this.balanceHisService.selectBalanceHisByPhoneNum(phoneNum);
+		return new JsonResult(ResultCode.SUCCESS, list);
+	}
+	
+	/**
+	 * 提现配置接口
+	 */
+	@RequestMapping("/queryIncomeSet")
+	public JsonResult queryIncomeSet() {
+		List<IncomeSetVo> list = this.incomeSetService.selectIncomeSet();
 		return new JsonResult(ResultCode.SUCCESS, list);
 	}
 }
