@@ -13,5 +13,7 @@
         <mapper resource="mybatis/mapper/UserSmsMapper.xml"/>
         <mapper resource="mybatis/mapper/BalanceHisMapper.xml"/>
         <mapper resource="mybatis/mapper/IncomeSetMapper.xml"/>
+        <mapper resource="mybatis/mapper/RateSetMapper.xml"/>
+        <mapper resource="mybatis/mapper/WithdrawHisMapper.xml"/>
     </mappers>
 </configuration>

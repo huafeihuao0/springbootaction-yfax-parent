@@ -22,9 +22,8 @@ import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
+import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
-import com.yfax.webapi.qmtt.vo.AwardHisVo;
-import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
@@ -48,6 +47,8 @@ public class AppDoRest {
 	private AwardHisService awardHisService;
 	@Autowired
 	private BalanceHisService balanceHisService;
+	@Autowired
+	private WithdrawHisService withdrawHisService;
 	
 	/**
 	 * 用户退出登录接口
@@ -199,28 +200,15 @@ public class AppDoRest {
 		return new JsonResult(ResultCode.SUCCESS);
 	}
 	
-	private static int[] a = new int[] {20,21,22,23,24,25,26,27,28,29,30};
-	
 	/**
 	 * 获得阅读文章随机金币
 	 */
 	@RequestMapping(value = "/doRandomAward", method = {RequestMethod.POST})
 	public JsonResult doRandomAward(String phoneNum) {
-		int gold = a[new Random().nextInt(9)];	//随机金币奖励
-		AwardHisVo awardHisVo = new AwardHisVo();
-		awardHisVo.setId(UUID.getUUID());
-		awardHisVo.setPhoneNum(phoneNum);
-		awardHisVo.setAwardType(4);
-		awardHisVo.setGold(String.valueOf(gold));
-		String cTime = DateUtil.getCurrentLongDateTime();
-		awardHisVo.setCreateDate(cTime);
-		awardHisVo.setUpdateDate(cTime);
-		boolean flag = this.awardHisService.addAwardHis(awardHisVo);
-		if(flag) {
-			return new JsonResult(ResultCode.SUCCESS, awardHisVo);
-		}else {
-			return new JsonResult(ResultCode.SUCCESS_FAIL);
-		}
+		//随机金币奖励
+		int gold = GlobalUtils.gold[new Random().nextInt(9)];
+		return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ);
+		
 	}
 	
 	/**
@@ -228,22 +216,32 @@ public class AppDoRest {
 	 */
 	@RequestMapping(value = "/doBalanceHis", method = {RequestMethod.POST})
 	public JsonResult doBalanceHis(String phoneNum, String gold) {
-		BalanceHisVo balanceHisVo = new BalanceHisVo();
-		balanceHisVo.setId(UUID.getUUID());
-		balanceHisVo.setPhoneNum(phoneNum);
-		balanceHisVo.setBalanceType(1);
-		balanceHisVo.setGold(gold);
-		//TODO 需要根据汇率计算，实时扣减个人金币，目前写死配合app测试
-		balanceHisVo.setBalance(gold);
-		balanceHisVo.setRate("1");
-		String cTime = DateUtil.getCurrentLongDateTime();
-		balanceHisVo.setCreateDate(cTime);
-		balanceHisVo.setUpdateDate(cTime);
-		boolean flag = this.balanceHisService.addBalanceHis(balanceHisVo);
-		if(flag) {
-			return new JsonResult(ResultCode.SUCCESS, balanceHisVo);
+		return this.balanceHisService.addBalanceHis(phoneNum, gold);
+	}
+	
+	/**
+	 * 提现发起接口
+	 */
+	@RequestMapping(value = "/doWithdraw", method = {RequestMethod.POST})
+	public JsonResult doWithdraw(String phoneNum, int withdrawType, 
+			String name, String account, String income) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(account).equals("") 
+				&& !StrUtil.null2Str(income).equals("")) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo != null) {
+				double incomeTmp = Double.valueOf(income);
+				double balance = Double.valueOf(appUserVo.getBalance());
+				if(balance - incomeTmp >= 0) {
+					return this.withdrawHisService.addWithdrawHis(phoneNum, withdrawType, 
+							name, account, income);
+				}else {
+					return new JsonResult(ResultCode.SUCCESS_NOT_ENOUGH);
+				}
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+			}
 		}else {
-			return new JsonResult(ResultCode.SUCCESS_FAIL);
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 }

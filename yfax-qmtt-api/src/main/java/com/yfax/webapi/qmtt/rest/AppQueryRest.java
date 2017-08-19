@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
+import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IncomeSetService;
+import com.yfax.webapi.qmtt.service.WithdrawHisService;
+import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.IncomeSetVo;
+import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
 /**
  * @author Minbo.He 
@@ -33,6 +37,10 @@ public class AppQueryRest {
 	private BalanceHisService balanceHisService;
 	@Autowired
 	private IncomeSetService incomeSetService;
+	@Autowired
+	private AppUserService appUserService;
+	@Autowired
+	private WithdrawHisService withdrawHisService;
 	
 	/**
 	 * 个人资产接口
@@ -67,5 +75,19 @@ public class AppQueryRest {
 	public JsonResult queryIncomeSet() {
 		List<IncomeSetVo> list = this.incomeSetService.selectIncomeSet();
 		return new JsonResult(ResultCode.SUCCESS, list);
+	}
+	
+	/**
+	 * 兑换提现记录接口
+	 */
+	@RequestMapping("/queryWithdrawHis")
+	public JsonResult queryWithdrawHis(String phoneNum) {
+		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+		if (appUserVo != null) {
+			List<WithdrawHisVo> withdrawHis = this.withdrawHisService.selectWithdrawHis(appUserVo.getPhoneNum());
+			return new JsonResult(ResultCode.SUCCESS, withdrawHis);
+		} else {
+			return new JsonResult(ResultCode.SUCCESS_NO_USER);
+		}
 	}
 }
