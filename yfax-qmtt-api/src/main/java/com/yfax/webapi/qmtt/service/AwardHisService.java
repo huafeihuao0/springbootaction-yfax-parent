@@ -1,6 +1,9 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +56,9 @@ public class AwardHisService{
 			boolean flag =  this.awardHisDao.insertAwardHis(awardHisVo);
 			boolean flag1 = this.appUserDao.updateUser(appUserVo);
 			if(flag && flag1) {
-				return new JsonResult(ResultCode.SUCCESS);
+				Map<String, Object> map = new HashMap<>();
+				map.put("gold", gold);
+				return new JsonResult(ResultCode.SUCCESS, map);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
