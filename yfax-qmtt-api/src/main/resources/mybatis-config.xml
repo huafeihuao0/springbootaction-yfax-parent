@@ -15,5 +15,6 @@
         <mapper resource="mybatis/mapper/IncomeSetMapper.xml"/>
         <mapper resource="mybatis/mapper/RateSetMapper.xml"/>
         <mapper resource="mybatis/mapper/WithdrawHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/ReadHisMapper.xml"/>
     </mappers>
 </configuration>

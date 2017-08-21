@@ -14,11 +14,13 @@ import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IncomeSetService;
+import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.IncomeSetVo;
+import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
 /**
@@ -41,6 +43,8 @@ public class AppQueryRest {
 	private AppUserService appUserService;
 	@Autowired
 	private WithdrawHisService withdrawHisService;
+	@Autowired
+	private ReadHisService readHisService;
 	
 	/**
 	 * 个人资产接口
@@ -89,5 +93,14 @@ public class AppQueryRest {
 		} else {
 			return new JsonResult(ResultCode.SUCCESS_NO_USER);
 		}
+	}
+	
+	/**
+	 * 获得阅读文章历史
+	 */
+	@RequestMapping("/queryReadHis")
+	public JsonResult queryReadHis(String phoneNum) {
+		List<ReadHisVo> list = this.readHisService.selectReadHisByPhoneNum(phoneNum);
+		return new JsonResult(ResultCode.SUCCESS, list);
 	}
 }

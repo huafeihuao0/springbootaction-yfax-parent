@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.rest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,11 +23,13 @@ import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
+import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
+import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
 /**
@@ -51,6 +54,8 @@ public class AppDoRest {
 	private BalanceHisService balanceHisService;
 	@Autowired
 	private WithdrawHisService withdrawHisService;
+	@Autowired
+	private ReadHisService readHisService;
 	
 	/**
 	 * 用户退出登录接口
@@ -286,6 +291,30 @@ public class AppDoRest {
 				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
+	
+	/**
+	 * 记录阅读文章历史
+	 */
+	@RequestMapping("/doReadHis")
+	public JsonResult doReadHis(String phoneNum, String data) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("")) {
+			ReadHisVo readHisVo = new ReadHisVo();
+			readHisVo.setId(UUID.getUUID());
+			readHisVo.setPhoneNum(phoneNum);
+			readHisVo.setData(data);
+			String cTime = DateUtil.getCurrentLongDateTime();
+			readHisVo.setCreateDate(cTime);
+			readHisVo.setUpdateDate(cTime);
+			boolean flag = this.readHisService.addReadHis(readHisVo);
+			if(flag) {
+				return new JsonResult(ResultCode.SUCCESS);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		}else {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
