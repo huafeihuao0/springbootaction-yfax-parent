@@ -244,4 +244,22 @@ public class AppDoRest {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
+	
+	/**
+	 * 重置用户登录密码
+	 */
+	@RequestMapping(value = "/doResetPwd", method = {RequestMethod.POST})
+	public JsonResult doResetPwd(String phoneNum, String userPwd) {
+		AppUserVo appUserVo = new AppUserVo();
+		appUserVo.setPhoneNum(phoneNum);
+		appUserVo.setUserPwd(userPwd);
+		String cTime = DateUtil.getCurrentLongDateTime();
+		appUserVo.setUpdateDate(cTime);
+		boolean flag = this.appUserService.modifyUser(appUserVo);
+		if(flag) {
+			return new JsonResult(ResultCode.SUCCESS);
+		}else {
+			return new JsonResult(ResultCode.SUCCESS_FAIL);
+		}
+	}
 }
