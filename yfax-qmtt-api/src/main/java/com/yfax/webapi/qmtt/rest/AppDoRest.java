@@ -1,7 +1,6 @@
 package com.yfax.webapi.qmtt.rest;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -128,14 +127,6 @@ public class AppDoRest {
 	}
 	
 	/**
-	 * 用户登录历史接口（限定手机号码）
-	 */
-	@RequestMapping(value = "/doLoginInfo", method = {RequestMethod.POST})
-	public JsonResult doLoginInfo(String phoneNum, String data) {
-		return null;
-	}
-	
-	/**
 	 * 短信验证码接口
 	 */
 	@RequestMapping(value = "/doSms", method = {RequestMethod.POST})
@@ -204,6 +195,7 @@ public class AppDoRest {
 	 */
 	@RequestMapping(value = "/doShareUrl", method = {RequestMethod.POST})
 	public JsonResult doShareUrl() {
+		//TODO 生成分享邀请链接
 		return new JsonResult(ResultCode.SUCCESS);
 	}
 	

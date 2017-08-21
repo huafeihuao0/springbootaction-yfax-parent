@@ -1,6 +1,8 @@
 package com.yfax.webapi.qmtt.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +53,13 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryOwnInfo")
 	public JsonResult queryOwnInfo(String phoneNum) {
-		return new JsonResult(ResultCode.SUCCESS);
+		Map<String, Object> map = new HashMap<>();
+		//我的零钱，我的金币，我的徒弟
+		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+		map.put("gold", appUserVo.getGold());
+		map.put("balance", appUserVo.getBalance());
+		map.put("students", "20");
+		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 	
 	/**
@@ -102,5 +110,14 @@ public class AppQueryRest {
 	public JsonResult queryReadHis(String phoneNum) {
 		List<ReadHisVo> list = this.readHisService.selectReadHisByPhoneNum(phoneNum);
 		return new JsonResult(ResultCode.SUCCESS, list);
+	}
+	
+	/**
+	 * 获得排行榜数据
+	 */
+	@RequestMapping("/queryRank")
+	public JsonResult queryRank(String phoneNum) {
+		//TODO 获得排行榜数据
+		return new JsonResult(ResultCode.SUCCESS);
 	}
 }
