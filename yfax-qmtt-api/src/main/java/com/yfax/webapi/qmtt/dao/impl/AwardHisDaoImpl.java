@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class AwardHisDaoImpl implements AwardHisDao {
 	@Override
 	public List<AwardHisVo> selectAwardHisByPhoneNum(String phoneNum) {
 		return this.sqlSessionTemplate.selectList("selectAwardHisByPhoneNum", phoneNum);
+	}
+
+	@Override
+	public AwardHisVo selectAwardHisIsCheckIn(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectAwardHisIsFirstLogin", map);
 	}
 
 }

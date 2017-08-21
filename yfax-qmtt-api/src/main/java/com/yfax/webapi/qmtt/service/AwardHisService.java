@@ -71,5 +71,9 @@ public class AwardHisService{
 	public List<AwardHisVo> selectAwardHisByPhoneNum(String phoneNum) {
 		return this.awardHisDao.selectAwardHisByPhoneNum(phoneNum);
 	}
-
+	
+	public AwardHisVo selectAwardHisIsCheckIn(Map<String, Object> map) {
+		return this.awardHisDao.selectAwardHisIsCheckIn(map);
+	}
+	
 }

@@ -31,6 +31,9 @@ public enum ResultCode {
 	
 	/** 账户已注册 */
 	SUCCESS_EXIST("209", "账户已注册"),
+	
+	/** 账户已注册 */
+	SUCCESS_CHECK_IN("210", "已签到过了"),
 
 	/** 没有登录 */
 	NOT_LOGIN("400", "没有登录"),

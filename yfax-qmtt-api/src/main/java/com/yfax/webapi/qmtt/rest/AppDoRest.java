@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.rest;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
+import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
@@ -250,16 +252,43 @@ public class AppDoRest {
 	 */
 	@RequestMapping(value = "/doResetPwd", method = {RequestMethod.POST})
 	public JsonResult doResetPwd(String phoneNum, String userPwd) {
-		AppUserVo appUserVo = new AppUserVo();
-		appUserVo.setPhoneNum(phoneNum);
-		appUserVo.setUserPwd(userPwd);
-		String cTime = DateUtil.getCurrentLongDateTime();
-		appUserVo.setUpdateDate(cTime);
-		boolean flag = this.appUserService.modifyUser(appUserVo);
-		if(flag) {
-			return new JsonResult(ResultCode.SUCCESS);
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(userPwd).equals("")) {
+			AppUserVo appUserVo = new AppUserVo();
+			appUserVo.setPhoneNum(phoneNum);
+			appUserVo.setUserPwd(userPwd);
+			String cTime = DateUtil.getCurrentLongDateTime();
+			appUserVo.setUpdateDate(cTime);
+			boolean flag = this.appUserService.modifyUser(appUserVo);
+			if(flag) {
+				return new JsonResult(ResultCode.SUCCESS);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			}
 		}else {
-			return new JsonResult(ResultCode.SUCCESS_FAIL);
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
+	
+	/**
+	 * 每日签到获得随机金币
+	 */
+	@RequestMapping(value = "/doDailyCheckIn", method = {RequestMethod.POST})
+	public JsonResult doDailyCheckIn(String phoneNum) {
+		if(!StrUtil.null2Str(phoneNum).equals("")) {
+			String currentTime = DateUtil.getCurrentDate();
+			Map<String, Object> map = new HashMap<>();
+			map.put("phoneNum", phoneNum);
+			map.put("currentTime", currentTime);
+			AwardHisVo awardHisVo = this.awardHisService.selectAwardHisIsCheckIn(map);
+			if(awardHisVo == null) {
+				//随机金币奖励
+				int gold = GlobalUtils.gold[new Random().nextInt(9)];
+				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 }

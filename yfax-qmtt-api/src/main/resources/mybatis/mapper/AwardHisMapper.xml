@@ -4,8 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yfax.webapi.qmtt.vo.AwardHisVo">
 
-	 <select id="selectAwardHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
+	<select id="selectAwardHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
         select * from qmtt_award_his where phoneNum=#{phoneNum} order by createDate desc
+    </select>
+    
+    <!-- 今日签到判断 -->
+    <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
+         select * from qmtt_award_his where phoneNum=#{phoneNum} and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
     </select>
 
     <!-- 添加 -->
