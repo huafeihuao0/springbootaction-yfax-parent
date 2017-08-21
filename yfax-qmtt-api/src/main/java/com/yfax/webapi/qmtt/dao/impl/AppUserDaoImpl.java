@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,5 +46,10 @@ public class AppUserDaoImpl implements AppUserDao {
 	public boolean updateUser(AppUserVo appUserVo) {
 		int i = this.sqlSessionTemplate.delete("updateUser", appUserVo);
 		return i > 0 ? true : false;
+	}
+
+	@Override
+	public List<AppUserVo> selectByRank() {
+		return this.sqlSessionTemplate.selectList("selectByRank");
 	}
 }

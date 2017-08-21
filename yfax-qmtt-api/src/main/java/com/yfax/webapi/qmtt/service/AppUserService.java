@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -29,6 +30,10 @@ public class AppUserService {
 	
 	public AppUserVo selectByPhoneNumAndPwd(Map<String, Object> params) {
 		return this.dao.selectByPhoneNumAndPwd(params);
+	}
+	
+	public List<AppUserVo> selectByRank() {
+		return this.dao.selectByRank();
 	}
 	       
 	@Transactional

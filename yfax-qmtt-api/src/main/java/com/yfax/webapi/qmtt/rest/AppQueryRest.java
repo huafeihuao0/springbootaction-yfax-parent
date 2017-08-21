@@ -54,10 +54,11 @@ public class AppQueryRest {
 	@RequestMapping("/queryOwnInfo")
 	public JsonResult queryOwnInfo(String phoneNum) {
 		Map<String, Object> map = new HashMap<>();
-		//我的零钱，我的金币，我的徒弟
+		//我的零钱，我的金币
 		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
 		map.put("gold", appUserVo.getGold());
 		map.put("balance", appUserVo.getBalance());
+		//TODO 我的徒弟数
 		map.put("students", "20");
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
@@ -117,7 +118,7 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryRank")
 	public JsonResult queryRank(String phoneNum) {
-		//TODO 获得排行榜数据
-		return new JsonResult(ResultCode.SUCCESS);
+		List<AppUserVo> list = this.appUserService.selectByRank();
+		return new JsonResult(ResultCode.SUCCESS, list);
 	}
 }
