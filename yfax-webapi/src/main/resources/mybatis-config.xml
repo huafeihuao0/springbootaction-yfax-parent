@@ -24,7 +24,7 @@
         <mapper resource="mybatis/mapper/AppUpgradeMapper.xml"/>
         <mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
         <mapper resource="mybatis/mapper/UserSmsMapper.xml"/>
-        
         <mapper resource="mybatis/mapper/WdkzAppConfigMapper.xml"/>
+        <mapper resource="mybatis/mapper/AppVersionMapper.xml"/>
     </mappers>
 </configuration>

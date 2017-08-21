@@ -10,10 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yfax.utils.DateUtil;
+import com.yfax.utils.JsonResult;
+import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
 import com.yfax.webapi.cfdb.vo.ApkUrlVo;
 import com.yfax.webapi.cfdb.vo.AppBannerVo;
 import com.yfax.webapi.cfdb.vo.AppConfigVo;
 import com.yfax.webapi.cfdb.vo.AppUpgradeVo;
+import com.yfax.webapi.cfdb.vo.AppVersionVo;
 import com.yfax.webapi.cfdb.vo.IncomeHisVo;
 import com.yfax.webapi.cfdb.vo.IncomeSetVo;
 import com.yfax.webapi.cfdb.vo.SdkChannelConfigVo;
@@ -25,6 +30,7 @@ import com.yfax.webapi.service.ApkUrlService;
 import com.yfax.webapi.service.AppBannerService;
 import com.yfax.webapi.service.AppConfigService;
 import com.yfax.webapi.service.AppUpgradeService;
+import com.yfax.webapi.service.AppVersionService;
 import com.yfax.webapi.service.IncomeHisService;
 import com.yfax.webapi.service.IncomeSetService;
 import com.yfax.webapi.service.SdkChannelConfigService;
@@ -32,10 +38,6 @@ import com.yfax.webapi.service.TaskDetailService;
 import com.yfax.webapi.service.UserTaskListService;
 import com.yfax.webapi.service.UsersService;
 import com.yfax.webapi.service.WithdrawHisService;
-import com.yfax.utils.DateUtil;
-import com.yfax.utils.JsonResult;
-import com.yfax.utils.ResultCode;
-import com.yfax.utils.StrUtil;
 
 /**
  * @author Minbo.He 
@@ -69,6 +71,8 @@ public class AppQueryRest {
 	private AppUpgradeService appUpgradeService;
 	@Autowired
 	private AppConfigService appConfigService;
+	@Autowired
+	private AppVersionService appVersionService;
 
 	/**
 	 * 收益记录接口
@@ -166,6 +170,9 @@ public class AppQueryRest {
 		// 4. Banner图配置
 		List<AppBannerVo> appBannerList = this.appBannerService.selectAppBannerList();
 		allMap.put("appBannerList", appBannerList);
+		//5. APK渠道版本配置
+		AppVersionVo appVersionVo = this.appVersionService.selectAppVersion();
+		allMap.put("appVersionVo", appVersionVo);
 		return new JsonResult(ResultCode.SUCCESS, allMap);
 	}
 
