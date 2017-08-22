@@ -227,7 +227,7 @@ public class AppDoRest {
 	 * 邀请中转链接接口
 	 * @return
 	 */
-	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.POST})
+	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.GET})
 	public JsonResult doRedirectUrl(HttpServletRequest request) {
 		logger.info("邀请链接中转接口, 获取访问者IP=" + NetworkUtil.getIpAddress(request) 
 			+ ", 来访者的浏览器版本=" + NetworkUtil.getRequestBrowserInfo(request) 
