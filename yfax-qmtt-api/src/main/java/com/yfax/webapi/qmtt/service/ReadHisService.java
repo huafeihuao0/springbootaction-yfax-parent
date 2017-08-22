@@ -37,8 +37,8 @@ public class ReadHisService{
 		return this.readHisDao.selectReadHisByPhoneNum(phoneNum);
 	}
 	
-	public ReadHisVo selectReadHisByPhoneNumAndPrimaryKey(Map<String, Object> map) {
-		return this.readHisDao.selectReadHisByPhoneNumAndPrimaryKey(map);
+	public Long selectCountByPhoneNumAndPrimaryKey(Map<String, Object> map) {
+		return this.readHisDao.selectCountByPhoneNumAndPrimaryKey(map);
 	}
 	
 }

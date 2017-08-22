@@ -208,14 +208,16 @@ public class AppDoRest {
 			Map<String, Object> map = new HashMap<>();
 			map.put("phoneNum", phoneNum);
 			map.put("primaryKey", primaryKey);
-			ReadHisVo readHisVo = this.readHisService.selectReadHisByPhoneNumAndPrimaryKey(map);
-			if(readHisVo == null) {
+			Long count = this.readHisService.selectCountByPhoneNumAndPrimaryKey(map);
+			//首次阅读才奖励
+			if(count == 1) {
 				//随机金币奖励
 				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
 				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ);
 			}else {
-				logger.info("文章已获取奖励，跳过处理。phoneNum=" + phoneNum + ", primaryKey=" + primaryKey);
-				return new JsonResult(ResultCode.SUCCESS);
+				String result = "文章已获取奖励，跳过处理";
+				logger.info(result + "。phoneNum=" + phoneNum + ", primaryKey=" + primaryKey);
+				return new JsonResult(ResultCode.SUCCESS, result);
 			}
 			
 		}else {

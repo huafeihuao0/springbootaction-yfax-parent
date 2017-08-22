@@ -31,8 +31,8 @@ public class ReadHisDaoImpl implements ReadHisDao {
 	}
 
 	@Override
-	public ReadHisVo selectReadHisByPhoneNumAndPrimaryKey(Map<String, Object> map) {
-		return this.sqlSessionTemplate.selectOne("selectReadHisByPhoneNumAndPrimaryKey", map);
+	public Long selectCountByPhoneNumAndPrimaryKey(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectCountByPhoneNumAndPrimaryKey", map);
 	}
 
 }

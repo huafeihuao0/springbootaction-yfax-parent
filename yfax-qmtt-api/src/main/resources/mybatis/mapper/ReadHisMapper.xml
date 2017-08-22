@@ -8,8 +8,9 @@
         select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc
     </select>
     
-    <select id="selectReadHisByPhoneNumAndPrimaryKey" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
-        select * from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey} limit 1
+    <!-- 首次阅读 -->
+    <select id="selectCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
+        select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey}
     </select>
     
     <!-- 添加 -->
