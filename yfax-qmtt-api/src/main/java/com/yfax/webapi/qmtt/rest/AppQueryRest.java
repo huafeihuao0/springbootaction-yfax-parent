@@ -16,12 +16,14 @@ import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IncomeSetService;
+import com.yfax.webapi.qmtt.service.RateSetService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.IncomeSetVo;
+import com.yfax.webapi.qmtt.vo.RateSetVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
@@ -47,6 +49,8 @@ public class AppQueryRest {
 	private WithdrawHisService withdrawHisService;
 	@Autowired
 	private ReadHisService readHisService;
+	@Autowired
+	private RateSetService rateSetService;
 	
 	/**
 	 * 个人资产接口
@@ -58,6 +62,9 @@ public class AppQueryRest {
 		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
 		map.put("gold", appUserVo.getGold());
 		map.put("balance", appUserVo.getBalance());
+		//得到当前汇率
+		RateSetVo rateSetVo = this.rateSetService.selectRateSet();
+		map.put("rate", rateSetVo.getRate());
 		//TODO 我的徒弟数
 		map.put("students", "20");
 		return new JsonResult(ResultCode.SUCCESS, map);
@@ -118,6 +125,7 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryRank")
 	public JsonResult queryRank(String phoneNum) {
+		//TODO 金币字段需变成整型处理，否则排序不了
 		List<AppUserVo> list = this.appUserService.selectByRank();
 		return new JsonResult(ResultCode.SUCCESS, list);
 	}

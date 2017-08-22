@@ -1,10 +1,13 @@
 package com.yfax.webapi.qmtt.rest;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,7 @@ import com.yfax.webapi.qmtt.service.AppShareCodeService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
+import com.yfax.webapi.qmtt.service.IpShareCodeService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
@@ -32,6 +36,7 @@ import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
+import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
@@ -62,6 +67,8 @@ public class AppDoRest {
 	private ReadHisService readHisService;
 	@Autowired
 	private AppShareCodeService appShareCodeService;
+	@Autowired
+	private IpShareCodeService ipShareCodeService;
 	
 	/**
 	 * 用户退出登录接口
@@ -223,16 +230,53 @@ public class AppDoRest {
 	}
 	
 	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
+	private static final String ANDROID_URL = "http://www.qq.com/";
+	private static final String IPHONE_URL = "http://baidu.com";
 	/**
 	 * 邀请中转链接接口
 	 * @return
 	 */
 	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.GET})
-	public JsonResult doRedirectUrl(HttpServletRequest request) {
-		logger.info("邀请链接中转接口, 获取访问者IP=" + NetworkUtil.getIpAddress(request) 
-			+ ", 来访者的浏览器版本=" + NetworkUtil.getRequestBrowserInfo(request) 
-			+ ", 获取系统版本信息=" + NetworkUtil.getRequestSystemInfo(request));
-		return new JsonResult(ResultCode.SUCCESS);
+	public JsonResult doRedirectUrl(String shareCode, HttpServletRequest request, HttpServletResponse response) {
+		String sourceIp = NetworkUtil.getIpAddress(request);
+		logger.info("邀请链接中转接口, 获取访问者IP=" + sourceIp
+			+ ", 邀请码shareCode=" + shareCode);
+		 Enumeration<String> names = request.getHeaderNames();
+		 String url = "";
+		 while (names.hasMoreElements()){
+			 String name = (String) names.nextElement();
+			 if(request.getHeader(name).contains("iPhone")){  
+				 url = IPHONE_URL;
+				 break;
+			 }else if(request.getHeader(name).contains("Android")) {
+				 url = ANDROID_URL;
+				 break;
+			 }
+		 }
+		 logger.info("跳转url=" + url);
+		 try {
+			 IpShareCodeVo ipShareCodeVo = this.ipShareCodeService.selectIpShareCodeByIp(sourceIp);
+			 if(ipShareCodeVo == null) {
+				 ipShareCodeVo = new IpShareCodeVo();
+				 ipShareCodeVo.setId(UUID.getUUID());
+				 ipShareCodeVo.setSourceIp(sourceIp);
+				 ipShareCodeVo.setShareCode(shareCode);
+				 ipShareCodeVo.setIsUsed(1);//未使用
+				 String cTime = DateUtil.getCurrentLongDateTime();
+				 ipShareCodeVo.setCreateDate(cTime);
+				 ipShareCodeVo.setUpdateDate(cTime);
+				 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
+				 if(!flag) {
+					 logger.warn("记录失败");
+				 }
+			 }
+			 if(!url.equals("")) {
+				 response.sendRedirect(url);
+			 }
+		} catch (IOException e) {
+			logger.error("跳转异常：" + e.getMessage(), e);
+		} 
+		return new JsonResult(ResultCode.SUCCESS, url);
 	}
 	
 	/**
