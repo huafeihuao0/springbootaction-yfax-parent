@@ -20,6 +20,7 @@
 		  <if test="id != null" > id, </if>
 		  <if test="phoneNum != null" > phoneNum, </if>
 		  <if test="awardType != null" > awardType, </if>
+		  <if test="awardName != null" > awardName, </if>
 		  <if test="gold != null" > gold, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
@@ -29,6 +30,7 @@
 		  <if test="id != null" > #{id}, </if>
 		  <if test="phoneNum != null" > #{phoneNum}, </if>
 		  <if test="awardType != null" > #{awardType}, </if>
+		  <if test="awardName != null" > #{awardName}, </if>
 		  <if test="gold != null" > #{gold}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>

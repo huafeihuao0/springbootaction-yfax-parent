@@ -14,6 +14,7 @@ import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.UUID;
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.dao.AwardHisDao;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
@@ -41,6 +42,7 @@ public class AwardHisService{
 			awardHisVo.setId(UUID.getUUID());
 			awardHisVo.setPhoneNum(phoneNum);
 			awardHisVo.setAwardType(awardType);
+			awardHisVo.setAwardName(GlobalUtils.getAwardTypeName(awardType));
 			awardHisVo.setGold(String.valueOf(gold));
 			String cTime = DateUtil.getCurrentLongDateTime();
 			awardHisVo.setCreateDate(cTime);

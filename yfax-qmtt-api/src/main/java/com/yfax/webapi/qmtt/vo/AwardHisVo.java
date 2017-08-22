@@ -9,6 +9,7 @@ public class AwardHisVo implements Serializable{
 	private String id;			//主键
 	private String phoneNum;		//手机号码
 	private Integer awardType;	//奖励类型
+	private String awardName;	//奖励类型名
 	private String gold;			//金币值
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
@@ -62,6 +63,12 @@ public class AwardHisVo implements Serializable{
 	}
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+	public String getAwardName() {
+		return awardName;
+	}
+	public void setAwardName(String awardName) {
+		this.awardName = awardName;
 	}
 	
 }

@@ -8,7 +8,12 @@
         select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc
     </select>
     
-    <!-- 首次阅读 -->
+    <!-- 首次有效阅读 -->
+    <select id="selectCountByPhoneNum" resultType="java.lang.Long">
+        select count(id) from qmtt_read_his where phoneNum=#{phoneNum}
+    </select>
+    
+    <!-- 一篇文章只能奖励阅读 -->
     <select id="selectCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
         select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey}
     </select>
