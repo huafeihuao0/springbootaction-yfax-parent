@@ -15,6 +15,7 @@
 		  <if test="id != null" > id, </if>
 		  <if test="phoneNum != null" > phoneNum, </if>
 		  <if test="data != null" > data, </if>
+		  <if test="primaryKey != null" > primaryKey, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
 		  
@@ -23,6 +24,7 @@
 		  <if test="id != null" > #{id}, </if>
 		  <if test="phoneNum != null" > #{phoneNum}, </if>
 		  <if test="data != null" > #{data}, </if>
+		  <if test="primaryKey != null" > #{primaryKey}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>
 		  

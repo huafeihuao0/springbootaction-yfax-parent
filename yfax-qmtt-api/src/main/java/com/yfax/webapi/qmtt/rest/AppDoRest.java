@@ -293,12 +293,14 @@ public class AppDoRest {
 	 * 记录阅读文章历史
 	 */
 	@RequestMapping("/doReadHis")
-	public JsonResult doReadHis(String phoneNum, String data) {
-		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("")) {
+	public JsonResult doReadHis(String phoneNum, String data, String primaryKey) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("") 
+				&& !StrUtil.null2Str(primaryKey).equals("")) {
 			ReadHisVo readHisVo = new ReadHisVo();
 			readHisVo.setId(UUID.getUUID());
 			readHisVo.setPhoneNum(phoneNum);
 			readHisVo.setData(data);
+			readHisVo.setPrimaryKey(primaryKey);
 			String cTime = DateUtil.getCurrentLongDateTime();
 			readHisVo.setCreateDate(cTime);
 			readHisVo.setUpdateDate(cTime);

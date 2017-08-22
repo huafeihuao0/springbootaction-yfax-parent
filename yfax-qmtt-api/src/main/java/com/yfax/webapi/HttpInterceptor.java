@@ -1,6 +1,7 @@
 package com.yfax.webapi;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +31,18 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String url = request.getRequestURL().toString();
 		String method = request.getMethod();
 		String uri = request.getRequestURI();
-		String queryString = request.getQueryString();
 		String ip = NetworkUtil.getIpAddress(request);
+		String queryString = "";
+        // 去掉最后一个空格
+        	Map<String, String[]> params = request.getParameterMap();  
+        for (String key : params.keySet()) {  
+            String[] values = params.get(key);  
+            for (int i = 0; i < values.length; i++) {  
+                String value = values[i];  
+                queryString += key + "=" + value + "&";
+            }
+        }
+    		queryString = queryString.equals("") ? null : queryString.substring(0, queryString.length() - 1);
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s, ip: %s", url, method, uri, queryString, ip));
 		
         //常见问题faq页不做拦截

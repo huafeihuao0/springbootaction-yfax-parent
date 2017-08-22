@@ -9,6 +9,7 @@ public class ReadHisVo implements Serializable{
 	private String id;			//主键
 	private String phoneNum;		//手机号码
 	private String data;			//文章内容
+	private String primaryKey;	//文章主键
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
@@ -56,5 +57,10 @@ public class ReadHisVo implements Serializable{
 	public void setData(String data) {
 		this.data = data;
 	}
-	
+	public String getPrimaryKey() {
+		return primaryKey;
+	}
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
+	}
 }
