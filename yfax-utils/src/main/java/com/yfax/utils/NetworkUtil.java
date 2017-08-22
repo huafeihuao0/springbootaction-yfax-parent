@@ -111,7 +111,7 @@ public class NetworkUtil {
 		} else if (header.indexOf("SunOS") > 0) {
 			systenInfo = "SunOS";
 		}
-		return systenInfo;
+		return systenInfo == null ? header:systenInfo;
 	}
 
 	/**

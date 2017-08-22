@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yfax.common.sms.SmsService;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
+import com.yfax.utils.NetworkUtil;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.StrUtil;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.qmtt.service.AppShareCodeService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
@@ -25,6 +29,7 @@ import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
+import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
@@ -55,6 +60,8 @@ public class AppDoRest {
 	private WithdrawHisService withdrawHisService;
 	@Autowired
 	private ReadHisService readHisService;
+	@Autowired
+	private AppShareCodeService appShareCodeService;
 	
 	/**
 	 * 用户退出登录接口
@@ -194,8 +201,37 @@ public class AppDoRest {
 	 * 生成分享邀请链接
 	 */
 	@RequestMapping(value = "/doShareUrl", method = {RequestMethod.POST})
-	public JsonResult doShareUrl() {
-		//TODO 生成分享邀请链接
+	public JsonResult doShareUrl(String phoneNum) {
+		AppShareCodeVo appShareCodeVo = this.appShareCodeService.selectAppShareCodeByPhoneNum(phoneNum);
+		if(appShareCodeVo == null) {
+			appShareCodeVo = new AppShareCodeVo();
+			appShareCodeVo.setPhoneNum(phoneNum);
+			appShareCodeVo.setShareCode(UUID.getUUID().substring(11, 20));
+			boolean flag = this.appShareCodeService.addAppShareCode(appShareCodeVo);
+			String cTime = DateUtil.getCurrentLongDateTime();
+			appShareCodeVo.setCreateDate(cTime);
+			appShareCodeVo.setUpdateDate(cTime);
+			if(flag) {
+				//返回邀请中转链接
+				return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			}
+		}else {
+			return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
+		}
+	}
+	
+	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
+	/**
+	 * 邀请中转链接接口
+	 * @return
+	 */
+	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.POST})
+	public JsonResult doRedirectUrl(HttpServletRequest request) {
+		logger.info("邀请链接中转接口, 获取访问者IP=" + NetworkUtil.getIpAddress(request) 
+			+ ", 来访者的浏览器版本=" + NetworkUtil.getRequestBrowserInfo(request) 
+			+ ", 获取系统版本信息=" + NetworkUtil.getRequestSystemInfo(request));
 		return new JsonResult(ResultCode.SUCCESS);
 	}
 	

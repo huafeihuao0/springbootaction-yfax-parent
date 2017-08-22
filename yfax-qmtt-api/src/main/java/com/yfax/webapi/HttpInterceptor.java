@@ -45,8 +45,9 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
     		queryString = queryString.equals("") ? null : queryString.substring(0, queryString.length() - 1);
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s, ip: %s", url, method, uri, queryString, ip));
 		
-        //常见问题faq页不做拦截
-        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/faq")){
+        //常见问题faq页不做拦截，中转链接不做拦截
+        if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/faq") 
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doRedirectUrl")){
             return true;
         }
 		

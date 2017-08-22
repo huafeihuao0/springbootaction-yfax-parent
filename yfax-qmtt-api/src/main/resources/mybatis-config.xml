@@ -16,5 +16,6 @@
         <mapper resource="mybatis/mapper/RateSetMapper.xml"/>
         <mapper resource="mybatis/mapper/WithdrawHisMapper.xml"/>
         <mapper resource="mybatis/mapper/ReadHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/AppShareCodeMapper.xml"/>
     </mappers>
 </configuration>

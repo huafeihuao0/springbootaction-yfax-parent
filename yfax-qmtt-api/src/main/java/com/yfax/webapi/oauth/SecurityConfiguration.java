@@ -45,11 +45,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     		//登录不做拦截
     		//注册验证码
     		//重置密码
+    		//中转链接url
         web.ignoring().antMatchers("/hello"
         		, GlobalUtils.PROJECT_QMTT + "/faq"
         		, GlobalUtils.PROJECT_QMTT + "/doLogin"
         		, GlobalUtils.PROJECT_QMTT + "/doSms"
-        		, GlobalUtils.PROJECT_QMTT + "/doResetPwd");
+        		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"
+        		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl");
     }
     
     @Override
