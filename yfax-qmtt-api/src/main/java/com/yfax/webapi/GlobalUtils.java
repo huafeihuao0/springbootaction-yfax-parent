@@ -16,7 +16,7 @@ public interface GlobalUtils {
 	/**
 	 * 随机奖励
 	 */
-	public static final int[] gold = new int[] {20,21,22,23,24,25,26,27,28,29,30};
+	public static final int[] RANDOM_GOLD = new int[] {20,21,22,23,24,25,26,27,28,29,30};
 	/**
 	 * 新手奖励
 	 */

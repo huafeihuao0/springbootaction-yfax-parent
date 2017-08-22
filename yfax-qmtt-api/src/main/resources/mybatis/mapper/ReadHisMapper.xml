@@ -8,6 +8,10 @@
         select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc
     </select>
     
+    <select id="selectReadHisByPhoneNumAndPrimaryKey" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
+        select * from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey} limit 1
+    </select>
+    
     <!-- 添加 -->
 	<insert id="insertReadHis" parameterType="com.yfax.webapi.qmtt.vo.ReadHisVo">
 		insert into qmtt_read_his

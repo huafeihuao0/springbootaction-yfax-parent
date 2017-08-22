@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,10 @@ public class ReadHisService{
 	
 	public List<ReadHisVo> selectReadHisByPhoneNum(String phoneNum) {
 		return this.readHisDao.selectReadHisByPhoneNum(phoneNum);
+	}
+	
+	public ReadHisVo selectReadHisByPhoneNumAndPrimaryKey(Map<String, Object> map) {
+		return this.readHisDao.selectReadHisByPhoneNumAndPrimaryKey(map);
 	}
 	
 }

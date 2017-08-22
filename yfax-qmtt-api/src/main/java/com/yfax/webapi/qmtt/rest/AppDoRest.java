@@ -202,12 +202,25 @@ public class AppDoRest {
 	/**
 	 * 获得阅读文章随机金币
 	 */
-	@RequestMapping(value = "/doRandomAward", method = {RequestMethod.POST})
-	public JsonResult doRandomAward(String phoneNum) {
-		//随机金币奖励
-		int gold = GlobalUtils.gold[new Random().nextInt(9)];
-		return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ);
-		
+	@RequestMapping(value = "/doReadAward", method = {RequestMethod.POST})
+	public JsonResult doReadAward(String phoneNum, String primaryKey) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(primaryKey).equals("")) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("phoneNum", phoneNum);
+			map.put("primaryKey", primaryKey);
+			ReadHisVo readHisVo = this.readHisService.selectReadHisByPhoneNumAndPrimaryKey(map);
+			if(readHisVo == null) {
+				//随机金币奖励
+				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
+				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ);
+			}else {
+				logger.info("文章已获取奖励，跳过处理。phoneNum=" + phoneNum + ", primaryKey=" + primaryKey);
+				return new JsonResult(ResultCode.SUCCESS);
+			}
+			
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
 	}
 	
 	/**
@@ -279,7 +292,7 @@ public class AppDoRest {
 			AwardHisVo awardHisVo = this.awardHisService.selectAwardHisIsCheckIn(map);
 			if(awardHisVo == null) {
 				//随机金币奖励
-				int gold = GlobalUtils.gold[new Random().nextInt(9)];
+				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
 				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);

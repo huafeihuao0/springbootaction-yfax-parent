@@ -1,6 +1,8 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,11 @@ public class ReadHisDaoImpl implements ReadHisDao {
 	@Override
 	public List<ReadHisVo> selectReadHisByPhoneNum(String phoneNum) {
 		return this.sqlSessionTemplate.selectList("selectReadHisByPhoneNum", phoneNum);
+	}
+
+	@Override
+	public ReadHisVo selectReadHisByPhoneNumAndPrimaryKey(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectReadHisByPhoneNumAndPrimaryKey", map);
 	}
 
 }
