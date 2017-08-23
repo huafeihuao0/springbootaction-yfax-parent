@@ -52,7 +52,8 @@ public class OAuth2Configuration {
                     		GlobalUtils.PROJECT_QMTT + "/doLogin", 
                     		GlobalUtils.PROJECT_QMTT + "/doSms",
                     		GlobalUtils.PROJECT_QMTT + "/doResetPwd",
-                    		GlobalUtils.PROJECT_QMTT + "/doRedirectUrl").permitAll()
+                    		GlobalUtils.PROJECT_QMTT + "/doRedirectUrl",
+                    		GlobalUtils.PROJECT_QMTT + "/queryRank").permitAll()
                     .antMatchers("/secure/**", 
                     		GlobalUtils.PROJECT_QMTT + "/**").authenticated();
 

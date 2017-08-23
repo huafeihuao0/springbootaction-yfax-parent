@@ -126,7 +126,7 @@ public class AppQueryRest {
 	 * 获得排行榜数据
 	 */
 	@RequestMapping("/queryRank")
-	public JsonResult queryRank(String phoneNum) {
+	public JsonResult queryRank() {
 		Map<String, Object> map = new HashMap<>();
 		List<AppUserVo> list = this.appUserService.selectByRank();
 		map.put("list", list);

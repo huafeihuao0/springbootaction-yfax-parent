@@ -47,7 +47,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		
         //常见问题faq页不做拦截，中转链接不做拦截
         if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/faq") 
-        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doRedirectUrl")){
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doRedirectUrl")
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryRank")){
             return true;
         }
 		

@@ -51,7 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         		, GlobalUtils.PROJECT_QMTT + "/doLogin"
         		, GlobalUtils.PROJECT_QMTT + "/doSms"
         		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"
-        		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl");
+        		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl"
+        		, GlobalUtils.PROJECT_QMTT + "/queryRank");
     }
     
     @Override
