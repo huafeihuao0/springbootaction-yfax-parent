@@ -215,7 +215,7 @@ public class AppDoRest {
 	}
 	
 	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
-	private static final String ANDROID_URL = "http://www.qq.com/";
+	private static final String ANDROID_URL = "http://hbhunter.oss-cn-qingdao.aliyuncs.com/debug/app_qmtt.apk";
 	private static final String IPHONE_URL = "http://baidu.com";
 	/**
 	 * 邀请中转链接接口
@@ -382,7 +382,7 @@ public class AppDoRest {
 	/**
 	 * 记录阅读文章历史
 	 */
-	@RequestMapping("/doReadHis")
+	@RequestMapping(value = "/doReadHis", method = {RequestMethod.POST})
 	public JsonResult doReadHis(String phoneNum, String data, String primaryKey) {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("") 
 				&& !StrUtil.null2Str(primaryKey).equals("")) {
@@ -402,6 +402,27 @@ public class AppDoRest {
 			}
 		}else {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
+	
+	/**
+	 * 首次分享奖励金币接口
+	 */
+	@RequestMapping("/doSocialShare")
+	public JsonResult doSocialShare(String phoneNum) {
+		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+		if(appUserVo.getFirstShare() == 0) {
+			appUserVo.setFirstShare(1);
+			appUserVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
+			boolean flag = this.appUserService.modifyUser(appUserVo);
+			if(flag) {
+				return this.awardHisService.addAwardHis(phoneNum, GlobalUtils.AWARD_TYPE_FIRSTSHARE_GOLD
+						, GlobalUtils.AWARD_TYPE_FIRSTSHARE, null, 1, null);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			}
+		}else {
+			return new JsonResult(ResultCode.SUCCESS_DUPLICATE);
 		}
 	}
 }

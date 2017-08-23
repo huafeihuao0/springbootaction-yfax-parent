@@ -46,11 +46,15 @@ public class GlobalUtils {
 	 */
 	public static final int AWARD_TYPE_FIRSTSHARE = 6;
 	/**
+	 * 首次分享奖励金币
+	 */
+	public static final int AWARD_TYPE_FIRSTSHARE_GOLD = 500;
+	/**
 	 * 首次邀请奖励
 	 */
 	public static final int AWARD_TYPE_FIRSTINVITE = 7;
 	/**
-	 * 首次邀请奖励奖励金币
+	 * 首次邀请奖励金币
 	 */
 	public static final int AWARD_TYPE_FIRSTINVITE_GOLD = 3000;
 	/**
