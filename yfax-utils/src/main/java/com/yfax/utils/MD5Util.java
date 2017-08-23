@@ -55,6 +55,6 @@ public class MD5Util {
 //		System.out.println(DateUtil.stampToDate(1501646898));
 //		System.out.println(encodeByMD5(parameter).toLowerCase().equals("6d14631d36e9607a8e49a8f909c07e9e"));
 		//6d14631d36e9607a8e49a8f909c07e9e
-//		System.out.println(encodeByMD5("123456"));
+		System.out.println(encodeByMD5("yongjun"));
 	}
 }

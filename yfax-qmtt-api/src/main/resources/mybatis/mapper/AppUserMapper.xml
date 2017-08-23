@@ -12,9 +12,15 @@
         select * from qmtt_app_user where phoneNum=#{phoneNum}
     </select>
     
-    <!-- 20位最多获得金币的人 -->
+    <!-- 统计前二十收益最高的人 -->
     <select id="selectByRank" resultType="com.yfax.webapi.qmtt.vo.AppUserVo">
-        select * from qmtt_app_user order by gold desc limit 20
+        select phoneNum, ROUND(total,3) as balance from (select phoneNum, sum(balance) as total 
+		from qmtt_balance_his group by phoneNum order by total desc limit 20) a
+    </select>
+    
+    <!-- 统计总收益金额 -->
+    <select id="selectByRankSum" resultType="java.lang.Long">
+        select ROUND(sum(balance), 3) as sum from qmtt_balance_his
     </select>
     
 	<delete id="deleteByPhoneNum" parameterType="java.lang.String">

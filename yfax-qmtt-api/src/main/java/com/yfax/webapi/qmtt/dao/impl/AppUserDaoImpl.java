@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,5 +52,10 @@ public class AppUserDaoImpl implements AppUserDao {
 	@Override
 	public List<AppUserVo> selectByRank() {
 		return this.sqlSessionTemplate.selectList("selectByRank");
+	}
+	
+	@Override
+	public Long selectByRankSum() {
+		return this.sqlSessionTemplate.selectOne("selectByRankSum");
 	}
 }

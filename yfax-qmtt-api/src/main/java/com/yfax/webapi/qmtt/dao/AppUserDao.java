@@ -12,4 +12,5 @@ public interface AppUserDao {
 	public boolean insertUser(AppUserVo appUserVo);
 	public boolean updateUser(AppUserVo appUserVo);
 	public List<AppUserVo> selectByRank();
+	public Long selectByRankSum();
 }

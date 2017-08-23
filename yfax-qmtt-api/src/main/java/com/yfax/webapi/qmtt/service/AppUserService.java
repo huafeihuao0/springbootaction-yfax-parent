@@ -58,6 +58,10 @@ public class AppUserService {
 	public List<AppUserVo> selectByRank() {
 		return this.appUserDao.selectByRank();
 	}
+	
+	public Long selectByRankSum() {
+		return this.appUserDao.selectByRankSum();
+	}
 	       
 	@Transactional
 	public boolean doLoginOut(String phoneNum) {

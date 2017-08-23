@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.rest;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
@@ -125,8 +127,13 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryRank")
 	public JsonResult queryRank(String phoneNum) {
-		//TODO 金币字段需变成整型处理，否则排序不了
+		Map<String, Object> map = new HashMap<>();
 		List<AppUserVo> list = this.appUserService.selectByRank();
-		return new JsonResult(ResultCode.SUCCESS, list);
+		map.put("list", list);
+		Long sum = this.appUserService.selectByRankSum();
+		//格式化，保留三位小数，四舍五入
+		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+		map.put("sum", dFormat.format(sum));
+		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 }
