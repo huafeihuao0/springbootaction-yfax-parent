@@ -26,4 +26,9 @@ public class AppShareCodeDaoImpl implements AppShareCodeDao {
 		return this.sqlSessionTemplate.selectOne("selectAppShareCodeByPhoneNum", phoneNum);
 	}
 
+	@Override
+	public AppShareCodeVo selectAppShareCodeByShareCode(String shareCode) {
+		return this.sqlSessionTemplate.selectOne("selectAppShareCodeByShareCode", shareCode);
+	}
+
 }

@@ -36,6 +36,13 @@
 		  <if test="registerDate != null" > registerDate, </if>
 		  <if test="lastLoginDate != null" > lastLoginDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
+		  <if test="blackList != null" > blackList, </if>
+		  <if test="shareCount != null" > shareCount, </if>
+		  <if test="firstShare != null" > firstShare, </if>
+		  <if test="firstInvite != null" > firstInvite, </if>
+		  <if test="firstRead != null" > firstRead, </if>
+		  <if test="students != null" > students, </if>
+		  <if test="dailyCheckIn != null" > dailyCheckIn, </if>
 		  
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -51,6 +58,13 @@
 		  <if test="registerDate != null" > #{registerDate}, </if>
 		  <if test="lastLoginDate != null" > null, </if>
 		  <if test="updateDate != null" > #{updateDate}, </if>
+		  <if test="blackList != null" > #{blackList}, </if>
+		  <if test="shareCount != null" > #{shareCount}, </if>
+		  <if test="firstShare != null" > #{firstShare}, </if>
+		  <if test="firstInvite != null" > #{firstInvite}, </if>
+		  <if test="firstRead != null" > #{firstRead}, </if>
+		  <if test="students != null" > #{students}, </if>
+		  <if test="dailyCheckIn != null" > #{dailyCheckIn}, </if>
 		  
         </trim>
 	</insert>
@@ -68,6 +82,13 @@
 			<if test="email != null"> email = #{email}, </if>
 			<if test="lastLoginDate != null"> lastLoginDate = #{lastLoginDate}, </if>
 			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+			<if test="blackList != null"> blackList = #{blackList}, </if>
+			<if test="shareCount != null"> shareCount = #{shareCount}, </if>
+			<if test="firstShare != null"> firstShare = #{firstShare}, </if>
+			<if test="firstInvite != null"> firstInvite = #{firstInvite}, </if>
+			<if test="firstRead != null"> firstRead = #{firstRead}, </if>
+			<if test="students != null"> students = #{students}, </if>
+			<if test="dailyCheckIn != null"> dailyCheckIn = #{dailyCheckIn}, </if>
 			
 		</set>
 		where phoneNum = #{phoneNum} 

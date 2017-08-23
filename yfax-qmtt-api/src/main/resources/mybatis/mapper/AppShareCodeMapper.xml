@@ -7,6 +7,10 @@
 	<select id="selectAppShareCodeByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.AppShareCodeVo">
         select * from qmtt_app_sharecode where phoneNum=#{phoneNum}
     </select>
+    
+    <select id="selectAppShareCodeByShareCode" resultType="com.yfax.webapi.qmtt.vo.AppShareCodeVo">
+         select * from qmtt_app_sharecode where sharecode=#{sharecode}
+    </select>
 
     <!-- 添加 -->
 	<insert id="insertAppShareCode" parameterType="com.yfax.webapi.qmtt.vo.AppShareCodeVo">

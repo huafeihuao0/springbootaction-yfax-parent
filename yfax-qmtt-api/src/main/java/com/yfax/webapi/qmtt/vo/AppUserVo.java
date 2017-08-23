@@ -18,7 +18,20 @@ public class AppUserVo implements Serializable {
 	private String registerDate;	//注册时间
 	private String lastLoginDate;	//最后一次登录时间
 	private String updateDate;
+	private Integer blackList;	//是否黑名单用户
+	private Integer shareCount;	//已分享次数
+	private Integer firstShare;	//首次分享标识
+	private Integer firstInvite;	//首次邀请成功标识
+	private Integer firstRead;	//首次阅读标识
+	private Integer students;	//徒弟数
+	private Integer dailyCheckIn;	//今日签到标识
 	
+	public Integer getDailyCheckIn() {
+		return dailyCheckIn;
+	}
+	public void setDailyCheckIn(Integer dailyCheckIn) {
+		this.dailyCheckIn = dailyCheckIn;
+	}
 	public String getPhoneNum() {
 		return phoneNum;
 	}
@@ -90,5 +103,41 @@ public class AppUserVo implements Serializable {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	public Integer getBlackList() {
+		return blackList;
+	}
+	public void setBlackList(Integer blackList) {
+		this.blackList = blackList;
+	}
+	public Integer getShareCount() {
+		return shareCount;
+	}
+	public void setShareCount(Integer shareCount) {
+		this.shareCount = shareCount;
+	}
+	public Integer getFirstShare() {
+		return firstShare;
+	}
+	public void setFirstShare(Integer firstShare) {
+		this.firstShare = firstShare;
+	}
+	public Integer getFirstInvite() {
+		return firstInvite;
+	}
+	public void setFirstInvite(Integer firstInvite) {
+		this.firstInvite = firstInvite;
+	}
+	public Integer getFirstRead() {
+		return firstRead;
+	}
+	public void setFirstRead(Integer firstRead) {
+		this.firstRead = firstRead;
+	}
+	public Integer getStudents() {
+		return students;
+	}
+	public void setStudents(Integer students) {
+		this.students = students;
 	}
 }

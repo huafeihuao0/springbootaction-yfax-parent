@@ -53,7 +53,7 @@ public class AppQueryRest {
 	private RateSetService rateSetService;
 	
 	/**
-	 * 个人资产接口
+	 * 个人信息接口
 	 */
 	@RequestMapping("/queryOwnInfo")
 	public JsonResult queryOwnInfo(String phoneNum) {
@@ -65,8 +65,8 @@ public class AppQueryRest {
 		//得到当前汇率
 		RateSetVo rateSetVo = this.rateSetService.selectRateSet();
 		map.put("rate", rateSetVo.getRate());
-		//TODO 我的徒弟数
-		map.put("students", "20");
+		map.put("students", appUserVo.getStudents());
+		map.put("appUserVo", appUserVo);
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 	

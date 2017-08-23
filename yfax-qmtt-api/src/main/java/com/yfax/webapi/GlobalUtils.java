@@ -50,6 +50,10 @@ public class GlobalUtils {
 	 */
 	public static final int AWARD_TYPE_FIRSTINVITE = 7;
 	/**
+	 * 首次邀请奖励奖励金币
+	 */
+	public static final int AWARD_TYPE_FIRSTINVITE_GOLD = 3000;
+	/**
 	 * 兑换类型-兑换金币
 	 */
 	public static final int BALANCE_TYPE_REDEEM = 1;

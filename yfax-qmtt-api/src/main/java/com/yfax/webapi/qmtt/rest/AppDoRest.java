@@ -89,7 +89,7 @@ public class AppDoRest {
 	 * 用户注册接口（限定手机号码）
 	 */
 	@RequestMapping(value = "/doRegister", method = {RequestMethod.POST})
-	public JsonResult doRegister(String phoneNum, String userPwd) {
+	public JsonResult doRegister(String phoneNum, String userPwd, HttpServletRequest request) {
 		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
 		if(appUserVo != null) {
 			return new JsonResult(ResultCode.SUCCESS_EXIST);
@@ -97,22 +97,7 @@ public class AppDoRest {
 			if(phoneNum == null || userPwd == null) {
 				return new JsonResult(ResultCode.PARAMS_ERROR);
 			}
-			//添加用户
-			appUserVo = new AppUserVo();
-			appUserVo.setPhoneNum(phoneNum);;
-			appUserVo.setUserPwd(userPwd);
-			appUserVo.setGold("0");
-			appUserVo.setBalance("0.00");
-			String cTime = DateUtil.getCurrentLongDateTime();
-			appUserVo.setRegisterDate(cTime);
-			appUserVo.setLastLoginDate(cTime);
-			appUserVo.setUpdateDate(cTime);
-			boolean flag = this.appUserService.addUser(appUserVo);
-			if(flag) {
-				return new JsonResult(ResultCode.SUCCESS);
-			}else {
-				return new JsonResult(ResultCode.SUCCESS_FAIL);
-			}
+			return this.appUserService.registerUser(phoneNum, userPwd, request);
 		}
 	}
 	
@@ -292,16 +277,17 @@ public class AppDoRest {
 			if(count == 1) {
 				logger.info("首次有效阅读固定奖励，gold=" + GlobalUtils.AWARD_TYPE_FIRSTREAD_GOLD + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, GlobalUtils.AWARD_TYPE_FIRSTREAD_GOLD
-						, GlobalUtils.AWARD_TYPE_FIRSTREAD);
+						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null);
 			}
 			//一篇文章只能奖励一次
 			map.put("primaryKey", primaryKey);
 			Long count2 = this.readHisService.selectCountByPhoneNumAndPrimaryKey(map);
+			logger.info("count2");
 			if(count2 == 1){
 				//随机金币奖励
 				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
 				logger.info("阅读随机奖励，gold=" + gold + "，phoneNum=" + phoneNum);
-				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ);
+				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ, null, null, null);
 				
 			}else if(count2 > 1) {
 				String result = "文章已获取奖励，跳过处理";
@@ -384,7 +370,7 @@ public class AppDoRest {
 			if(awardHisVo == null) {
 				//随机金币奖励
 				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
-				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY);
+				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY, null, null, null);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
 			}

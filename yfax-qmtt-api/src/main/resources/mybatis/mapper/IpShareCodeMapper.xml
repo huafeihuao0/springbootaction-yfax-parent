@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
 
 	<select id="selectIpShareCodeByIp" resultType="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
-        select * from qmtt_ip_sharecode where sourceIp=#{sourceIp} limit 1
+        select * from qmtt_ip_sharecode where sourceIp=#{sourceIp} order by createDate desc limit 1
     </select>
 
     <!-- 添加 -->

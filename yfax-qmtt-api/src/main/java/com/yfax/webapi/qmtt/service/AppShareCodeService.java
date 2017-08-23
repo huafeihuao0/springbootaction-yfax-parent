@@ -33,4 +33,8 @@ public class AppShareCodeService{
 		return this.dao.selectAppShareCodeByPhoneNum(phoneNum);
 	}
 	
+	public AppShareCodeVo selectAppShareCodeByShareCode(String shareCode) {
+		return this.dao.selectAppShareCodeByShareCode(shareCode);
+	}
+	
 }

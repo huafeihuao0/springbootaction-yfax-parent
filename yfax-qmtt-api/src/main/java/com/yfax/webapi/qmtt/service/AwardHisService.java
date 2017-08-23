@@ -34,8 +34,17 @@ public class AwardHisService{
 	@Autowired
 	private AppUserDao appUserDao;
 	
+	/**
+	 * @param phoneNum
+	 * @param gold
+	 * @param awardType
+	 * @param firstRead
+	 * @param firstShare
+	 * @param firstInvite
+	 * @return
+	 */
 	@Transactional
-	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType){
+	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, Integer firstRead, Integer firstShare, Integer firstInvite){
 		try {
 			//1. 记录奖励明细
 			AwardHisVo awardHisVo = new AwardHisVo();
@@ -53,6 +62,11 @@ public class AwardHisService{
 			int sum = Integer.valueOf(appUserVo.getGold()) + gold;
 			appUserVo.setGold(String.valueOf(sum));
 			appUserVo.setUpdateDate(cTime);
+			appUserVo.setFirstRead(firstRead);
+			appUserVo.setFirstShare(firstShare);
+			appUserVo.setFirstInvite(firstInvite);
+			//TODO 每日零点跑批清除标识
+			appUserVo.setDailyCheckIn(1);	//今日签到标识
 			logger.info("手机号码phoneNum=" + phoneNum + ", 原金币余额gold=" + old + ", 奖励金币gold=" + gold 
 				+ ", 更新金币总余额sum=" + sum + ", 奖励类型awardType=" + awardType);
 			boolean flag =  this.awardHisDao.insertAwardHis(awardHisVo);
@@ -60,6 +74,7 @@ public class AwardHisService{
 			if(flag && flag1) {
 				Map<String, Object> map = new HashMap<>();
 				map.put("gold", gold);
+				map.put("awardType", awardType);
 				return new JsonResult(ResultCode.SUCCESS, map);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
