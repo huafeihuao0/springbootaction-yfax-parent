@@ -9,12 +9,12 @@
     </select>
     
     <!-- 首次有效阅读 -->
-    <select id="selectCountByPhoneNum" resultType="java.lang.Long">
+    <select id="selectReadHisCountByPhoneNum" resultType="java.lang.Long">
         select count(id) from qmtt_read_his where phoneNum=#{phoneNum}
     </select>
     
     <!-- 一篇文章只能奖励阅读 -->
-    <select id="selectCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
+    <select id="selectReadHisCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
         select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey}
     </select>
     

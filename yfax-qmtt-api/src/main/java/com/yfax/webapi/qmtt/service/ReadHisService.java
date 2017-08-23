@@ -38,11 +38,11 @@ public class ReadHisService{
 	}
 	
 	public Long selectCountByPhoneNum(Map<String, Object> map) {
-		return this.readHisDao.selectCountByPhoneNum(map);
+		return this.readHisDao.selectReadHisCountByPhoneNum(map);
 	}
 	
 	public Long selectCountByPhoneNumAndPrimaryKey(Map<String, Object> map) {
-		return this.readHisDao.selectCountByPhoneNumAndPrimaryKey(map);
+		return this.readHisDao.selectReadHisCountByPhoneNumAndPrimaryKey(map);
 	}
 	
 }
