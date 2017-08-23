@@ -19,5 +19,6 @@
         <mapper resource="mybatis/mapper/AppShareCodeMapper.xml"/>
         <mapper resource="mybatis/mapper/IpShareCodeMapper.xml"/>
         <mapper resource="mybatis/mapper/ShareUserHisMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserFeedbackMapper.xml"/>
     </mappers>
 </configuration>

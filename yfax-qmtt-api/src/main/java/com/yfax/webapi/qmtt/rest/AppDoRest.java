@@ -31,6 +31,7 @@ import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IpShareCodeService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
+import com.yfax.webapi.qmtt.service.UserFeedbackService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
@@ -39,6 +40,7 @@ import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
+import com.yfax.webapi.qmtt.vo.UserFeedbackVo;
 import com.yfax.webapi.qmtt.vo.UserSmsVo;
 
 /**
@@ -69,6 +71,8 @@ public class AppDoRest {
 	private AppShareCodeService appShareCodeService;
 	@Autowired
 	private IpShareCodeService ipShareCodeService;
+	@Autowired
+	private UserFeedbackService userFeedbackService;
 	
 	/**
 	 * 用户退出登录接口
@@ -423,6 +427,30 @@ public class AppDoRest {
 			}
 		}else {
 			return new JsonResult(ResultCode.SUCCESS_DUPLICATE);
+		}
+	}
+	
+	/**
+	 * 用户反馈信息接口
+	 */
+	@RequestMapping(value = "/doUserFeedback", method = {RequestMethod.POST})
+	public JsonResult doUserFeedback(String phoneNum, String info) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(info).equals("")) {
+			UserFeedbackVo userFeedbackVo = new UserFeedbackVo();
+			userFeedbackVo.setId(UUID.getUUID());
+			userFeedbackVo.setPhoneNum(phoneNum);
+			userFeedbackVo.setInfo(info);
+			String cTime = DateUtil.getCurrentLongDateTime();
+			userFeedbackVo.setCreateDate(cTime);
+			userFeedbackVo.setUpdateDate(cTime);
+			boolean result = this.userFeedbackService.addUserFeedback(userFeedbackVo);
+			if(result) {
+				return new JsonResult(ResultCode.SUCCESS);
+			}else{
+				return new JsonResult(ResultCode.SUCCESS_FAIL);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
 }
