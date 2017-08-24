@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.WithdrawHisVo">
 
     <select id="selectWithdrawHis" resultType="com.yfax.webapi.qmtt.vo.WithdrawHisVo">
-		select * from qmtt_withdraw_his where phoneNum = #{phoneNum} order by withdrawTime desc
+		select * from qmtt_withdraw_his where phoneNum = #{phoneNum} order by withdrawTime desc limit 200
     </select>
     
     <!-- 添加 -->

@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.ReadHisVo">
 
 	<select id="selectReadHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
-        select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc
+        select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc limit 50
     </select>
     
     <!-- 首次有效阅读 -->

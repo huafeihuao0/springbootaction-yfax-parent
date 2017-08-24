@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.AwardHisVo">
 
 	<select id="selectAwardHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
-        select * from qmtt_award_his where phoneNum=#{phoneNum} order by createDate desc
+        select * from qmtt_award_his where phoneNum=#{phoneNum} order by createDate desc limit 200
     </select>
     
     <!-- 今日签到判断 -->
