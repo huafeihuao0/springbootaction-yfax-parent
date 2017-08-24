@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.IncomeSetVo">
 
 	 <select id="selectIncomeSet" resultType="com.yfax.webapi.qmtt.vo.IncomeSetVo">
-        select * from qmtt_income_set where status=2
+        select * from qmtt_income_set where status=2 and saleFlag!=1
     </select>
     
 </mapper>
