@@ -20,8 +20,8 @@ public class ReadHisDaoImpl implements ReadHisDao {
 	
 	@Override
 	@Transactional
-	public boolean insertReadHis(ReadHisVo awardHisVo) throws Exception {
-		int i = this.sqlSessionTemplate.insert("insertReadHis", awardHisVo);
+	public boolean insertReadHis(ReadHisVo readHisVo) throws Exception {
+		int i = this.sqlSessionTemplate.insert("insertReadHis", readHisVo);
 		return i > 0 ? true : false;
 	}
 
@@ -38,6 +38,13 @@ public class ReadHisDaoImpl implements ReadHisDao {
 	@Override
 	public Long selectReadHisCountByPhoneNumAndPrimaryKey(Map<String, Object> map) {
 		return this.sqlSessionTemplate.selectOne("selectReadHisCountByPhoneNumAndPrimaryKey", map);
+	}
+
+	@Override
+	@Transactional
+	public boolean updateReadHis(ReadHisVo readHisVo) throws Exception {
+		int i = this.sqlSessionTemplate.insert("updateReadHis", readHisVo);
+		return i > 0 ? true : false;
 	}
 
 }

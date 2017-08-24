@@ -10,11 +10,18 @@ public class ReadHisVo implements Serializable{
 	private String phoneNum;		//手机号码
 	private String data;			//文章内容
 	private String primaryKey;	//文章主键
+	private Integer isAward;		//是否已奖励金币
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
+	public Integer getIsAward() {
+		return isAward;
+	}
+	public void setIsAward(Integer isAward) {
+		this.isAward = isAward;
+	}
 	public String getId() {
 		return id;
 	}

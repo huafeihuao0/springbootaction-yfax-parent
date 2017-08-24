@@ -1,5 +1,7 @@
 package com.yfax.webapi;
 
+import java.util.Random;
+
 public class GlobalUtils {
 	/**
 	 * 统一访问前缀：/yfax-qmtt-api
@@ -16,15 +18,11 @@ public class GlobalUtils {
 	/**
 	 * 随机奖励
 	 */
-	public static final int[] RANDOM_GOLD = new int[] {20,21,22,23,24,25,26,27,28,29,30};
+//	public static final int[] RANDOM_GOLD = new int[] {20,21,22,23,24,25,26,27,28,29,30};
 	/**
 	 * 首次有效阅读
 	 */
 	public static final int AWARD_TYPE_FIRSTREAD = 1;
-	/**
-	 * 首次有效阅读奖励金币
-	 */
-	public static final int AWARD_TYPE_FIRSTREAD_GOLD = 300;
 	/**
 	 * 邀请奖励
 	 */
@@ -46,17 +44,9 @@ public class GlobalUtils {
 	 */
 	public static final int AWARD_TYPE_FIRSTSHARE = 6;
 	/**
-	 * 首次分享奖励金币
-	 */
-	public static final int AWARD_TYPE_FIRSTSHARE_GOLD = 500;
-	/**
 	 * 首次邀请奖励
 	 */
 	public static final int AWARD_TYPE_FIRSTINVITE = 7;
-	/**
-	 * 首次邀请奖励金币
-	 */
-	public static final int AWARD_TYPE_FIRSTINVITE_GOLD = 3000;
 	/**
 	 * 兑换类型-兑换金币
 	 */
@@ -85,5 +75,28 @@ public class GlobalUtils {
 				return "首次邀请奖励";
 		}
 		return "未知奖励类型";
+	}
+	
+	/**
+	 * 根据金币，返回随机金币值
+	 * @param goldRange
+	 */
+	public static int getRanomGold(String goldRange) {
+		String[] strings = goldRange.split("#");
+		int start = Integer.valueOf(strings[0]);
+		int end = Integer.valueOf(strings[1]);
+		int count = 0;
+		for (int i = start; i <= end; i++) {
+			count++;
+		}
+		int[] golds = new int[count];
+		for (int i = 0; i < golds.length; i++) {
+			golds[i] = start + i;
+		}
+		return golds[new Random().nextInt(golds.length)];
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getRanomGold("40#50"));
 	}
 }

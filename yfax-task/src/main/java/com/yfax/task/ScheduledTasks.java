@@ -44,17 +44,33 @@ public class ScheduledTasks {
 
 	// cron表达式，second, minute, hour, day, month, weekday
 	//每日零点跑批
-	@Scheduled(cron = "0 0 17 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void doSomething() {
-		//TODO 配合APP测试，暂时改成每日下午5点跑批
-		this.myTask();
+		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+		this.batchResetDailyCheckIn();
+		this.batchAutoTransfer();
 	}
 	
 	/**
-	 * 跑批任务
+	 * 每日零点重置用户今日签到标识
 	 */
-	private void myTask() {
-		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+	private void batchResetDailyCheckIn() {
+		logger.info("第一步，开始清除用户的每日签到标识...");
+		List<AppUserVo> list = this.appUserService.selectAllUser();
+		for (AppUserVo appUserVo : list) {
+			appUserVo.setDailyCheckIn(0);
+			boolean result = this.appUserService.modifyUser(appUserVo);
+			logger.info("phoneNum" + appUserVo.getPhoneNum() 
+				+ ", 重置结果result=" + (result?"成功":"失败"));
+		}
+	}
+	
+	
+	/**
+	 * 跑批自动金币转零钱任务
+	 */
+	private void batchAutoTransfer() {
+		logger.info("第二步，开始自动批量处理金币转换零钱...");
 		List<AppUserVo> list = this.appUserService.selectByPhoneNumGoldLimit();
 		for (AppUserVo appUserVo : list) {
 			if(!StrUtil.null2Str(appUserVo.getGold()).equals("") 

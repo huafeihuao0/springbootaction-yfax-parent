@@ -14,4 +14,5 @@ public interface AppUserDao {
 	public List<AppUserVo> selectByRank();
 	public Long selectByRankSum();
 	public List<AppUserVo> selectByPhoneNumGoldLimit();
+	public List<AppUserVo> selectAllUser();
 }

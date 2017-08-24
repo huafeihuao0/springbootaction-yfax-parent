@@ -28,7 +28,17 @@ public class ReadHisService{
 		try {
 			return this.readHisDao.insertReadHis(readHisVo);
 		} catch (Exception e) {
-			logger.error("记录用户阅读文章历史异常：" + e.getMessage(), e);
+			logger.error("新增用户阅读文章历史异常：" + e.getMessage(), e);
+			return false;
+		}
+	}
+	
+	@Transactional
+	public boolean modifyReadHis(ReadHisVo readHisVo){
+		try {
+			return this.readHisDao.updateReadHis(readHisVo);
+		} catch (Exception e) {
+			logger.error("修改用户阅读文章历史异常：" + e.getMessage(), e);
 			return false;
 		}
 	}

@@ -2,7 +2,6 @@ package com.yfax.webapi.qmtt.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +21,7 @@ import com.yfax.webapi.qmtt.dao.AppShareCodeDao;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.dao.IpShareCodeDao;
 import com.yfax.webapi.qmtt.dao.ShareUserHisDao;
+import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
@@ -46,6 +46,8 @@ public class AppUserService {
 	private ShareUserHisDao shareUserHisDao;
 	@Autowired
 	private AwardHisService awardHisService;
+	@Autowired
+	private AppConfigService appConfigService;
 	
 	public AppUserVo selectByPhoneNum(String phoneNum) {
 		return this.appUserDao.selectByPhoneNum(phoneNum);
@@ -100,20 +102,22 @@ public class AppUserService {
 				 //邀请人信息
 				 AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(appShareCodeVo.getPhoneNum());
 				 if(appUserVo2 != null) {
+					 //配置信息
+					 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 					 //是否首次邀请奖励
 					 Long count = this.shareUserHisDao.selectCountByPhoneNum(phoneNum);
 					 JsonResult result = new JsonResult();
 					 if(count == 0) {
 						 //给邀请人首次邀请奖励
-						 result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), GlobalUtils.AWARD_TYPE_FIRSTINVITE_GOLD
-								 , GlobalUtils.AWARD_TYPE_FIRSTINVITE, null, null, 1);
-						 logger.info("首次邀请奖励，gold=" + GlobalUtils.AWARD_TYPE_FIRSTINVITE_GOLD 
+						 result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), appConfigVo.getFirstInviteGold()
+								 , GlobalUtils.AWARD_TYPE_FIRSTINVITE, null, null, 1, null);
+						 logger.info("首次邀请奖励，gold=" + appConfigVo.getFirstInviteGold()
 								 + "，phoneNum=" + appUserVo2.getPhoneNum() + ", result=" + result.toJsonString());
 					 }else {
 						//随机金币奖励
-						int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
+						int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 						result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), gold, 
-								GlobalUtils.AWARD_TYPE_INVITE, null, null, null);
+								GlobalUtils.AWARD_TYPE_INVITE, null, null, null, null);
 						logger.info("邀请随机奖励，gold=" + gold + "，phoneNum=" + appUserVo2.getPhoneNum() 
 							+ ", result=" + result.toJsonString());
 					 }

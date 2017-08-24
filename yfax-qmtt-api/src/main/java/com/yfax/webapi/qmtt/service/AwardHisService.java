@@ -17,8 +17,10 @@ import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.dao.AwardHisDao;
+import com.yfax.webapi.qmtt.dao.ReadHisDao;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
+import com.yfax.webapi.qmtt.vo.ReadHisVo;
 
 /**
  * 记录用户金币奖励记录
@@ -33,6 +35,8 @@ public class AwardHisService{
 	private AwardHisDao awardHisDao;
 	@Autowired
 	private AppUserDao appUserDao;
+	@Autowired
+	private ReadHisDao readHisDao;
 	
 	/**
 	 * @param phoneNum
@@ -41,10 +45,12 @@ public class AwardHisService{
 	 * @param firstRead
 	 * @param firstShare
 	 * @param firstInvite
+	 * @param readHisId
 	 * @return
 	 */
 	@Transactional
-	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, Integer firstRead, Integer firstShare, Integer firstInvite){
+	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, 
+			Integer firstRead, Integer firstShare, Integer firstInvite, String readHisId){
 		try {
 			//1. 记录奖励明细
 			AwardHisVo awardHisVo = new AwardHisVo();
@@ -65,13 +71,24 @@ public class AwardHisService{
 			appUserVo.setFirstRead(firstRead);
 			appUserVo.setFirstShare(firstShare);
 			appUserVo.setFirstInvite(firstInvite);
-			//TODO 每日零点跑批清除标识
 			appUserVo.setDailyCheckIn(1);	//今日签到标识
 			logger.info("手机号码phoneNum=" + phoneNum + ", 原金币余额gold=" + old + ", 奖励金币gold=" + gold 
 				+ ", 更新金币总余额sum=" + sum + ", 奖励类型awardType=" + awardType);
 			boolean flag =  this.awardHisDao.insertAwardHis(awardHisVo);
 			boolean flag1 = this.appUserDao.updateUser(appUserVo);
 			if(flag && flag1) {
+				//3. 记录文章已获取金币标识
+				if(awardType == GlobalUtils.AWARD_TYPE_FIRSTREAD 
+						|| awardType == GlobalUtils.AWARD_TYPE_READ) {
+					ReadHisVo readHisVo = new ReadHisVo();
+					readHisVo.setId(readHisId);
+					readHisVo.setIsAward(1);		//已奖励标识
+					readHisVo.setUpdateDate(cTime);
+					boolean flag2 =  this.readHisDao.updateReadHis(readHisVo);
+					if (!flag2) {
+						logger.error("阅读文章奖励标识更新异常", new RuntimeException("readHisId=" + readHisId));
+					}
+				}
 				Map<String, Object> map = new HashMap<>();
 				map.put("gold", gold);
 				map.put("awardType", awardType);
@@ -91,6 +108,10 @@ public class AwardHisService{
 	
 	public AwardHisVo selectAwardHisIsCheckIn(Map<String, Object> map) {
 		return this.awardHisDao.selectAwardHisIsCheckIn(map);
+	}
+	
+	public Long selectUserTotalOfGold(Map<String, Object> map) {
+		return this.awardHisDao.selectUserTotalOfGold(map);
 	}
 	
 }

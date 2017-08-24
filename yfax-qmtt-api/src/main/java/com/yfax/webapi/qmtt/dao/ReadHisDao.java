@@ -7,7 +7,9 @@ import com.yfax.webapi.qmtt.vo.ReadHisVo;
 
 public interface ReadHisDao {
 	public boolean insertReadHis(ReadHisVo readHisVo) throws Exception;
+	public boolean updateReadHis(ReadHisVo readHisVo) throws Exception;
 	public List<ReadHisVo> selectReadHisByPhoneNum(String phoneNum);
 	public Long selectReadHisCountByPhoneNum(Map<String, Object> map);
 	public Long selectReadHisCountByPhoneNumAndPrimaryKey(Map<String, Object> map);
+	
 }

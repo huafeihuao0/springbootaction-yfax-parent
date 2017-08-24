@@ -17,6 +17,10 @@
         select * from qmtt_app_user where phoneNum=#{phoneNum}
     </select>
     
+    <select id="selectAllUser" resultType="com.yfax.task.vo.AppUserVo">
+        select * from qmtt_app_user
+    </select>
+    
     <!-- 统计前二十收益最高的人 -->
     <select id="selectByRank" resultType="com.yfax.task.vo.AppUserVo">
         select phoneNum, ROUND(total,3) as balance from (select phoneNum, sum(balance) as total 

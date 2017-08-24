@@ -12,6 +12,12 @@
     <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
          select * from qmtt_award_his where phoneNum=#{phoneNum} and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
     </select>
+    
+    <!-- 统计各类型指定类型下领取的金币值 -->
+    <select id="selectUserTotalOfGold" resultType="java.lang.Long">
+		select ifnull(sum(gold),0) as total from qmtt_award_his where phoneNum=#{phoneNum} 
+			and awardType=#{awardType} and date_format(createDate,'%Y-%m-%d')=#{currentTime}
+    </select>
 
     <!-- 添加 -->
 	<insert id="insertAwardHis" parameterType="com.yfax.webapi.qmtt.vo.AwardHisVo">

@@ -35,4 +35,9 @@ public class AwardHisDaoImpl implements AwardHisDao {
 		return this.sqlSessionTemplate.selectOne("selectAwardHisIsFirstLogin", map);
 	}
 
+	@Override
+	public Long selectUserTotalOfGold(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectUserTotalOfGold", map);
+	}
+
 }

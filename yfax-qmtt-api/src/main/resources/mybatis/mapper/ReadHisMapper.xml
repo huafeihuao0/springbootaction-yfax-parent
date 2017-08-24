@@ -15,7 +15,7 @@
     
     <!-- 一篇文章只能奖励阅读 -->
     <select id="selectReadHisCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
-        select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey}
+        select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey} and isAward=1
     </select>
     
     <!-- 添加 -->
@@ -26,6 +26,7 @@
 		  <if test="phoneNum != null" > phoneNum, </if>
 		  <if test="data != null" > data, </if>
 		  <if test="primaryKey != null" > primaryKey, </if>
+		  <if test="isAward != null" > isAward, </if>
 		  <if test="createDate != null" > createDate, </if>
 		  <if test="updateDate != null" > updateDate, </if>
 		  
@@ -35,9 +36,22 @@
 		  <if test="phoneNum != null" > #{phoneNum}, </if>
 		  <if test="data != null" > #{data}, </if>
 		  <if test="primaryKey != null" > #{primaryKey}, </if>
+		  <if test="isAward != null" > #{isAward}, </if>
 		  <if test="createDate != null" > #{createDate}, </if>
 		  <if test="updateDate != null" > null, </if>
 		  
         </trim>
 	</insert>
+	
+	<update id="updateReadHis" parameterType="com.yfax.webapi.qmtt.vo.ReadHisVo">
+		update qmtt_read_his 
+		<set>
+			<if test="phoneNum != null"> phoneNum = #{phoneNum}, </if>
+			<if test="data != null"> data = #{data}, </if>
+			<if test="primaryKey != null"> primaryKey = #{primaryKey}, </if>
+			<if test="isAward != null"> isAward = #{isAward}, </if>
+			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+		</set>
+		where id = #{id} 
+	</update>
 </mapper>

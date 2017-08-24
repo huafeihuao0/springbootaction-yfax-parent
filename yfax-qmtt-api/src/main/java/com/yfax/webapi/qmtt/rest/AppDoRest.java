@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,16 +23,17 @@ import com.yfax.utils.ResultCode;
 import com.yfax.utils.StrUtil;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppShareCodeService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
-import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IpShareCodeService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.UserFeedbackService;
 import com.yfax.webapi.qmtt.service.UserSmsService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
+import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
@@ -73,6 +73,8 @@ public class AppDoRest {
 	private IpShareCodeService ipShareCodeService;
 	@Autowired
 	private UserFeedbackService userFeedbackService;
+	@Autowired
+	private AppConfigService appConfigService;
 	
 	/**
 	 * 用户退出登录接口
@@ -219,8 +221,9 @@ public class AppDoRest {
 	}
 	
 	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
-	private static final String ANDROID_URL = "http://hbhunter.oss-cn-qingdao.aliyuncs.com/debug/app_qmtt.apk";
-	private static final String IPHONE_URL = "http://baidu.com";
+//	private static final String ANDROID_URL = "http://hbhunter.oss-cn-qingdao.aliyuncs.com/debug/app_qmtt.apk";
+//	private static final String IPHONE_URL = "http://baidu.com";
+	
 	/**
 	 * 邀请中转链接接口
 	 * @return
@@ -235,10 +238,14 @@ public class AppDoRest {
 		 while (names.hasMoreElements()){
 			 String name = (String) names.nextElement();
 			 if(request.getHeader(name).contains("iPhone")){  
-				 url = IPHONE_URL;
+				//配置信息
+				 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				 url = appConfigVo.getIphoneUrl();
 				 break;
 			 }else if(request.getHeader(name).contains("Android")) {
-				 url = ANDROID_URL;
+				//配置信息
+				 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				 url = appConfigVo.getAndroidUrl();
 				 break;
 			 }
 		 }
@@ -272,26 +279,38 @@ public class AppDoRest {
 	 * 获得阅读文章随机金币
 	 */
 	@RequestMapping(value = "/doReadAward", method = {RequestMethod.POST})
-	public JsonResult doReadAward(String phoneNum, String primaryKey) {
-		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(primaryKey).equals("")) {
+	public JsonResult doReadAward(String phoneNum, String primaryKey, String readHisId) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(primaryKey).equals("") 
+				&& !StrUtil.null2Str(readHisId).equals("")) {
+			//配置信息
+			AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+			
 			Map<String, Object> map = new HashMap<>();
 			map.put("phoneNum", phoneNum);
-			Long count = this.readHisService.selectCountByPhoneNum(map);
-			//首次阅读才奖励
-			if(count == 1) {
-				logger.info("首次有效阅读固定奖励，gold=" + GlobalUtils.AWARD_TYPE_FIRSTREAD_GOLD + "，phoneNum=" + phoneNum);
-				return this.awardHisService.addAwardHis(phoneNum, GlobalUtils.AWARD_TYPE_FIRSTREAD_GOLD
-						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null);
+			//先判断是否达到每日阅读奖励上限
+			map.put("awardType", GlobalUtils.AWARD_TYPE_READ);
+			map.put("createDate", DateUtil.getCurrentDate());
+			Long total = this.awardHisService.selectUserTotalOfGold(map);		//统计个人今日阅读领取金币
+			if(total>=appConfigVo.getGoldLimit()) {
+				return new JsonResult(ResultCode.SUCCESS_DAILY_LIMIT);
 			}
-			//一篇文章只能奖励一次
+			//2. 首次阅读才奖励固定金币
+			Long count = this.readHisService.selectCountByPhoneNum(map);
+			if(count == 1) {
+				logger.info("首次有效阅读固定奖励，gold=" + appConfigVo.getFirstReadGold() + "，phoneNum=" + phoneNum);
+				return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getFirstReadGold()
+						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null, readHisId);
+			}
+			//3. 一篇文章只能奖励一次
 			map.put("primaryKey", primaryKey);
 			Long count2 = this.readHisService.selectCountByPhoneNumAndPrimaryKey(map);
-			logger.info("count2");
+			logger.info("count2=" + count2);
 			if(count2 == 1){
 				//随机金币奖励
-				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
+				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 				logger.info("阅读随机奖励，gold=" + gold + "，phoneNum=" + phoneNum);
-				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_READ, null, null, null);
+				return this.awardHisService.addAwardHis(phoneNum, gold, 
+						GlobalUtils.AWARD_TYPE_READ, null, null, null, readHisId);
 				
 			}else if(count2 > 1) {
 				String result = "文章已获取奖励，跳过处理";
@@ -372,9 +391,12 @@ public class AppDoRest {
 			map.put("currentTime", currentTime);
 			AwardHisVo awardHisVo = this.awardHisService.selectAwardHisIsCheckIn(map);
 			if(awardHisVo == null) {
+				//配置信息
+				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 				//随机金币奖励
-				int gold = GlobalUtils.RANDOM_GOLD[new Random().nextInt(9)];
-				return this.awardHisService.addAwardHis(phoneNum, gold, GlobalUtils.AWARD_TYPE_DAYLY, null, null, null);
+				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
+				return this.awardHisService.addAwardHis(phoneNum, gold, 
+						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
 			}
@@ -391,7 +413,8 @@ public class AppDoRest {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("") 
 				&& !StrUtil.null2Str(primaryKey).equals("")) {
 			ReadHisVo readHisVo = new ReadHisVo();
-			readHisVo.setId(UUID.getUUID());
+			String readHisId = UUID.getUUID();
+			readHisVo.setId(readHisId);
 			readHisVo.setPhoneNum(phoneNum);
 			readHisVo.setData(data);
 			readHisVo.setPrimaryKey(primaryKey);
@@ -400,7 +423,9 @@ public class AppDoRest {
 			readHisVo.setUpdateDate(cTime);
 			boolean flag = this.readHisService.addReadHis(readHisVo);
 			if(flag) {
-				return new JsonResult(ResultCode.SUCCESS);
+				Map<String, Object> map = new HashMap<>();
+				map.put("readHisId", readHisId);
+				return new JsonResult(ResultCode.SUCCESS, map);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
@@ -420,8 +445,10 @@ public class AppDoRest {
 			appUserVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
 			boolean flag = this.appUserService.modifyUser(appUserVo);
 			if(flag) {
-				return this.awardHisService.addAwardHis(phoneNum, GlobalUtils.AWARD_TYPE_FIRSTSHARE_GOLD
-						, GlobalUtils.AWARD_TYPE_FIRSTSHARE, null, 1, null);
+				//配置信息
+				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getFirstShareGold()
+						, GlobalUtils.AWARD_TYPE_FIRSTSHARE, null, 1, null, null);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}

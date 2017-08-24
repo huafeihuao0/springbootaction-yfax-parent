@@ -58,4 +58,8 @@ public class AppUserService {
 	public List<AppUserVo> selectByPhoneNumGoldLimit() {
 		return this.appUserDao.selectByPhoneNumGoldLimit();
 	}
+	
+	public List<AppUserVo> selectAllUser(){
+		return this.appUserDao.selectAllUser();
+	}
 }

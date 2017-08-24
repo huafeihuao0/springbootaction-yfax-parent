@@ -62,4 +62,9 @@ public class AppUserDaoImpl implements AppUserDao {
 	public List<AppUserVo> selectByPhoneNumGoldLimit() {
 		return this.sqlSessionTemplate.selectList("selectByPhoneNumGoldLimit");
 	}
+
+	@Override
+	public List<AppUserVo> selectAllUser() {
+		return this.sqlSessionTemplate.selectList("selectAllUser");
+	}
 }
