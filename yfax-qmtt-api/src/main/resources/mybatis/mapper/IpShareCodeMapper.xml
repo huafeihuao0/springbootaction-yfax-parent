@@ -4,8 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
 
-	<select id="selectIpShareCodeByIp" resultType="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
+	<select id="selectIpShareCodeIsFromIp" resultType="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
         select * from qmtt_ip_sharecode where sourceIp=#{sourceIp} order by createDate desc limit 1
+    </select>
+
+	<select id="selectIpShareCodeByIp" resultType="com.yfax.webapi.qmtt.vo.IpShareCodeVo">
+        select * from qmtt_ip_sharecode where sourceIp=#{sourceIp} and shareCode=#{shareCode} 
+        		order by createDate desc limit 1
     </select>
 
     <!-- 添加 -->

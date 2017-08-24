@@ -1,5 +1,7 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,8 +25,13 @@ public class IpShareCodeDaoImpl implements IpShareCodeDao {
 	}
 
 	@Override
-	public IpShareCodeVo selectIpShareCodeByIp(String sourceIp) {
-		return this.sqlSessionTemplate.selectOne("selectIpShareCodeByIp", sourceIp);
+	public IpShareCodeVo selectIpShareCodeByIp(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectIpShareCodeByIp", map);
+	}
+
+	@Override
+	public IpShareCodeVo selectIpShareCodeIsFromIp(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectOne("selectIpShareCodeIsFromIp", map);
 	}
 
 }

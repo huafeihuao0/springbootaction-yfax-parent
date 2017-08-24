@@ -251,7 +251,10 @@ public class AppDoRest {
 		 }
 		 logger.info("跳转url=" + url);
 		 try {
-			 IpShareCodeVo ipShareCodeVo = this.ipShareCodeService.selectIpShareCodeByIp(sourceIp);
+			 Map<String, Object> map = new HashMap<>();
+			 map.put("sourceIp", sourceIp);
+			 map.put("shareCode", shareCode);
+			 IpShareCodeVo ipShareCodeVo = this.ipShareCodeService.selectIpShareCodeByIp(map);
 			 if(ipShareCodeVo == null) {
 				 ipShareCodeVo = new IpShareCodeVo();
 				 ipShareCodeVo.setId(UUID.getUUID());

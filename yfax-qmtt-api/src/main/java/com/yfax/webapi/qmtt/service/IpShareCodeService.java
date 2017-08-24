@@ -1,5 +1,7 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,8 @@ public class IpShareCodeService{
 		}
 	}
 	
-	public IpShareCodeVo selectIpShareCodeByIp(String sourceIp) {
-		return this.dao.selectIpShareCodeByIp(sourceIp);
+	public IpShareCodeVo selectIpShareCodeByIp(Map<String, Object> map) {
+		return this.dao.selectIpShareCodeByIp(map);
 	}
 	
 }

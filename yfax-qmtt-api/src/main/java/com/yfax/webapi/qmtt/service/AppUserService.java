@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,8 +97,10 @@ public class AppUserService {
 			appUserVo.setUpdateDate(cTime);
 			boolean flag = this.appUserDao.insertUser(appUserVo);
 			if(flag) {
+				 Map<String, Object> map = new HashMap<>();
+				 map.put("sourceIp", sourceIp);
 				 //判断是否是由其他人邀请加入的
-				 IpShareCodeVo ipShareCodeVo = this.ipShareCodeDao.selectIpShareCodeByIp(sourceIp);
+				 IpShareCodeVo ipShareCodeVo = this.ipShareCodeDao.selectIpShareCodeIsFromIp(map);
 				 AppShareCodeVo appShareCodeVo = this.appShareCodeDao.selectAppShareCodeByShareCode(ipShareCodeVo.getShareCode());
 				 //邀请人信息
 				 AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(appShareCodeVo.getPhoneNum());
