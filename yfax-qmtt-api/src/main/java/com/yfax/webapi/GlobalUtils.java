@@ -55,6 +55,10 @@ public class GlobalUtils {
 	 * 短信模板ID
 	 */
 	public static final String SMS_TEMPLATE_ID = "199335";
+	/**
+	 * 短信模板ID
+	 */
+	public static final String SMS_APP_ID = "8a216da85dea700c015df35e8ba00567";
 	
 	/**
 	 * 取奖励类型名

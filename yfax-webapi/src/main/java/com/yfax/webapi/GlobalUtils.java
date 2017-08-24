@@ -45,4 +45,8 @@ public interface GlobalUtils {
 	 * 短信模板ID
 	 */
 	public static final String SMS_TEMPLATE_ID = "195930";
+	/**
+	 * 短信模板ID
+	 */
+	public static final String SMS_APP_ID = "8aaf07085d7cf73f015da0accd660bc0";
 }

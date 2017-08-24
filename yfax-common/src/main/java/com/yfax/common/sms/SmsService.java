@@ -21,7 +21,7 @@ public class SmsService {
 	 * @param msgCode	验证码
 	 * @param project	项目标识
 	 */
-	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode, String project, String templateId) {
+	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode, String project, String templateId, String appId) {
 		logger.info("发送短信，phoneNum=" + phoneNum + ", msgCode=" + msgCode + ", project=" + project);
 		
 		//初始化SDK
@@ -48,7 +48,7 @@ public class SmsService {
 		//*测试开发可使用“测试Demo”的APP ID，正式上线需要使用自己创建的应用的App ID     *
 		//*应用ID的获取：登陆官网，在“应用-应用列表”，点击应用名称，看应用详情获取APP ID*
 		//*******************************************************************************
-		restAPI.setAppId("8aaf07085d7cf73f015da0accd660bc0");
+		restAPI.setAppId(appId);
 		
 		
 		//******************************注释****************************************************************
