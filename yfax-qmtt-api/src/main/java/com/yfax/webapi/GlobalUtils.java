@@ -51,6 +51,10 @@ public class GlobalUtils {
 	 * 兑换类型-兑换金币
 	 */
 	public static final int BALANCE_TYPE_REDEEM = 1;
+	/**
+	 * 短信模板ID
+	 */
+	public static final String SMS_TEMPLATE_ID = "199335";
 	
 	/**
 	 * 取奖励类型名
@@ -96,7 +100,4 @@ public class GlobalUtils {
 		return golds[new Random().nextInt(golds.length)];
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(getRanomGold("40#50"));
-	}
 }

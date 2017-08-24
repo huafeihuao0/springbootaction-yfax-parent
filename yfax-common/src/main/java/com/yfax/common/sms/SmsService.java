@@ -21,7 +21,7 @@ public class SmsService {
 	 * @param msgCode	验证码
 	 * @param project	项目标识
 	 */
-	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode, String project) {
+	public static HashMap<String, Object> sendSms(String phoneNum, String msgCode, String project, String templateId) {
 		logger.info("发送短信，phoneNum=" + phoneNum + ", msgCode=" + msgCode + ", project=" + project);
 		
 		//初始化SDK
@@ -65,7 +65,7 @@ public class SmsService {
 		//*result = restAPI.sendTemplateSMS("13800000000","1" ,new String[]{"6532","5"});																		  *
 		//*则13800000000手机号收到的短信内容是：【云通讯】您使用的是云通讯短信模板，您的验证码是6532，请于5分钟内正确输入     *
 		//*********************************************************************************************************************
-		HashMap<String, Object> result = restAPI.sendTemplateSMS(phoneNum, "195930", new String[]{msgCode, "10"});
+		HashMap<String, Object> result = restAPI.sendTemplateSMS(phoneNum, templateId, new String[]{msgCode, "10"});
 		logger.info("短信发送结果，result=" + result);
 		
 		if("000000".equals(result.get("statusCode"))){

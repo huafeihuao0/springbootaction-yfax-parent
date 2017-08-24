@@ -41,4 +41,8 @@ public interface GlobalUtils {
 	 */
 	public static Map<String, Object> dataCache = new HashMap<String, Object>();
 	public static Map<String, Object> flagCache = new HashMap<String, Object>();
+	/**
+	 * 短信模板ID
+	 */
+	public static final String SMS_TEMPLATE_ID = "195930";
 }
