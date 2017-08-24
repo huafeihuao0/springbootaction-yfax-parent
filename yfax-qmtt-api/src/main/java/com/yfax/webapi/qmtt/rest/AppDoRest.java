@@ -300,7 +300,7 @@ public class AppDoRest {
 			}
 			//2. 首次阅读才奖励固定金币
 			Long count = this.readHisService.selectCountByPhoneNum(map);
-			if(count == 1) {
+			if(count == 0) {
 				logger.info("首次有效阅读固定奖励，gold=" + appConfigVo.getFirstReadGold() + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getFirstReadGold()
 						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null, readHisId);

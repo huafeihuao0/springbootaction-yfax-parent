@@ -6,23 +6,24 @@ package com.yfax.utils;
 public class UUID {
 	
 	/**
-	 * 获取随机字符串，默认20位长度
-	 * @return 获取随机字符串 至少20位
+	 * 获取随机字符串，默认30位长度
+	 * @return 获取随机字符串 至少30位
 	 */
 	public static final String getUUID() {
 		return getUUID(0);
 	}
 
 	/**
-	 * 获取随机字符串 至少20位
+	 * 获取随机字符串 至少30位
 	 * @param i 随机字符串长度
-	 * @return 获取随机字符串 至少20位
+	 * @return 获取随机字符串 至少30位
 	 */
 	public static final String getUUID(int i) {
-		if (i < 20) {
-			i = 20;
+		if (i < 30) {
+			i = 30;
 		}
 		StringBuffer UUID = new StringBuffer();
+		UUID.append(Long.toHexString(System.nanoTime()));
 		UUID.append(Long.toHexString(new java.util.Date().getTime()));
 		while (UUID.length() < i) {
 			String random = String.valueOf(Math.random());
