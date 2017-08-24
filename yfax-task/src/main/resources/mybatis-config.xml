@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.yfax.webapi"/>
+    </typeAliases>
+    <mappers>
+    		<mapper resource="mybatis/mapper/AppUserMapper.xml"/>
+    		<mapper resource="mybatis/mapper/BalanceHisMapper.xml"/>
+    		<mapper resource="mybatis/mapper/RateSetMapper.xml"/>
+    		<mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
+    </mappers>
+</configuration>

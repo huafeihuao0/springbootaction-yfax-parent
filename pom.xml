@@ -20,6 +20,7 @@
 	<module>yfax-qmtt-api</module>
 	<module>yfax-common</module>
 	<module>yfax-utils</module>
+	<module>yfax-task</module>
   </modules>
   
   <parent>

@@ -1,4 +1,4 @@
-package com.yfax.webapi.qmtt.vo;
+package com.yfax.task.vo;
 
 import java.io.Serializable;
 

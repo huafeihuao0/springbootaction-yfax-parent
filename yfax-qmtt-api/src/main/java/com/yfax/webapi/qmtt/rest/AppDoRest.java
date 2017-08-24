@@ -61,8 +61,8 @@ public class AppDoRest {
 	private LoginHisService loginHisService;
 	@Autowired
 	private AwardHisService awardHisService;
-	@Autowired
-	private BalanceHisService balanceHisService;
+//	@Autowired
+//	private BalanceHisService balanceHisService;
 	@Autowired
 	private WithdrawHisService withdrawHisService;
 	@Autowired
@@ -304,13 +304,13 @@ public class AppDoRest {
 		}
 	}
 	
-	/**
-	 * 用户发起零钱兑换接口
-	 */
-	@RequestMapping(value = "/doBalanceHis", method = {RequestMethod.POST})
-	public JsonResult doBalanceHis(String phoneNum, String gold) {
-		return this.balanceHisService.addBalanceHis(phoneNum, gold);
-	}
+//	/**
+//	 * 用户发起零钱兑换接口-废弃
+//	 */
+//	@RequestMapping(value = "/doBalanceHis", method = {RequestMethod.POST})
+//	public JsonResult doBalanceHis(String phoneNum, String gold) {
+//		return this.balanceHisService.addBalanceHis(phoneNum, gold);
+//	}
 	
 	/**
 	 * 提现发起接口
