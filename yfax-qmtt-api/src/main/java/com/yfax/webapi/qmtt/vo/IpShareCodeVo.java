@@ -63,5 +63,10 @@ public class IpShareCodeVo implements Serializable{
 	public void setIsUsed(Integer isUsed) {
 		this.isUsed = isUsed;
 	}
-	
+	@Override
+	public String toString() {
+		return "IpShareCodeVo [id=" + id + ", sourceIp=" + sourceIp + ", shareCode=" + shareCode + ", isUsed=" + isUsed
+				+ ", createDate=" + createDate + ", createdBy=" + createdBy + ", updateDate=" + updateDate
+				+ ", updatedBy=" + updatedBy + "]";
+	}
 }

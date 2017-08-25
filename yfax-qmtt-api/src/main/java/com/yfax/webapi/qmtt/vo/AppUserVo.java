@@ -140,4 +140,13 @@ public class AppUserVo implements Serializable {
 	public void setStudents(Integer students) {
 		this.students = students;
 	}
+	@Override
+	public String toString() {
+		return "AppUserVo [phoneNum=" + phoneNum + ", gold=" + gold + ", balance=" + balance
+				+ ", userName=" + userName + ", address=" + address + ", wechat=" + wechat + ", qq=" + qq + ", email="
+				+ email + ", registerDate=" + registerDate + ", lastLoginDate=" + lastLoginDate + ", updateDate="
+				+ updateDate + ", blackList=" + blackList + ", shareCount=" + shareCount + ", firstShare=" + firstShare
+				+ ", firstInvite=" + firstInvite + ", firstRead=" + firstRead + ", students=" + students
+				+ ", dailyCheckIn=" + dailyCheckIn + "]";
+	}
 }

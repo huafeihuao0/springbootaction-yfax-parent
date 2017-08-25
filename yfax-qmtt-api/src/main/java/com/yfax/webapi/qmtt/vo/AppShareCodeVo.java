@@ -49,5 +49,9 @@ public class AppShareCodeVo implements Serializable{
 	public void setShareCode(String shareCode) {
 		this.shareCode = shareCode;
 	}
-	
+	@Override
+	public String toString() {
+		return "AppShareCodeVo [phoneNum=" + phoneNum + ", shareCode=" + shareCode + ", createDate=" + createDate
+				+ ", createdBy=" + createdBy + ", updateDate=" + updateDate + ", updatedBy=" + updatedBy + "]";
+	}
 }
