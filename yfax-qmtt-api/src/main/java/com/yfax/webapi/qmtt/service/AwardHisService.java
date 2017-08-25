@@ -50,7 +50,7 @@ public class AwardHisService{
 	 */
 	@Transactional
 	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, 
-			Integer firstRead, Integer firstShare, Integer firstInvite, String readHisId){
+			Integer firstRead, Integer firstShare, Integer firstInvite, String readHisId, Integer dailyCheckIn){
 		try {
 			//1. 记录奖励明细
 			AwardHisVo awardHisVo = new AwardHisVo();
@@ -58,7 +58,7 @@ public class AwardHisService{
 			awardHisVo.setPhoneNum(phoneNum);
 			awardHisVo.setAwardType(awardType);
 			awardHisVo.setAwardName(GlobalUtils.getAwardTypeName(awardType));
-			awardHisVo.setGold(String.valueOf(gold));
+			awardHisVo.setGold("+" + String.valueOf(gold));
 			String cTime = DateUtil.getCurrentLongDateTime();
 			awardHisVo.setCreateDate(cTime);
 			awardHisVo.setUpdateDate(cTime);
@@ -71,7 +71,8 @@ public class AwardHisService{
 			appUserVo.setFirstRead(firstRead);
 			appUserVo.setFirstShare(firstShare);
 			appUserVo.setFirstInvite(firstInvite);
-			appUserVo.setDailyCheckIn(1);	//今日签到标识
+			//今日签到标识
+			appUserVo.setDailyCheckIn(dailyCheckIn);	
 			logger.info("手机号码phoneNum=" + phoneNum + ", 原金币余额gold=" + old + ", 奖励金币gold=" + gold 
 				+ ", 更新金币总余额sum=" + sum + ", 奖励类型awardType=" + awardType);
 			boolean flag =  this.awardHisDao.insertAwardHis(awardHisVo);

@@ -299,11 +299,11 @@ public class AppDoRest {
 				return new JsonResult(ResultCode.SUCCESS_DAILY_LIMIT);
 			}
 			//2. 首次阅读才奖励固定金币
-			Long count = this.readHisService.selectCountByPhoneNum(map);
-			if(count == 0) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo.getFirstRead() == 0) {
 				logger.info("首次有效阅读固定奖励，gold=" + appConfigVo.getFirstReadGold() + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getFirstReadGold()
-						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null, readHisId);
+						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null, readHisId, null);
 			}
 			//3. 一篇文章只能奖励一次
 			map.put("primaryKey", primaryKey);
@@ -314,7 +314,7 @@ public class AppDoRest {
 				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 				logger.info("阅读随机奖励，gold=" + gold + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, gold, 
-						GlobalUtils.AWARD_TYPE_READ, null, null, null, readHisId);
+						GlobalUtils.AWARD_TYPE_READ, null, null, null, readHisId, null);
 				
 			}else if(count2 == 1) {
 				String result = "文章已获取奖励，跳过处理";
@@ -400,7 +400,7 @@ public class AppDoRest {
 				//随机金币奖励
 				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 				return this.awardHisService.addAwardHis(phoneNum, gold, 
-						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null);
+						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null, 1);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
 			}
@@ -452,7 +452,7 @@ public class AppDoRest {
 				//配置信息
 				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 				return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getFirstShareGold()
-						, GlobalUtils.AWARD_TYPE_FIRSTSHARE, null, 1, null, null);
+						, GlobalUtils.AWARD_TYPE_FIRSTSHARE, null, 1, null, null, null);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}

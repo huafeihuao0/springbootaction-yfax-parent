@@ -58,7 +58,7 @@ public class BalanceHisService{
 			double rate = Double.valueOf(rateSetVo.getRate());
 			double goldDb = Double.valueOf(gold);
 			double balanceDb = goldDb * rate;
-			balanceHisVo.setBalance(dFormat.format(balanceDb));
+			balanceHisVo.setBalance("+" + dFormat.format(balanceDb));
 			balanceHisVo.setRate(rateSetVo.getRate());
 			logger.info("当前汇率rate=" + rateSetVo.getRate() + ", 兑换金币gold=" + goldDb + ", 获得零钱balance=" + balanceHisVo.getBalance());
 			String cTime = DateUtil.getCurrentLongDateTime();
