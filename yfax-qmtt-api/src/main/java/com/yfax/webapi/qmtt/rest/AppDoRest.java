@@ -309,14 +309,14 @@ public class AppDoRest {
 			map.put("primaryKey", primaryKey);
 			Long count2 = this.readHisService.selectCountByPhoneNumAndPrimaryKey(map);
 			logger.info("count2=" + count2);
-			if(count2 == 1){
+			if(count2 == 0){
 				//随机金币奖励
 				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 				logger.info("阅读随机奖励，gold=" + gold + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, gold, 
 						GlobalUtils.AWARD_TYPE_READ, null, null, null, readHisId);
 				
-			}else if(count2 > 1) {
+			}else if(count2 == 1) {
 				String result = "文章已获取奖励，跳过处理";
 				logger.info(result + "。phoneNum=" + phoneNum + ", primaryKey=" + primaryKey);
 				return new JsonResult(ResultCode.SUCCESS_DUPLICATE, result);
