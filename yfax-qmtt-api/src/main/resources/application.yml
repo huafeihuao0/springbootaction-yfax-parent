@@ -4,7 +4,7 @@
 # 生产环境：java -jar xxx.jar --spring.profiles.active=prod
 spring: 
   profiles: 
-    active: test
+    active: dev
   datasource: 
     # mysql
     username: root

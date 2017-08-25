@@ -18,9 +18,13 @@ import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.dao.AwardHisDao;
 import com.yfax.webapi.qmtt.dao.ReadHisDao;
+import com.yfax.webapi.qmtt.dao.ShareUserHisDao;
+import com.yfax.webapi.qmtt.dao.StudentConfigDao;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
+import com.yfax.webapi.qmtt.vo.ShareUserHisVo;
+import com.yfax.webapi.qmtt.vo.StudentConfigVo;
 
 /**
  * 记录用户金币奖励记录
@@ -37,6 +41,10 @@ public class AwardHisService{
 	private AppUserDao appUserDao;
 	@Autowired
 	private ReadHisDao readHisDao;
+	@Autowired
+	private ShareUserHisDao shareUserHisDao;
+	@Autowired
+	private StudentConfigDao studentConfigDao;
 	
 	/**
 	 * @param phoneNum
@@ -90,6 +98,10 @@ public class AwardHisService{
 						logger.error("阅读文章奖励标识更新异常", new RuntimeException("readHisId=" + readHisId));
 					}
 				}
+				//4. 看是否需要给师傅奖励
+				if(awardType == GlobalUtils.AWARD_TYPE_READ) {
+					this.awardMasterHis(phoneNum, gold, awardType, cTime);
+				}
 				Map<String, Object> map = new HashMap<>();
 				map.put("gold", gold);
 				map.put("awardType", awardType);
@@ -103,6 +115,46 @@ public class AwardHisService{
 		}
 	}
 	
+	/**
+	 * 随机阅读奖励，给师傅奖励
+	 * @throws Exception
+	 */
+	public void awardMasterHis(String phoneNum, int gold, int awardType, String cTime) throws Exception {
+		ShareUserHisVo shareUserHisVo = this.shareUserHisDao.selectShareUserByStudentPhoneNum(phoneNum);
+		if(shareUserHisVo != null) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("phoneNum", phoneNum);
+			map.put("awardType", awardType);
+			//收益总次数
+			long awardCount = this.awardHisDao.selectUserAwardCount(map);
+			StudentConfigVo studentConfigVo = this.studentConfigDao.selectStudentConfig(awardCount);
+			if(studentConfigVo != null) {
+				//5. 记录师傅的奖励明细
+				int total = gold * studentConfigVo.getAlpha();
+				AwardHisVo awardHisVo2 = new AwardHisVo();
+				awardHisVo2.setId(UUID.getUUID());
+				awardHisVo2.setPhoneNum(shareUserHisVo.getMasterPhoneNum());
+				awardHisVo2.setAwardType(GlobalUtils.AWARD_TYPE_STUDENT);
+				awardHisVo2.setAwardName(GlobalUtils.getAwardTypeName(GlobalUtils.AWARD_TYPE_STUDENT));
+				awardHisVo2.setGold("+" + String.valueOf(total));
+				awardHisVo2.setCreateDate(cTime);
+				awardHisVo2.setUpdateDate(cTime);
+				//6. 更新师傅的金币余额
+				AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(shareUserHisVo.getMasterPhoneNum());
+				int old2 = Integer.valueOf(appUserVo2.getGold());
+				int sum2 = Integer.valueOf(appUserVo2.getGold()) + total;
+				appUserVo2.setGold(String.valueOf(total));
+				appUserVo2.setUpdateDate(cTime);
+				logger.info("师傅的手机号码phoneNum=" + shareUserHisVo.getMasterPhoneNum() + ", 原金币余额gold=" + old2 + ", 奖励金币gold=" + gold 
+						+ ", alpha值=" + studentConfigVo.getAlpha() + ", 总赠送金币=" + total 
+						+ ", 更新金币总余额sum=" + sum2 + ", 奖励类型awardType=" + GlobalUtils.AWARD_TYPE_STUDENT);
+				boolean flag2 =  this.awardHisDao.insertAwardHis(awardHisVo2);
+				boolean flag3 = this.appUserDao.updateUser(appUserVo2);
+				logger.info("赠送给师傅的金币更新结果，flag2=" + flag2 + ", flag3=" + flag3);
+			}
+		}
+	}
+	
 	public List<AwardHisVo> selectAwardHisByPhoneNum(String phoneNum) {
 		return this.awardHisDao.selectAwardHisByPhoneNum(phoneNum);
 	}
@@ -113,6 +165,10 @@ public class AwardHisService{
 	
 	public Long selectUserTotalOfGold(Map<String, Object> map) {
 		return this.awardHisDao.selectUserTotalOfGold(map);
+	}
+	
+	public Long selectUserAwardCount(Map<String, Object> map) {
+		return this.awardHisDao.selectUserAwardCount(map);
 	}
 	
 }

@@ -26,5 +26,10 @@ public class ShareUserHisDaoImpl implements ShareUserHisDao {
 	public Long selectCountByPhoneNum(String phoneNum) {
 		return this.sqlSessionTemplate.selectOne("selectCountByPhoneNum", phoneNum);
 	}
+
+	@Override
+	public ShareUserHisVo selectShareUserByStudentPhoneNum(String phoneNum) {
+		return this.sqlSessionTemplate.selectOne("selectShareUserByStudentPhoneNum", phoneNum);
+	}
 	
 }

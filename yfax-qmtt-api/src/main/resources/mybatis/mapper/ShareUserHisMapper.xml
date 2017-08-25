@@ -8,6 +8,11 @@
     <select id="selectCountByPhoneNum" resultType="java.lang.Long">
         select count(id) from qmtt_shareuser_his where masterPhoneNum=#{phoneNum}
     </select>
+    
+    <!-- 查找师傅手机账号 -->
+    <select id="selectShareUserByStudentPhoneNum" resultType="com.yfax.webapi.qmtt.vo.ShareUserHisVo">
+        select * from qmtt_shareuser_his where studentPhoneNum=#{phoneNum}
+    </select>
 
     <!-- 添加 -->
 	<insert id="insertShareUserHis" parameterType="com.yfax.webapi.qmtt.vo.ShareUserHisVo">
