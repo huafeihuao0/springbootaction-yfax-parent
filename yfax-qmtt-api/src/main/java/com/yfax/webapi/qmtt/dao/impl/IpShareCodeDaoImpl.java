@@ -34,4 +34,11 @@ public class IpShareCodeDaoImpl implements IpShareCodeDao {
 		return this.sqlSessionTemplate.selectOne("selectIpShareCodeIsFromIp", map);
 	}
 
+	@Override
+	@Transactional
+	public boolean updateIpShareCode(IpShareCodeVo ipShareCodeVo) throws Exception {
+		int i = this.sqlSessionTemplate.update("updateIpShareCode", ipShareCodeVo);
+		return i > 0 ? true : false;
+	}
+
 }

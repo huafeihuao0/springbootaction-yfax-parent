@@ -27,7 +27,17 @@ public class IpShareCodeService{
 		try {
 			return this.dao.insertIpShareCode(ipShareCodeVo);
 		} catch (Exception e) {
-			logger.error("记录邀请用户和IP对应关系异常：" + e.getMessage(), e);
+			logger.error("新增邀请用户和IP对应关系异常：" + e.getMessage(), e);
+			return false;
+		}
+	}
+	
+	@Transactional
+	public boolean updateIpShareCode(IpShareCodeVo ipShareCodeVo){
+		try {
+			return this.dao.updateIpShareCode(ipShareCodeVo);
+		} catch (Exception e) {
+			logger.error("修改邀请用户和IP对应关系异常：" + e.getMessage(), e);
 			return false;
 		}
 	}

@@ -267,7 +267,15 @@ public class AppDoRest {
 				 ipShareCodeVo.setUpdateDate(cTime);
 				 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
 				 if(!flag) {
-					 logger.warn("记录失败");
+					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
+				 }
+			 }else {
+				 String cTime = DateUtil.getCurrentLongDateTime();
+				 ipShareCodeVo.setCreateDate(cTime);
+				 ipShareCodeVo.setUpdateDate(cTime);
+				 boolean flag = this.ipShareCodeService.updateIpShareCode(ipShareCodeVo);
+				 if(!flag) {
+					 logger.warn("更新失败，ipShareCodeVo=" + ipShareCodeVo.toString());
 				 }
 			 }
 			 if(!url.equals("")) {
