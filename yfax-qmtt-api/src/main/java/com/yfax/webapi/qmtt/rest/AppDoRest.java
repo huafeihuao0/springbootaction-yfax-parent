@@ -301,7 +301,7 @@ public class AppDoRest {
 			map.put("phoneNum", phoneNum);
 			//先判断是否达到每日阅读奖励上限
 			map.put("awardType", GlobalUtils.AWARD_TYPE_READ);
-			map.put("createDate", DateUtil.getCurrentDate());
+			map.put("currentTime", DateUtil.getCurrentDate());
 			Long total = this.awardHisService.selectUserTotalOfGold(map);		//统计个人今日阅读领取金币
 			if(total>=appConfigVo.getGoldLimit()) {
 				return new JsonResult(ResultCode.SUCCESS_DAILY_LIMIT);
