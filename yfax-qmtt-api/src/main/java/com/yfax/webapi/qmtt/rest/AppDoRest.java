@@ -20,6 +20,7 @@ import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.NetworkUtil;
 import com.yfax.utils.ResultCode;
+import com.yfax.utils.ShareCodeUtil;
 import com.yfax.utils.StrUtil;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
@@ -205,11 +206,11 @@ public class AppDoRest {
 		if(appShareCodeVo == null) {
 			appShareCodeVo = new AppShareCodeVo();
 			appShareCodeVo.setPhoneNum(phoneNum);
-			appShareCodeVo.setShareCode(UUID.getUUID().substring(11, 20));
-			boolean flag = this.appShareCodeService.addAppShareCode(appShareCodeVo);
+			appShareCodeVo.setShareCode(ShareCodeUtil.toSerialCode(Long.valueOf(phoneNum)));
 			String cTime = DateUtil.getCurrentLongDateTime();
 			appShareCodeVo.setCreateDate(cTime);
 			appShareCodeVo.setUpdateDate(cTime);
+			boolean flag = this.appShareCodeService.addAppShareCode(appShareCodeVo);
 			if(flag) {
 				//返回邀请中转链接
 				return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
