@@ -27,7 +27,11 @@ public class ScheduledTasks {
 	// 以指定时间间隔调度任务（以方法执行开始时间为准）
 //	@Scheduled(fixedRate = 20000)
 //	public void reportCurrentTime() {
-//		this.myTask();
+//		logger.info("======================start===================");
+//		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+//		this.batchResetDailyCheckIn();
+//		this.batchAutoTransfer();
+//		logger.info("=======================end====================");
 //	}
 
 	// 以指定时间间隔调度（以方法执行结束时间为准）
@@ -43,12 +47,14 @@ public class ScheduledTasks {
 	// }
 
 	// cron表达式，second, minute, hour, day, month, weekday
-	//每日零点跑批
+	// 每日零点跑批
 	@Scheduled(cron = "0 0 0 * * *")
 	public void doSomething() {
+		logger.info("======================start===================");
 		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
 		this.batchResetDailyCheckIn();
 		this.batchAutoTransfer();
+		logger.info("=======================end====================");
 	}
 	
 	/**
@@ -58,10 +64,12 @@ public class ScheduledTasks {
 		logger.info("第一步，开始清除用户的每日签到标识...");
 		List<AppUserVo> list = this.appUserService.selectAllUser();
 		for (AppUserVo appUserVo : list) {
-			appUserVo.setDailyCheckIn(0);
-			boolean result = this.appUserService.modifyUser(appUserVo);
-			logger.info("phoneNum" + appUserVo.getPhoneNum() 
-				+ ", 重置结果result=" + (result?"成功":"失败"));
+			if(appUserVo.getDailyCheckIn() == 1) {
+				appUserVo.setDailyCheckIn(0);
+				boolean result = this.appUserService.modifyUser(appUserVo);
+				logger.info("phoneNum" + appUserVo.getPhoneNum() 
+					+ ", 重置结果result=" + (result?"成功":"失败"));
+			}
 		}
 	}
 	

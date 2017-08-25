@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yfax.task.GlobalUtils;
 import com.yfax.task.dao.AppUserDao;
+import com.yfax.task.dao.AwardHisDao;
 import com.yfax.task.dao.BalanceHisDao;
 import com.yfax.task.dao.RateSetDao;
 import com.yfax.task.vo.AppUserVo;
+import com.yfax.task.vo.AwardHisVo;
 import com.yfax.task.vo.BalanceHisVo;
 import com.yfax.task.vo.RateSetVo;
 import com.yfax.utils.DateUtil;
@@ -36,6 +38,8 @@ public class BalanceHisService{
 	private AppUserDao appUserDao;
 	@Autowired
 	private RateSetDao rateSetDao;
+	@Autowired 
+	private AwardHisDao awardHisDao;
 	
 	@Transactional
 	public JsonResult addBalanceHis(String phoneNum, String gold){
@@ -68,11 +72,26 @@ public class BalanceHisService{
 			appUserVo.setUpdateDate(cTime);
 			logger.info("手机号码phoneNum=" + phoneNum + ", 原金币余额gold=" + old + ", 扣减金币gold=" + gold 
 				+ ", 更新金币总余额sum=" + sum);
+			//4. 记录零钱扣减记录
+			AwardHisVo awardHisVo = new AwardHisVo();
+			awardHisVo.setId(UUID.getUUID());
+			awardHisVo.setPhoneNum(phoneNum);
+			awardHisVo.setAwardType(8);
+			awardHisVo.setAwardName("每日自动扣减");
+			awardHisVo.setGold("-" + String.valueOf(gold));
+			awardHisVo.setCreateDate(cTime);
+			awardHisVo.setUpdateDate(cTime);
 			boolean flag = this.dao.insertBalanceHis(balanceHisVo);
 			boolean flag1 = this.appUserDao.updateUser(appUserVo);
-			if(flag && flag1) {
+			boolean flag2 = this.awardHisDao.insertAwardHis(awardHisVo);
+			if(flag && flag1 && flag2) {
+				logger.info("转换成功。phoneNum=" + phoneNum + ", gold=" + gold);
 				return new JsonResult(ResultCode.SUCCESS);
 			}else {
+				logger.error("转换失败。phoneNum=" + phoneNum + ", gold=" + gold 
+						+ ", flag=" + flag 
+						+ ", flag1=" + flag1 
+						+ ", flag2=" + flag2);
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		} catch (Exception e) {

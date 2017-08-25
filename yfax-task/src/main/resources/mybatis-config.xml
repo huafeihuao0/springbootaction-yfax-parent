@@ -11,5 +11,6 @@
     		<mapper resource="mybatis/mapper/BalanceHisMapper.xml"/>
     		<mapper resource="mybatis/mapper/RateSetMapper.xml"/>
     		<mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
+    		<mapper resource="mybatis/mapper/AwardHisMapper.xml"/>
     </mappers>
 </configuration>
