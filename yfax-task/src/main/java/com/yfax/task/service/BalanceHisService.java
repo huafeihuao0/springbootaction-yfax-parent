@@ -54,7 +54,7 @@ public class BalanceHisService{
 			balanceHisVo.setBalanceType(GlobalUtils.BALANCE_TYPE_REDEEM);
 			balanceHisVo.setBalanceName("每日自动兑换");
 			balanceHisVo.setGold(gold);
-			//3. 需要根据汇率计算，获得零钱
+			//2. 需要根据汇率计算，获得零钱
 			double rate = Double.valueOf(rateSetVo.getRate());
 			double goldDb = Double.valueOf(gold);
 			double balanceDb = goldDb * rate;
