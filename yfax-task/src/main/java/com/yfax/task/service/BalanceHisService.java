@@ -66,12 +66,16 @@ public class BalanceHisService{
 			balanceHisVo.setUpdateDate(cTime);
 			//3. 扣减个人金币余额，更新用户金币余额
 			AppUserVo appUserVo = this.appUserDao.selectByPhoneNum(phoneNum);
+			//更新数据
+			double balance = Double.valueOf(appUserVo.getBalance());	//原已有余额
 			int old = Integer.valueOf(appUserVo.getGold());
 			int sum = Integer.valueOf(appUserVo.getGold()) - Integer.valueOf(gold);
 			appUserVo.setGold(String.valueOf(sum));
 			appUserVo.setUpdateDate(cTime);
+			appUserVo.setBalance(dFormat.format(balanceDb + balance));
 			logger.info("手机号码phoneNum=" + phoneNum + ", 原金币余额gold=" + old + ", 扣减金币gold=" + gold 
-				+ ", 更新金币总余额sum=" + sum);
+				+ ", 更新后金币总余额sum=" + sum + ", 原零钱余额balance=" + balance 
+				+ ", 更新后零钱余额balance=" + appUserVo.getBalance());
 			//4. 记录零钱扣减记录
 			AwardHisVo awardHisVo = new AwardHisVo();
 			awardHisVo.setId(UUID.getUUID());
