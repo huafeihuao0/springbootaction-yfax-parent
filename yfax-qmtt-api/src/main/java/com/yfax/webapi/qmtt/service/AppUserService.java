@@ -140,12 +140,18 @@ public class AppUserService {
 								 appUserVo2.setStudents(appUserVo2.getStudents() + 1);	//被邀请人的徒弟数加1
 								 appUserVo2.setUpdateDate(cTime);
 								 appUserVo2.setFirstInvite(1);
+								 //3. 更新ip与邀请码的isUsed标识位
+								 ipShareCodeVo.setIsUsed(2);		//该记录已使用
+								 ipShareCodeVo.setUpdateDate(cTime);
 								 
 								 boolean flag2 = this.shareUserHisDao.insertShareUserHis(shareUserHisVo);
 								 boolean flag3 = this.appUserDao.updateUser(appUserVo2);
-								 logger.info("flag2=" + flag2 + ", flag3=" + flag3);
-								 if(!flag2 && !flag3) {
-									 logger.error("邀请人信息更新失败，请检查", new RuntimeException("flag2=" + flag2 + ", flag3=" + flag3));
+								 boolean flag4 = this.ipShareCodeDao.updateIpShareCode(ipShareCodeVo);
+								 logger.info("flag2=" + flag2 + ", flag3=" + flag3
+										 + ", flag4=" + flag4);
+								 if(!flag2 && !flag3 && !flag4) {
+									 logger.error("邀请人信息更新失败，请检查", new RuntimeException("flag2=" + flag2 + ", flag3=" + flag3 
+											 + ", flag4=" + flag4));
 								 }
 							 }else {
 								 logger.error("邀请奖励失败，请检查", new RuntimeException("result=" + result.toJsonString()));
