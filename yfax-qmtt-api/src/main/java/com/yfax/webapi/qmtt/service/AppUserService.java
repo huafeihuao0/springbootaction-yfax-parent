@@ -101,13 +101,17 @@ public class AppUserService {
 				 map.put("sourceIp", sourceIp);
 				 //判断是否是由其他人邀请加入的
 				 IpShareCodeVo ipShareCodeVo = this.ipShareCodeDao.selectIpShareCodeIsFromIp(map);
-				 logger.info("ipShareCodeVo=" + ipShareCodeVo.toString());
+				 if(ipShareCodeVo != null) {
+					 logger.info("ipShareCodeVo=" + ipShareCodeVo.toString());
+				 }
 				 AppShareCodeVo appShareCodeVo = this.appShareCodeDao.selectAppShareCodeByShareCode(ipShareCodeVo.getShareCode());
-				 logger.info("appShareCodeVo=" + appShareCodeVo.toString());
+				 if(appShareCodeVo != null){
+					 logger.info("appShareCodeVo=" + appShareCodeVo.toString());
+				 }
 				 //邀请人信息
 				 AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(appShareCodeVo.getPhoneNum());
-				 logger.info("appUserVo2=" + appUserVo2.toString());
 				 if(appUserVo2 != null) {
+					 logger.info("appUserVo2=" + appUserVo2.toString());
 					 //配置信息
 					 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 					 JsonResult result = new JsonResult();

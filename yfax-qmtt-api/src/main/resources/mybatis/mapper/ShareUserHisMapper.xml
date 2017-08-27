@@ -11,7 +11,7 @@
     
     <!-- 查找师傅手机账号 -->
     <select id="selectShareUserByStudentPhoneNum" resultType="com.yfax.webapi.qmtt.vo.ShareUserHisVo">
-        select * from qmtt_shareuser_his where studentPhoneNum=#{phoneNum}
+        select * from qmtt_shareuser_his where studentPhoneNum=#{phoneNum} order by createDate desc limit 1
     </select>
 
     <!-- 添加 -->
