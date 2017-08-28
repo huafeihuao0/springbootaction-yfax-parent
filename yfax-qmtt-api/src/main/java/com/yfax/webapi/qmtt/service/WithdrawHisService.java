@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,14 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yfax.webapi.qmtt.vo.AppUserVo;
-import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
-import com.yfax.webapi.qmtt.dao.AppUserDao;
-import com.yfax.webapi.qmtt.dao.WithdrawHisDao;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.UUID;
+import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.qmtt.dao.AppUserDao;
+import com.yfax.webapi.qmtt.dao.BalanceHisDao;
+import com.yfax.webapi.qmtt.dao.WithdrawHisDao;
+import com.yfax.webapi.qmtt.vo.AppUserVo;
+import com.yfax.webapi.qmtt.vo.BalanceHisVo;
+import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
 /**
  * 兑换提现记录
@@ -31,6 +35,9 @@ public class WithdrawHisService{
 	
 	@Autowired
 	private AppUserDao appUserDao;
+	
+	@Autowired
+	private BalanceHisDao balanceHisDao;
 	
 	/**
 	 * 查询指定用户名下的提现记录
@@ -53,6 +60,7 @@ public class WithdrawHisService{
 	@Transactional
 	public JsonResult addWithdrawHis(String phoneNum, int withdrawType, 
 			String name, String account, String income) {
+		//1. 新增提现记录
 		WithdrawHisVo withdrawHisVo = new WithdrawHisVo();
 		withdrawHisVo.setId(UUID.getUUID());
 		withdrawHisVo.setPhoneNum(phoneNum);
@@ -68,19 +76,31 @@ public class WithdrawHisService{
 		withdrawHisVo.setCreateDate(cTime);
 		withdrawHisVo.setUpdateDate(cTime);
 		try {
-			//2. 提现，则需要扣减用户余额
+			//2. 记录零钱兑换扣减记录
+			BalanceHisVo balanceHisVo = new BalanceHisVo();
+			balanceHisVo.setId(UUID.getUUID());
+			balanceHisVo.setPhoneNum(phoneNum);
+			balanceHisVo.setBalanceType(GlobalUtils.BALANCE_TYPE_WITHDRAW);
+			balanceHisVo.setBalanceName("提现申请");
+			balanceHisVo.setBalance("-"+income);
+			balanceHisVo.setCreateDate(cTime);
+			balanceHisVo.setUpdateDate(cTime);
+			//3. 提现，则需要扣减用户余额
 			AppUserVo appUserVo = this.appUserDao.selectByPhoneNum(withdrawHisVo.getPhoneNum());
+			//格式化，保留三位小数，四舍五入
+			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 			//更新数据
 			double balance = Double.valueOf(appUserVo.getBalance());	//原已有余额
 			double incomeTmp = Double.valueOf(withdrawHisVo.getIncome());	//提现金额
 			appUserVo.setUpdateDate(cTime);
-			appUserVo.setBalance(String.valueOf(balance-incomeTmp));
-			logger.info("用户提现申请后，余额=" + (balance-incomeTmp) 
-					+ "。balance=" + balance + ", incomeTmp=" + incomeTmp);
+			appUserVo.setBalance(dFormat.format(balance-incomeTmp));
+			logger.info("用户提现申请后，原零钱余额balance=" + balance + ", 提现金额incomeTmp=" + incomeTmp 
+					+ "，更新后余额=" + dFormat.format(balance-incomeTmp));
 			
 			boolean flag = this.withdrawHisDao.insertWithdrawHis(withdrawHisVo);
-			boolean flag1 = this.appUserDao.updateUser(appUserVo);
-			if(flag && flag1) {
+			boolean flag1 = this.balanceHisDao.insertBalanceHis(balanceHisVo);
+			boolean flag2 = this.appUserDao.updateUser(appUserVo);
+			if(flag && flag1 && flag2) {
 				return new JsonResult(ResultCode.SUCCESS);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_NO_USER);

@@ -52,6 +52,10 @@ public class GlobalUtils {
 	 */
 	public static final int BALANCE_TYPE_REDEEM = 1;
 	/**
+	 * 兑换类型-提现申请
+	 */
+	public static final int BALANCE_TYPE_WITHDRAW = 1;
+	/**
 	 * 短信模板ID
 	 */
 	public static final String SMS_TEMPLATE_ID = "199335";
