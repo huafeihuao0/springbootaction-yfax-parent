@@ -48,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     		//中转链接url
         web.ignoring().antMatchers("/hello"
         		, GlobalUtils.PROJECT_QMTT + "/faq"
+        		, GlobalUtils.PROJECT_QMTT + "/invite"
+        		, GlobalUtils.PROJECT_QMTT + "/register"
         		, GlobalUtils.PROJECT_QMTT + "/doLogin"
         		, GlobalUtils.PROJECT_QMTT + "/doSms"
         		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"

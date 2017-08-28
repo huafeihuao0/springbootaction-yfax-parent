@@ -11,5 +11,5 @@ public interface ReadHisDao {
 	public List<ReadHisVo> selectReadHisByPhoneNum(String phoneNum);
 	public Long selectReadHisCountByPhoneNum(Map<String, Object> map);
 	public Long selectReadHisCountByPhoneNumAndPrimaryKey(Map<String, Object> map);
-	
+	public ReadHisVo selectReadHisById(String id);
 }

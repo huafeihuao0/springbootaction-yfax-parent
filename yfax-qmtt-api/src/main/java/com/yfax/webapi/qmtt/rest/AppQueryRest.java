@@ -19,6 +19,7 @@ import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IncomeSetService;
+import com.yfax.webapi.qmtt.service.InitConfigService;
 import com.yfax.webapi.qmtt.service.RateSetService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
@@ -27,6 +28,7 @@ import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.IncomeSetVo;
+import com.yfax.webapi.qmtt.vo.InitConfigVo;
 import com.yfax.webapi.qmtt.vo.RateSetVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
@@ -57,6 +59,8 @@ public class AppQueryRest {
 	private RateSetService rateSetService;
 	@Autowired
 	private AppConfigService appConfigService;
+	@Autowired
+	private InitConfigService initConfigService;
 	
 	/**
 	 * 个人信息接口
@@ -143,4 +147,14 @@ public class AppQueryRest {
 		map.put("sum", dFormat.format(sum));
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
+	
+	/**
+	 * 获得APP初始化配置数据
+	 */
+	@RequestMapping("/queryInitConfig")
+	public JsonResult queryInitConfig() {
+		InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
+		return new JsonResult(ResultCode.SUCCESS, initConfigVo);
+	}
+	
 }

@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yfax.webapi.qmtt.vo.ReadHisVo">
 
+	<select id="selectReadHisById" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
+		select * from qmtt_read_his where id=#{id}
+    </select>
+
 	<select id="selectReadHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
         select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc limit 50
     </select>

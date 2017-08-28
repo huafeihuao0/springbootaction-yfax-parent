@@ -23,4 +23,20 @@ public class AppConfig {
     public String pageFaq(Map<String, Object> model) {
         return "faq";
     }
+	
+	/**
+	 * APP的invite，邀请规则页面
+	 */
+	@RequestMapping("/invite")
+    public String pageInvite(Map<String, Object> model) {
+        return "invite";
+    }
+	
+	/**
+	 * APP的register，注册协议页面
+	 */
+	@RequestMapping("/register")
+    public String pageegister(Map<String, Object> model) {
+        return "register";
+    }
 }

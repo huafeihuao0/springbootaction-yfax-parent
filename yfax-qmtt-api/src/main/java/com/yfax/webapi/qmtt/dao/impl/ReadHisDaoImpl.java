@@ -47,4 +47,9 @@ public class ReadHisDaoImpl implements ReadHisDao {
 		return i > 0 ? true : false;
 	}
 
+	@Override
+	public ReadHisVo selectReadHisById(String id) {
+		return this.sqlSessionTemplate.selectOne("selectReadHisById", id);
+	}
+
 }
