@@ -114,7 +114,7 @@ public class WithdrawHisService{
 	/**
 	 * 解析提现名称
 	 * @param withdrawType
-	 * 1=手机充值;2=支付宝;3=微信
+	 * 1=手机充值;2=支付宝;3=微信;4=QQ币
 	 */
 	private static String getWithdrawName(int withdrawType) {
 		switch (withdrawType) {
@@ -124,6 +124,8 @@ public class WithdrawHisService{
 				return "支付宝";
 			case 3:
 				return "微信";
+			case 4:
+				return "QQ币";
 			default:
 				throw new RuntimeException("未知提现类型 withdrawType值");
 		}

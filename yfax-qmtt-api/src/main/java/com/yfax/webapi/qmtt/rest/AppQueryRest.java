@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
@@ -21,6 +22,7 @@ import com.yfax.webapi.qmtt.service.IncomeSetService;
 import com.yfax.webapi.qmtt.service.RateSetService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
+import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
@@ -53,6 +55,8 @@ public class AppQueryRest {
 	private ReadHisService readHisService;
 	@Autowired
 	private RateSetService rateSetService;
+	@Autowired
+	private AppConfigService appConfigService;
 	
 	/**
 	 * 个人信息接口
@@ -69,6 +73,9 @@ public class AppQueryRest {
 		map.put("rate", rateSetVo.getRate());
 		map.put("students", appUserVo.getStudents());
 		map.put("appUserVo", appUserVo);
+		//配置信息
+		AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+		map.put("appConfigVo", appConfigVo);
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 	
