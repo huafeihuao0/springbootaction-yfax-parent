@@ -68,7 +68,7 @@ public class WithdrawHisService{
 		withdrawHisVo.setWithdrawName(getWithdrawName(withdrawType));
 		withdrawHisVo.setName(name);
 		withdrawHisVo.setAccount(account);
-		withdrawHisVo.setIncome(income);
+		withdrawHisVo.setIncome("+"+income);
 		String cTime = DateUtil.getCurrentLongDateTime();
 		withdrawHisVo.setWithdrawTime(cTime);
 		withdrawHisVo.setStatus("处理中");
@@ -91,7 +91,7 @@ public class WithdrawHisService{
 			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 			//更新数据
 			double balance = Double.valueOf(appUserVo.getBalance());	//原已有余额
-			double incomeTmp = Double.valueOf(withdrawHisVo.getIncome());	//提现金额
+			double incomeTmp = Double.valueOf(income);	//提现金额
 			appUserVo.setUpdateDate(cTime);
 			appUserVo.setBalance(dFormat.format(balance-incomeTmp));
 			logger.info("用户提现申请后，原零钱余额balance=" + balance + ", 提现金额incomeTmp=" + incomeTmp 
