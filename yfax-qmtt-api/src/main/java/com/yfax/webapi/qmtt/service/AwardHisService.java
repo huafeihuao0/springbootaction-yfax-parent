@@ -143,7 +143,7 @@ public class AwardHisService{
 				AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(shareUserHisVo.getMasterPhoneNum());
 				int old2 = Integer.valueOf(appUserVo2.getGold());
 				int sum2 = Integer.valueOf(appUserVo2.getGold()) + total;
-				appUserVo2.setGold(String.valueOf(total));
+				appUserVo2.setGold(String.valueOf(sum2));
 				appUserVo2.setUpdateDate(cTime);
 				logger.info("师傅的手机号码phoneNum=" + shareUserHisVo.getMasterPhoneNum() + ", 原金币余额gold=" + old2 + ", 奖励金币gold=" + gold 
 						+ ", alpha值=" + studentConfigVo.getAlpha() + ", 总赠送金币=" + total 
