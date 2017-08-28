@@ -347,7 +347,7 @@ public class AppDoRest {
 				double balance = Double.valueOf(appUserVo.getBalance());
 				if(balance - incomeTmp >= 0) {
 					return this.withdrawHisService.addWithdrawHis(phoneNum, withdrawType, 
-							name, account, income);
+							name, account, income, appUserVo);
 				}else {
 					return new JsonResult(ResultCode.SUCCESS_NOT_ENOUGH);
 				}

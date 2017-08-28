@@ -59,7 +59,7 @@ public class WithdrawHisService{
 	 */
 	@Transactional
 	public JsonResult addWithdrawHis(String phoneNum, int withdrawType, 
-			String name, String account, String income) {
+			String name, String account, String income, AppUserVo appUserVo) {
 		//1. 新增提现记录
 		WithdrawHisVo withdrawHisVo = new WithdrawHisVo();
 		withdrawHisVo.setId(UUID.getUUID());
@@ -86,13 +86,16 @@ public class WithdrawHisService{
 			balanceHisVo.setCreateDate(cTime);
 			balanceHisVo.setUpdateDate(cTime);
 			//3. 提现，则需要扣减用户余额
-			AppUserVo appUserVo = this.appUserDao.selectByPhoneNum(withdrawHisVo.getPhoneNum());
 			//格式化，保留三位小数，四舍五入
 			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 			//更新数据
 			double balance = Double.valueOf(appUserVo.getBalance());	//原已有余额
 			double incomeTmp = Double.valueOf(income);	//提现金额
 			appUserVo.setUpdateDate(cTime);
+			if(balance - incomeTmp < 0) {
+				logger.info("余额不足。原零钱余额balance=" + balance + ", 提现金额incomeTmp=" + incomeTmp);
+				return new JsonResult(ResultCode.SUCCESS_NOT_ENOUGH);
+			}
 			appUserVo.setBalance(dFormat.format(balance-incomeTmp));
 			logger.info("用户提现申请后，原零钱余额balance=" + balance + ", 提现金额incomeTmp=" + incomeTmp 
 					+ "，更新后余额=" + dFormat.format(balance-incomeTmp));
