@@ -256,28 +256,17 @@ public class AppDoRest {
 			 Map<String, Object> map = new HashMap<>();
 			 map.put("sourceIp", sourceIp);
 			 map.put("shareCode", shareCode);
-			 IpShareCodeVo ipShareCodeVo = this.ipShareCodeService.selectIpShareCodeByIp(map);
-			 if(ipShareCodeVo == null) {
-				 ipShareCodeVo = new IpShareCodeVo();
-				 ipShareCodeVo.setId(UUID.getUUID());
-				 ipShareCodeVo.setSourceIp(sourceIp);
-				 ipShareCodeVo.setShareCode(shareCode);
-				 ipShareCodeVo.setIsUsed(1);//未使用
-				 String cTime = DateUtil.getCurrentLongDateTime();
-				 ipShareCodeVo.setCreateDate(cTime);
-				 ipShareCodeVo.setUpdateDate(cTime);
-				 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
-				 if(!flag) {
-					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
-				 }
-			 }else {
-				 String cTime = DateUtil.getCurrentLongDateTime();
-				 ipShareCodeVo.setCreateDate(cTime);
-				 ipShareCodeVo.setUpdateDate(cTime);
-				 boolean flag = this.ipShareCodeService.updateIpShareCode(ipShareCodeVo);
-				 if(!flag) {
-					 logger.warn("更新失败，ipShareCodeVo=" + ipShareCodeVo.toString());
-				 }
+			 IpShareCodeVo ipShareCodeVo = new IpShareCodeVo();
+			 ipShareCodeVo.setId(UUID.getUUID());
+			 ipShareCodeVo.setSourceIp(sourceIp);
+			 ipShareCodeVo.setShareCode(shareCode);
+			 ipShareCodeVo.setIsUsed(1);//未使用
+			 String cTime = DateUtil.getCurrentLongDateTime();
+			 ipShareCodeVo.setCreateDate(cTime);
+			 ipShareCodeVo.setUpdateDate(cTime);
+			 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
+			 if(!flag) {
+				 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
 			 }
 			 if(!url.equals("")) {
 				 response.sendRedirect(url);
