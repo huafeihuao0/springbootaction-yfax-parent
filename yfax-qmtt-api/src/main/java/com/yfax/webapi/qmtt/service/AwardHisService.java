@@ -60,11 +60,6 @@ public class AwardHisService{
 	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, 
 			Integer firstRead, Integer firstShare, Integer firstInvite, String readHisId, Integer dailyCheckIn){
 		try {
-			//先判断奖励文章是否存在，签到类型则跳过
-			ReadHisVo readHisVo = this.readHisDao.selectReadHisById(readHisId);
-			if(readHisVo == null && dailyCheckIn == null) {
-				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
-			}
 			//1. 记录奖励明细
 			AwardHisVo awardHisVo = new AwardHisVo();
 			awardHisVo.setId(UUID.getUUID());
@@ -94,6 +89,8 @@ public class AwardHisService{
 				//3. 记录文章已获取金币标识
 				if(awardType == GlobalUtils.AWARD_TYPE_FIRSTREAD 
 						|| awardType == GlobalUtils.AWARD_TYPE_READ) {
+					ReadHisVo readHisVo = new ReadHisVo();
+					readHisVo.setId(readHisId);
 					readHisVo.setIsAward(1);		//已奖励标识
 					readHisVo.setUpdateDate(cTime);
 					boolean flag2 =  this.readHisDao.updateReadHis(readHisVo);

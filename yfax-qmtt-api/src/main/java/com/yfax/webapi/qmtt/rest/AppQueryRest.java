@@ -140,10 +140,10 @@ public class AppQueryRest {
 	public JsonResult queryRank() {
 		Map<String, Object> map = new HashMap<>();
 		List<AppUserVo> list = this.appUserService.selectByRank();
-		if(list != null) {
+		if(list.size()>0) {
 			map.put("list", list);
 			Long sum = this.appUserService.selectByRankSum();
-			//格式化，保留三位小数，四舍五入
+			//格式化，保留三位小数，DB做四舍五入
 			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 			map.put("sum", dFormat.format(sum));
 		}else {

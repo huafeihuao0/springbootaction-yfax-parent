@@ -288,6 +288,11 @@ public class AppDoRest {
 	public JsonResult doReadAward(String phoneNum, String primaryKey, String readHisId) {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(primaryKey).equals("") 
 				&& !StrUtil.null2Str(readHisId).equals("")) {
+			//先判断奖励文章是否存在
+			ReadHisVo readHisVo = this.readHisService.selectReadHisById(readHisId);
+			if(readHisVo == null) {
+				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
+			}
 			//配置信息
 			AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 			
