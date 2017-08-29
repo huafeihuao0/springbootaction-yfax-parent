@@ -37,6 +37,9 @@ public enum ResultCode {
 	
 	/** 今日阅读金币领取已达上限 */
 	SUCCESS_DAILY_LIMIT("211", "今日阅读金币领取已达上限"),
+	
+	/** 无效邀请码 */
+	SUCCESS_INVALID_CODE("212", "无效邀请码"),
 
 	/** 没有登录 */
 	NOT_LOGIN("400", "没有登录"),

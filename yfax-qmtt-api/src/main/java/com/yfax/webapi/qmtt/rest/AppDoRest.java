@@ -213,11 +213,14 @@ public class AppDoRest {
 			boolean flag = this.appShareCodeService.addAppShareCode(appShareCodeVo);
 			if(flag) {
 				//返回邀请中转链接
+				logger.info("新创建的，分享邀请链接：phoneNum=" + phoneNum + ", shareCode=" + appShareCodeVo.getShareCode());
 				return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
 			}else {
+				logger.error("分享邀请链接生成失败", new RuntimeException("phoneNum=" + phoneNum));
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		}else {
+			logger.info("已存在的，分享邀请链接：phoneNum=" + phoneNum + ", shareCode=" + appShareCodeVo.getShareCode());
 			return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
 		}
 	}
@@ -232,14 +235,19 @@ public class AppDoRest {
 	 */
 	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.GET})
 	public JsonResult doRedirectUrl(String shareCode, HttpServletRequest request, HttpServletResponse response) {
-		String sourceIp = NetworkUtil.getIpAddress(request);
-		logger.info("邀请链接中转接口, 获取访问者IP=" + sourceIp
+		 String sourceIp = NetworkUtil.getIpAddress(request);
+		 logger.info("邀请链接中转接口, 获取访问者IP=" + sourceIp
 			+ ", 邀请码shareCode=" + shareCode);
+		 AppShareCodeVo appShareCodeVo = this.appShareCodeService.selectAppShareCodeByShareCode(shareCode);
+		 if(appShareCodeVo == null) {
+			 logger.warn("无效邀请码，不存在的邀请码。shareCode=" + shareCode);
+			 return new JsonResult(ResultCode.SUCCESS_INVALID_CODE);
+		 }
 		 Enumeration<String> names = request.getHeaderNames();
 		 String url = "";
 		 while (names.hasMoreElements()){
 			 String name = (String) names.nextElement();
-			 if(request.getHeader(name).contains("iPhone")){  
+			 if(request.getHeader(name).contains("iPhone")){
 				//配置信息
 				 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 				 url = appConfigVo.getIphoneUrl();
