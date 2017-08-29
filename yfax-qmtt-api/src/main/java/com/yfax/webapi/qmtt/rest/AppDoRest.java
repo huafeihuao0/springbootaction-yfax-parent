@@ -226,8 +226,6 @@ public class AppDoRest {
 	}
 	
 	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
-//	private static final String ANDROID_URL = "http://hbhunter.oss-cn-qingdao.aliyuncs.com/debug/app_qmtt.apk";
-//	private static final String IPHONE_URL = "http://baidu.com";
 	
 	/**
 	 * 邀请中转链接接口
@@ -236,8 +234,7 @@ public class AppDoRest {
 	@RequestMapping(value = "/doRedirectUrl", method = {RequestMethod.GET})
 	public JsonResult doRedirectUrl(String shareCode, HttpServletRequest request, HttpServletResponse response) {
 		 String sourceIp = NetworkUtil.getIpAddress(request);
-		 logger.info("邀请链接中转接口, 获取访问者IP=" + sourceIp
-			+ ", 邀请码shareCode=" + shareCode);
+		 logger.info("邀请链接中转接口, 获取访问者IP=" + sourceIp + ", 邀请码shareCode=" + shareCode);
 		 AppShareCodeVo appShareCodeVo = this.appShareCodeService.selectAppShareCodeByShareCode(shareCode);
 		 if(appShareCodeVo == null) {
 			 logger.warn("无效邀请码，不存在的邀请码。shareCode=" + shareCode);
@@ -261,23 +258,22 @@ public class AppDoRest {
 		 }
 		 logger.info("跳转url=" + url);
 		 try {
-			 Map<String, Object> map = new HashMap<>();
-			 map.put("sourceIp", sourceIp);
-			 map.put("shareCode", shareCode);
-			 IpShareCodeVo ipShareCodeVo = new IpShareCodeVo();
-			 ipShareCodeVo.setId(UUID.getUUID());
-			 ipShareCodeVo.setSourceIp(sourceIp);
-			 ipShareCodeVo.setShareCode(shareCode);
-			 ipShareCodeVo.setIsUsed(1);//未使用
-			 String cTime = DateUtil.getCurrentLongDateTime();
-			 ipShareCodeVo.setCreateDate(cTime);
-			 ipShareCodeVo.setUpdateDate(cTime);
-			 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
-			 if(!flag) {
-				 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
-			 }
-			 if(!url.equals("")) {
-				 response.sendRedirect(url);
+			 if(url != null) {
+				 IpShareCodeVo ipShareCodeVo = new IpShareCodeVo();
+				 ipShareCodeVo.setId(UUID.getUUID());
+				 ipShareCodeVo.setSourceIp(sourceIp);
+				 ipShareCodeVo.setShareCode(shareCode);
+				 ipShareCodeVo.setIsUsed(1);//未使用
+				 String cTime = DateUtil.getCurrentLongDateTime();
+				 ipShareCodeVo.setCreateDate(cTime);
+				 ipShareCodeVo.setUpdateDate(cTime);
+				 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
+				 if(!flag) {
+					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
+				 }
+				 if(!url.equals("")) {
+					 response.sendRedirect(url);
+				 }
 			 }
 		} catch (IOException e) {
 			logger.error("跳转异常：" + e.getMessage(), e);
