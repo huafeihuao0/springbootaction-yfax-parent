@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.yfax.utils.DateUtil;
 import com.yfax.webapi.qmtt.dao.AppUserDao;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 
@@ -34,6 +36,9 @@ public class CfdbUserDetailsService implements UserDetailsService {
         		logger.info("AppUserVo " + phoneNum + " was not exist");
             throw new UsernameNotFoundException("AppUserVo " + phoneNum + " was not found in the database");
         }
+        userFromDatabase.setLastLoginDate(DateUtil.getCurrentLongDateTime());
+        //更新最后一次登录时间
+        this.dao.updateUser(userFromDatabase);
         //获取用户的所有权限并且SpringSecurity需要的集合
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
