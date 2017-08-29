@@ -10,11 +10,25 @@ public class InitConfigVo implements Serializable{
 	private String faqUrl;			//常见问题页面url
 	private String inviteUrl;		//邀请规则说明页面url
 	private String registerInfoUrl;	//注册用户协议页面url
+	private String duration;			//阅读文章控制时长
+	private Integer frequency;		//阅读文章拖动次数
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
+	public String getDuration() {
+		return duration;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	public Integer getFrequency() {
+		return frequency;
+	}
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
 	public String getId() {
 		return id;
 	}
