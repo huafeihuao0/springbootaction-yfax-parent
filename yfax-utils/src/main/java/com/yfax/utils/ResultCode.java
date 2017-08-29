@@ -32,7 +32,7 @@ public enum ResultCode {
 	/** 账户已注册 */
 	SUCCESS_EXIST("209", "账户已注册"),
 	
-	/** 账户已注册 */
+	/** 已签到过了 */
 	SUCCESS_CHECK_IN("210", "已签到过了"),
 	
 	/** 今日阅读金币领取已达上限 */

@@ -60,9 +60,9 @@ public class AwardHisService{
 	public JsonResult addAwardHis(String phoneNum, int gold, Integer awardType, 
 			Integer firstRead, Integer firstShare, Integer firstInvite, String readHisId, Integer dailyCheckIn){
 		try {
-			//先判断奖励文章是否存在
+			//先判断奖励文章是否存在，签到类型则跳过
 			ReadHisVo readHisVo = this.readHisDao.selectReadHisById(readHisId);
-			if(readHisVo == null) {
+			if(readHisVo == null && dailyCheckIn == null) {
 				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 			}
 			//1. 记录奖励明细
