@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.cfdb.vo.IncomeHisVo">
+
+	<resultMap id="result" type="com.yfax.webapi.cfdb.vo.IncomeHisVo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="phoneId" property="phoneId" jdbcType="VARCHAR" />
+		<result column="taskId" property="taskId" jdbcType="VARCHAR" />
+		<result column="logoUrl" property="logoUrl" jdbcType="VARCHAR" />
+		<result column="taskName" property="taskName" jdbcType="VARCHAR" />
+		<result column="incomeTime" property="incomeTime" jdbcType="VARCHAR" />
+		<result column="income" property="income" jdbcType="VARCHAR" />
+		<result column="sysIncome" property="sysIncome" jdbcType="VARCHAR" />
+		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
+		<result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+		<result column="channel" property="channel" jdbcType="INTEGER" />
+		<result column="hashid" property="hashid" jdbcType="VARCHAR" />
+		
+	</resultMap>
+
+    <select id="selectIncomeHis" resultMap="result">
+		select id,phoneId,taskId,logoUrl,taskName,income,sysIncome,
+		date_format(incomeTime,'%Y-%m-%d %H:%i:%s') as incomeTime,
+		date_format(createDate,'%Y-%m-%d %H:%i:%s') as createDate,
+		date_format(updateDate,'%Y-%m-%d %H:%i:%s') as updateDate,
+		flag,channel,hashid
+		from cfdb_income_his where phoneId = #{phoneId}
+		order by incometime desc
+    </select>
+    
+     <select id="selectIncomeHisByCondition" parameterType="com.yfax.webapi.cfdb.vo.IncomeHisVo" 
+     		resultType="com.yfax.webapi.cfdb.vo.IncomeHisVo">
+		select * from cfdb_income_his where hashid = #{hashid} and taskId = #{taskId} 
+			and phoneId = #{phoneId} and flag = #{flag} and channel = #{channel}
+	</select>
+    
+    <!-- 添加 -->
+	<insert id="insertIncomeHis" parameterType="com.yfax.webapi.cfdb.vo.IncomeHisVo">
+		insert into cfdb_income_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="phoneId != null" > phoneId, </if>
+		  <if test="taskId != null" > taskId, </if>
+		  <if test="logoUrl != null" > logoUrl, </if>
+		  <if test="taskName != null" > taskName, </if>
+		  <if test="incomeTime != null" > incomeTime, </if>
+		  <if test="income != null" > income, </if>
+		  <if test="sysIncome != null" > sysIncome, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  <if test="flag != null" > flag, </if>
+		  <if test="channel != null" > channel, </if>
+		  <if test="hashid != null" > hashid, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="phoneId != null" > #{phoneId}, </if>
+		  <if test="taskId != null" > #{taskId}, </if>
+		  <if test="logoUrl != null" > #{logoUrl}, </if>
+		  <if test="taskName != null" > #{taskName}, </if>
+		  <if test="incomeTime != null" > #{incomeTime}, </if>
+		  <if test="income != null" > #{income}, </if>
+		  <if test="sysIncome != null" > #{sysIncome}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  <if test="flag != null" > #{flag}, </if>
+		  <if test="channel != null" > #{channel}, </if>
+		  <if test="hashid != null" > #{hashid}, </if>
+		  
+        </trim>
+	</insert>
+</mapper>

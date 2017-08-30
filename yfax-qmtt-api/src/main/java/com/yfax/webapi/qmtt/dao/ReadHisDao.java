@@ -1,0 +1,14 @@
+package com.yfax.webapi.qmtt.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.yfax.webapi.qmtt.vo.ReadHisVo;
+
+public interface ReadHisDao {
+	public boolean insertReadHis(ReadHisVo readHisVo) throws Exception;
+	public boolean updateReadHis(ReadHisVo readHisVo) throws Exception;
+	public List<ReadHisVo> selectReadHisByPhoneNum(String phoneNum);
+	public Long selectReadHisCountByPhoneNum(Map<String, Object> map);
+	public ReadHisVo selectReadHisById(String id);
+}

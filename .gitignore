@@ -1,3 +1,16 @@
+yfax-webapi/target
+yfax-webapi/.classpath
+yfax-webapi/.project
+yfax-webapi/.settings
+yfax-webapi/log
+yfax-qmtt-api/log
+yfax-qmtt-api/target
+yfax-qmtt-api/.classpath
+yfax-qmtt-api/.project
+yfax-qmtt-api/.settings
+yfax-utils/target
+yfax-task/target
+yfax-common/target
 .project
 .settings
 log/

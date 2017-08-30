@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.cfdb.vo.SdkChannelConfigVo">
+
+    <select id="selectSdkChannelConfig" resultType="com.yfax.webapi.cfdb.vo.SdkChannelConfigVo">
+		select * from cfdb_sdk_channel_config
+	</select>
+	
+	<select id="selectSdkChannelConfigByFlag" resultType="com.yfax.webapi.cfdb.vo.SdkChannelConfigVo">
+		select * from cfdb_sdk_channel_config where channelFlag = #{channelFlag}
+	</select>
+</mapper>
