@@ -285,17 +285,15 @@ public class AppDoRest {
 	 * 获得阅读文章随机金币
 	 */
 	@RequestMapping(value = "/doReadAward", method = {RequestMethod.POST})
-	public JsonResult doReadAward(String phoneNum, String primaryKey, String readHisId) {
-		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(primaryKey).equals("") 
-				&& !StrUtil.null2Str(readHisId).equals("")) {
-			//先判断奖励文章是否存在
+	public JsonResult doReadAward(String phoneNum, String readHisId) {
+		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(readHisId).equals("")) {
+			//1. 先判断奖励文章是否存在
 			ReadHisVo readHisVo = this.readHisService.selectReadHisById(readHisId);
 			if(readHisVo == null) {
 				return new JsonResult(ResultCode.SUCCESS_NO_DATA);
 			}
 			//配置信息
 			AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
-			
 			Map<String, Object> map = new HashMap<>();
 			map.put("phoneNum", phoneNum);
 			//先判断是否达到每日阅读奖励上限
@@ -313,19 +311,16 @@ public class AppDoRest {
 						, GlobalUtils.AWARD_TYPE_FIRSTREAD, 1, null, null, readHisId, null);
 			}
 			//3. 一篇文章只能奖励一次
-			map.put("primaryKey", primaryKey);
-			Long count2 = this.readHisService.selectCountByPhoneNumAndPrimaryKey(map);
-			logger.info("count2=" + count2);
-			if(count2 == 0){
+			if(readHisVo.getIsAward() == 0){
 				//随机金币奖励
 				int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 				logger.info("阅读随机奖励，gold=" + gold + "，phoneNum=" + phoneNum);
 				return this.awardHisService.addAwardHis(phoneNum, gold, 
 						GlobalUtils.AWARD_TYPE_READ, null, null, null, readHisId, null);
 				
-			}else if(count2 == 1) {
+			}else if(readHisVo.getIsAward() == 1) {
 				String result = "文章已获取奖励，跳过处理";
-				logger.info(result + "。phoneNum=" + phoneNum + ", primaryKey=" + primaryKey);
+				logger.info(result + "。phoneNum=" + phoneNum + ", readHisId=" + readHisId);
 				return new JsonResult(ResultCode.SUCCESS_DUPLICATE, result);
 			}
 			return new JsonResult(ResultCode.SUCCESS_ALL_GONE);

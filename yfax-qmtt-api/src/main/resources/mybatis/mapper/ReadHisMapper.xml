@@ -17,11 +17,6 @@
         select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and isAward=1
     </select>
     
-    <!-- 一篇文章只能奖励阅读 -->
-    <select id="selectReadHisCountByPhoneNumAndPrimaryKey" resultType="java.lang.Long">
-        select count(id) from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey} and isAward=1
-    </select>
-    
     <!-- 添加 -->
 	<insert id="insertReadHis" parameterType="com.yfax.webapi.qmtt.vo.ReadHisVo">
 		insert into qmtt_read_his

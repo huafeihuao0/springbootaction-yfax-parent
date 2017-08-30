@@ -36,11 +36,6 @@ public class ReadHisDaoImpl implements ReadHisDao {
 	}
 
 	@Override
-	public Long selectReadHisCountByPhoneNumAndPrimaryKey(Map<String, Object> map) {
-		return this.sqlSessionTemplate.selectOne("selectReadHisCountByPhoneNumAndPrimaryKey", map);
-	}
-
-	@Override
 	@Transactional
 	public boolean updateReadHis(ReadHisVo readHisVo) throws Exception {
 		int i = this.sqlSessionTemplate.insert("updateReadHis", readHisVo);
