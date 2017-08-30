@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.cfdb.vo.UserTasklistHisVo">
+	
+	<!-- 添加 -->
+	<insert id="insertUserTasklistHis" parameterType="com.yfax.webapi.cfdb.vo.UserTasklistHisVo">
+		insert into cfdb_user_tasklist_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="phoneId != null" > phoneId, </if>
+		  <if test="taskId != null" > taskId, </if>
+		  <if test="logoUrl != null" > logoUrl, </if>
+		  <if test="taskName != null" > taskName, </if>
+		  <if test="income != null" > income, </if>
+		  <if test="point != null" > point, </if>
+		  <if test="status != null" > status, </if>
+		  <if test="statusFlag != null" > statusFlag, </if>
+		  <if test="createDate != null" > createDate, </if>
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="phoneId != null" > #{phoneId}, </if>
+		  <if test="taskId != null" > #{taskId}, </if>
+		  <if test="logoUrl != null" > #{logoUrl}, </if>
+		  <if test="taskName != null" > #{taskName}, </if>
+		  <if test="income != null" > #{income}, </if>
+		  <if test="point != null" > #{point}, </if>
+		  <if test="status != null" > #{status}, </if>
+		  <if test="statusFlag != null" > #{statusFlag}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+        </trim>
+	</insert>
+	
+</mapper>

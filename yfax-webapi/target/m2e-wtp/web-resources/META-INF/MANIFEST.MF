@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: yfax-webapi
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Minbo
+Implementation-Vendor-Id: com.yfax
+Build-Jdk: 1.8.0_101
+Implementation-URL: http://projects.spring.io/spring-boot/yfax-parent/
+ yfax-webapi/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

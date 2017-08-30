@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.cfdb.vo.UserTaskListVo">
+
+    <select id="selectUserTaskListByPhoneId" resultType="com.yfax.webapi.cfdb.vo.UserTaskListVo">
+		select b.id,b.phoneId,b.taskId,b.taskStatus,b.logoUrl,b.taskName,b.taskTag,b.amount,b.income,b.orderNo,b.goUrl,b.status,b.statusFlag,b.isChecked,b.createDate from (
+			(select a.id,a.phoneId,a.taskId,'' as taskStatus,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,a.status,a.statusFlag,a.isChecked,a.createDate
+			from cfdb_user_tasklist a where a.phoneId=#{phoneId}) 
+			union all
+			(select '' as id,'' as phoneId,a.taskId,a.status as taskStatus,a.logoUrl,a.taskName,a.taskTag,a.amount,a.income,a.orderNo,a.goUrl,'' as status,0 as statusFlag,0 as isChecked,'' as createDate
+			from cfdb_tasklist a where a.status=2 and a.taskId not in (select taskId from cfdb_user_tasklist where phoneId=#{phoneId}  and statusFlag in (1,2,3)))
+		) b order by b.isChecked, b.orderNo, b.createDate
+		
+	</select>
+	
+	<select id="selectUserTaskListById" resultType="com.yfax.webapi.cfdb.vo.UserTaskListVo">
+		select * from cfdb_user_tasklist where id=#{id}
+	</select>
+	
+	<!-- 查看任务是否已做过 -->
+	<select id="selectCountIsExist" resultType="java.lang.Long" parameterType="java.util.Map">
+		select count(id) as count from cfdb_user_tasklist where phoneId=#{phoneId} 
+			and taskId=#{taskId} and statusFlag in (1,2,3)
+	</select>
+	
+	<!-- 删除在进行中状态下的任务 -->
+	<delete id="deleteUserTask" parameterType="java.util.Map">
+		delete from cfdb_user_tasklist where phoneId=#{phoneId} and taskId=#{taskId} and statusFlag=1
+	</delete>
+	
+	<!-- 更新为已查看 -->
+	<update id="updateIsChecked" parameterType="java.util.Map">
+		update cfdb_user_tasklist set isChecked=2 where id=#{id} and isChecked=1
+	</update>
+	
+	<!-- 添加 -->
+	<insert id="insertUserTask" parameterType="com.yfax.webapi.cfdb.vo.UserTaskListVo">
+		insert into cfdb_user_tasklist
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="phoneId != null" > phoneId, </if>
+		  <if test="taskId != null" > taskId, </if>
+		  <if test="logoUrl != null" > logoUrl, </if>
+		  <if test="taskName != null" > taskName, </if>
+		  <if test="taskTag != null" > taskTag, </if>
+		  <if test="amount != null" > amount, </if>
+		  <if test="income != null" > income, </if>
+		  <if test="orderNo != null" > orderNo, </if>
+		  <if test="goUrl != null" > goUrl, </if>
+		  <if test="status != null" > status, </if>
+		  <if test="statusFlag != null" > statusFlag, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="phoneId != null" > #{phoneId}, </if>
+		  <if test="taskId != null" > #{taskId}, </if>
+		  <if test="logoUrl != null" > #{logoUrl}, </if>
+		  <if test="taskName != null" > #{taskName}, </if>
+		  <if test="taskTag != null" > #{taskTag}, </if>
+		  <if test="amount != null" > #{amount}, </if>
+		  <if test="income != null" > #{income}, </if>
+		  <if test="orderNo != null" > #{orderNo}, </if>
+		  <if test="goUrl != null" > #{goUrl}, </if>
+		  <if test="status != null" > #{status}, </if>
+		  <if test="statusFlag != null" > #{statusFlag}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  
+        </trim>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="updateUserTaskById" parameterType="com.yfax.webapi.cfdb.vo.UserTaskListVo">
+		update 
+			cfdb_user_tasklist
+		<set>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="statusFlag != null"> statusFlag = #{statusFlag}, </if>
+			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+			<if test="proveName != null"> proveName = #{proveName}, </if>
+			<if test="proveMobile != null"> proveMobile = #{proveMobile}, </if>
+			<if test="proveImagesUrl != null"> proveImagesUrl = #{proveImagesUrl}, </if>
+			<if test="proveColumn1 != null"> proveColumn1 = #{proveColumn1}, </if>
+			<if test="proveColumn2 != null"> proveColumn2 = #{proveColumn2}, </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.cfdb.vo.AdvHisVo">
+
+	<select id="selectByHashid" resultType="com.yfax.webapi.cfdb.vo.AdvHisVo">
+        select * from cfdb_adv_his where hashid = #{hashid}
+    </select>
+    
+    <!-- 添加 -->
+	<insert id="insertAdvHis" parameterType="com.yfax.webapi.cfdb.vo.AdvHisVo">
+		insert into cfdb_adv_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="hashid != null" > hashid, </if>
+		  <if test="appid != null" > appid, </if>
+		  <if test="adid != null" > adid, </if>
+		  <if test="adname != null" > adname, </if>
+		  <if test="userid != null" > userid, </if>
+		  <if test="mac != null" > mac, </if>
+		  <if test="deviceid != null" > deviceid, </if>
+		  <if test="source != null" > source, </if>
+		  <if test="point != null" > point, </if>
+		  <if test="price != null" > price, </if>
+		  <if test="time != null" > time, </if>
+		  <if test="timeStr != null" > timeStr, </if>
+		  <if test="appsecret != null" > appsecret, </if>
+		  <if test="checksum != null" > checksum, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="result != null" > result, </if>
+		  <if test="activeNum != null" > activeNum, </if>
+		  <if test="resultSum != null" > resultSum, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="hashid != null" > #{hashid}, </if>
+		  <if test="appid != null" > #{appid}, </if>
+		  <if test="adid != null" > #{adid}, </if>
+		  <if test="adname != null" > #{adname}, </if>
+		  <if test="userid != null" > #{userid}, </if>
+		  <if test="mac != null" > #{mac}, </if>
+		  <if test="deviceid != null" > #{deviceid}, </if>
+		  <if test="source != null" > #{source}, </if>
+		  <if test="point != null" > #{point}, </if>
+		  <if test="price != null" > #{price}, </if>
+		  <if test="time != null" > #{time}, </if>
+		  <if test="timeStr != null" > #{timeStr}, </if>
+		  <if test="appsecret != null" > #{appsecret}, </if>
+		  <if test="checksum != null" > #{checksum}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="result != null" > #{result}, </if>
+		  <if test="activeNum != null" > #{activeNum}, </if>
+		  <if test="resultSum != null" > #{resultSum}, </if>
+		  
+        </trim>
+	</insert>
+</mapper>
