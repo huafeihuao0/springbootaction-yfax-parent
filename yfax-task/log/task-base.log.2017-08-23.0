@@ -1,6 +1,0 @@
-2017-08-23 23:58:48,559 [restartedMain] [com.yfax.task.Application] [INFO] (StartupInfoLogger.java:48)- Starting Application on MInboHes-MacBook-Pro.local with PID 80712 (/Users/Minbo/Documents/IT/java/code/yfax-parent/yfax-task/target/classes started by Minbo in /Users/Minbo/Documents/IT/java/code/yfax-parent/yfax-task)
-2017-08-23 23:58:48,561 [restartedMain] [com.yfax.task.Application] [DEBUG] (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
-2017-08-23 23:58:48,562 [restartedMain] [com.yfax.task.Application] [INFO] (SpringApplication.java:641)- The following profiles are active: dev
-2017-08-23 23:59:54,269 [restartedMain] [com.yfax.task.Application] [INFO] (StartupInfoLogger.java:48)- Starting Application on MInboHes-MacBook-Pro.local with PID 80733 (/Users/Minbo/Documents/IT/java/code/yfax-parent/yfax-task/target/classes started by Minbo in /Users/Minbo/Documents/IT/java/code/yfax-parent/yfax-task)
-2017-08-23 23:59:54,270 [restartedMain] [com.yfax.task.Application] [DEBUG] (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
-2017-08-23 23:59:54,271 [restartedMain] [com.yfax.task.Application] [INFO] (SpringApplication.java:641)- The following profiles are active: dev
