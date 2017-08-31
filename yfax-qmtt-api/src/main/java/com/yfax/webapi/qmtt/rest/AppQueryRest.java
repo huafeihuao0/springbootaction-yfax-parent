@@ -202,7 +202,7 @@ public class AppQueryRest {
 	        		return Integer.valueOf(myFormat.format(Double.valueOf(str)));
 	        }
 	    });
-		return list;
+		return list.subList(0, 20);
 	}
 	/**
 	 * 获得APP初始化配置数据
