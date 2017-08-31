@@ -9,7 +9,12 @@
     </select>
 
 	<select id="selectReadHisByPhoneNum" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
-        select * from qmtt_read_his where phoneNum=#{phoneNum} order by createDate desc limit 50
+        select * from qmtt_read_his where phoneNum=#{phoneNum} order by updateDate desc, createDate desc limit 50
+    </select>
+    
+    <select id="selectReadHisByPhoneNumAndPrimaryKey" resultType="com.yfax.webapi.qmtt.vo.ReadHisVo">
+        select * from qmtt_read_his where phoneNum=#{phoneNum} and primaryKey=#{primaryKey} 
+       		order by updateDate desc, createDate desc limit 1
     </select>
     
     <!-- 首次有效阅读 -->

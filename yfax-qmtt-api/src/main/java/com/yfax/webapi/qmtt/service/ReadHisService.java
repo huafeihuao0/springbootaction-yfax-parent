@@ -55,4 +55,8 @@ public class ReadHisService{
 		return this.readHisDao.selectReadHisById(id);
 	}
 	
+	public ReadHisVo selectReadHisByPhoneNumAndPrimaryKey(Map<String, Object> map){
+		return this.readHisDao.selectReadHisByPhoneNumAndPrimaryKey(map);
+	}
+	
 }

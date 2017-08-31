@@ -418,20 +418,33 @@ public class AppDoRest {
 	public JsonResult doReadHis(String phoneNum, String data, String primaryKey) {
 		if(!StrUtil.null2Str(phoneNum).equals("") && !StrUtil.null2Str(data).equals("") 
 				&& !StrUtil.null2Str(primaryKey).equals("")) {
-			ReadHisVo readHisVo = new ReadHisVo();
-			String readHisId = UUID.getUUID();
-			readHisVo.setId(readHisId);
-			readHisVo.setPhoneNum(phoneNum);
-			readHisVo.setData(data);
-			readHisVo.setPrimaryKey(primaryKey);
-			String cTime = DateUtil.getCurrentLongDateTime();
-			readHisVo.setCreateDate(cTime);
-			readHisVo.setUpdateDate(cTime);
-			boolean flag = this.readHisService.addReadHis(readHisVo);
+			Map<String, Object> map = new HashMap<>();
+			map.put("phoneNum", phoneNum);
+			map.put("primaryKey", primaryKey);
+			//1. 先判断历史文章是否已存在
+			ReadHisVo readHisVo = this.readHisService.selectReadHisByPhoneNumAndPrimaryKey(map);
+			boolean flag = false;
+			if(readHisVo == null) {
+				readHisVo = new ReadHisVo();
+				String readHisId = UUID.getUUID();
+				readHisVo.setId(readHisId);
+				readHisVo.setPhoneNum(phoneNum);
+				readHisVo.setData(data);
+				readHisVo.setPrimaryKey(primaryKey);
+				readHisVo.setIsAward(0); //新建时默认未奖励
+				String cTime = DateUtil.getCurrentLongDateTime();
+				readHisVo.setCreateDate(cTime);
+				readHisVo.setUpdateDate(cTime);
+				flag = this.readHisService.addReadHis(readHisVo);
+			}else {
+				readHisVo.setUpdateDate(DateUtil.getCurrentLongDateTime());
+				flag = this.readHisService.modifyReadHis(readHisVo);
+			}
 			if(flag) {
-				Map<String, Object> map = new HashMap<>();
-				map.put("readHisId", readHisId);
-				return new JsonResult(ResultCode.SUCCESS, map);
+				Map<String, Object> result = new HashMap<>();
+				result.put("readHisId", readHisVo.getId());
+				result.put("isAward", readHisVo.getIsAward());
+				return new JsonResult(ResultCode.SUCCESS, result);
 			}else {
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
