@@ -41,10 +41,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Override
     public void configure(WebSecurity web) throws Exception {
     		//排除/hello路径拦截
+    		//版本升级
     		//广告平台回调不做拦截
     		//faq页不做拦截
     		//登录不做拦截（因为同时要创建新用户）
         web.ignoring().antMatchers("/hello"
+        		, GlobalUtils.PROJECT_CFDB + "/queryUpgradeByVersion"
         		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfo"
         		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfoYm"
         		, GlobalUtils.PROJECT_CFDB + "/faq"

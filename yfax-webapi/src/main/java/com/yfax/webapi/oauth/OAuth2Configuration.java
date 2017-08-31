@@ -48,6 +48,7 @@ public class OAuth2Configuration {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/hello/", 
+                    		GlobalUtils.PROJECT_CFDB + "/queryUpgradeByVersion",
                     		GlobalUtils.PROJECT_CFDB + "/doLogin").permitAll()
                     .antMatchers("/secure/**", 
                     		GlobalUtils.PROJECT_CFDB + "/**").authenticated();

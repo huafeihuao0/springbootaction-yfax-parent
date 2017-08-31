@@ -186,8 +186,7 @@ public class AppQueryRest {
 	}
 	
 	/**
-	 * 检查APP版本升级接口
-	 * @return
+	 * 检查APP版本升级接口（废弃掉了，留作旧APP版本升级用）
 	 */
 	@RequestMapping("/queryUpgrade")
 	public JsonResult queryUpgrade() {
@@ -197,7 +196,6 @@ public class AppQueryRest {
 	
 	/**
 	 * 获取APP版本升级信息接口
-	 * @return
 	 */
 	@RequestMapping("/queryUpgradeByVersion")
 	public JsonResult queryUpgradeByVersion(String version, String platform) {
