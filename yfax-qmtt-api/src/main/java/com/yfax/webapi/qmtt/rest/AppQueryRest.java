@@ -145,20 +145,38 @@ public class AppQueryRest {
 		Map<String, Object> map = new HashMap<>();
 		List<AppUserVo> list = this.appUserService.selectByRank();
 		if(list.size()>0) {
-			map.put("list", initTestData(list));
-			Long sum = this.appUserService.selectByRankSum();
+			List<AppUserVo> listTmp = initTestData(list);	//for test
+			map.put("list", listTmp);	//for test
+			map.put("sum", calSum(listTmp));		//for test
+			
+//			map.put("list", list);
+//			Long sum = this.appUserService.selectByRankSum();
 			//格式化，保留三位小数，DB做四舍五入
-			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
-			map.put("sum", dFormat.format(sum));
+//			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+//			map.put("sum", dFormat.format(sum));
 		}else {
-			//map.put("list", null);
-			map.put("list", initTestData(list));
-			map.put("sum", "0.000");
+//			map.put("list", null);
+//			map.put("sum", "0.000");
+			
+			List<AppUserVo> listTmp = initTestData(list);	//for test
+			map.put("list", listTmp);	//for test
+			map.put("sum", calSum(listTmp));		//for test
 		}
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 	
-	//虚拟数据
+	//测试方法，统计总收益金额
+	private String calSum(List<AppUserVo> list) {
+		double sum = 0;
+		for (AppUserVo appUserVo : list) {
+			sum += Double.valueOf(appUserVo.getBalance());
+		}
+		//格式化，保留三位小数，DB做四舍五入
+		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+		return dFormat.format(sum);
+	}
+	
+	//测试方法，虚拟数据
 	private List<AppUserVo> initTestData(List<AppUserVo> list) {
 		if(list == null) {
 			list = new ArrayList<>();
