@@ -213,14 +213,12 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryInitConfig")
 	public JsonResult queryInitConfig() {
-		Map<String, Object> allMap = new HashMap<String, Object>();
 		//1. 初始配置数据
 		InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
-		allMap.put("initConfigVo", initConfigVo);
 		//2. APP渠道版本配置
 		AppVersionVo appVersionVo = this.appVersionService.selectAppVersion();
-		allMap.put("appVersionVo", appVersionVo);
-		return new JsonResult(ResultCode.SUCCESS, allMap);
+		initConfigVo.setAppVersionVo(appVersionVo);
+		return new JsonResult(ResultCode.SUCCESS, initConfigVo);
 	}
 	
 }

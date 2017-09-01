@@ -16,7 +16,14 @@ public class InitConfigVo implements Serializable{
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
+	private AppVersionVo appVersionVo;
 	
+	public AppVersionVo getAppVersionVo() {
+		return appVersionVo;
+	}
+	public void setAppVersionVo(AppVersionVo appVersionVo) {
+		this.appVersionVo = appVersionVo;
+	}
 	public String getDuration() {
 		return duration;
 	}
