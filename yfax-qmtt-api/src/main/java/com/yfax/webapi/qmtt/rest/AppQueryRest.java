@@ -20,6 +20,7 @@ import com.yfax.utils.ResultCode;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppUserService;
+import com.yfax.webapi.qmtt.service.AppVersionService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
 import com.yfax.webapi.qmtt.service.BalanceHisService;
 import com.yfax.webapi.qmtt.service.IncomeSetService;
@@ -29,6 +30,7 @@ import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
+import com.yfax.webapi.qmtt.vo.AppVersionVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.BalanceHisVo;
 import com.yfax.webapi.qmtt.vo.IncomeSetVo;
@@ -65,6 +67,8 @@ public class AppQueryRest {
 	private AppConfigService appConfigService;
 	@Autowired
 	private InitConfigService initConfigService;
+	@Autowired
+	private AppVersionService appVersionService;
 	
 	/**
 	 * 个人信息接口
@@ -209,8 +213,14 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryInitConfig")
 	public JsonResult queryInitConfig() {
+		Map<String, Object> allMap = new HashMap<String, Object>();
+		//1. 初始配置数据
 		InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
-		return new JsonResult(ResultCode.SUCCESS, initConfigVo);
+		allMap.put("initConfigVo", initConfigVo);
+		//2. APP渠道版本配置
+		AppVersionVo appVersionVo = this.appVersionService.selectAppVersion();
+		allMap.put("appVersionVo", appVersionVo);
+		return new JsonResult(ResultCode.SUCCESS, allMap);
 	}
 	
 }

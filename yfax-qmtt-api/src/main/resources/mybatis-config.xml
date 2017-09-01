@@ -23,5 +23,6 @@
         <mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
         <mapper resource="mybatis/mapper/StudentConfigMapper.xml"/>
         <mapper resource="mybatis/mapper/InitConfigMapper.xml"/>
+        <mapper resource="mybatis/mapper/AppVersionMapper.xml"/>
     </mappers>
 </configuration>
