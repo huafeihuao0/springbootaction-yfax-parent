@@ -28,6 +28,7 @@ import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppShareCodeService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AwardHisService;
+import com.yfax.webapi.qmtt.service.InitConfigService;
 import com.yfax.webapi.qmtt.service.IpShareCodeService;
 import com.yfax.webapi.qmtt.service.LoginHisService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
@@ -38,6 +39,7 @@ import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AwardHisVo;
+import com.yfax.webapi.qmtt.vo.InitConfigVo;
 import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
@@ -76,6 +78,8 @@ public class AppDoRest {
 	private UserFeedbackService userFeedbackService;
 	@Autowired
 	private AppConfigService appConfigService;
+	@Autowired
+	private InitConfigService initConfigService;
 	
 	/**
 	 * 用户退出登录接口
@@ -212,20 +216,20 @@ public class AppDoRest {
 			appShareCodeVo.setUpdateDate(cTime);
 			boolean flag = this.appShareCodeService.addAppShareCode(appShareCodeVo);
 			if(flag) {
+				InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
 				//返回邀请中转链接
 				logger.info("新创建的，分享邀请链接：phoneNum=" + phoneNum + ", shareCode=" + appShareCodeVo.getShareCode());
-				return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
+				return new JsonResult(ResultCode.SUCCESS, initConfigVo.getAppInviteUrl() + appShareCodeVo.getShareCode());
 			}else {
 				logger.error("分享邀请链接生成失败", new RuntimeException("phoneNum=" + phoneNum));
 				return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
 		}else {
+			InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
 			logger.info("已存在的，分享邀请链接：phoneNum=" + phoneNum + ", shareCode=" + appShareCodeVo.getShareCode());
-			return new JsonResult(ResultCode.SUCCESS, REDIRECT_URL + appShareCodeVo.getShareCode());
+			return new JsonResult(ResultCode.SUCCESS, initConfigVo.getAppInviteUrl() + appShareCodeVo.getShareCode());
 		}
 	}
-	
-	private static final String REDIRECT_URL = "doRedirectUrl?shareCode=";
 	
 	/**
 	 * 邀请中转链接接口
