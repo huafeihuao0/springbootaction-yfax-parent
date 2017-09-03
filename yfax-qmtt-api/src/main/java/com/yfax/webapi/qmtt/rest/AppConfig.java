@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -36,7 +37,16 @@ public class AppConfig {
 	 * APP的register，注册协议页面
 	 */
 	@RequestMapping("/register")
-    public String pageegister(Map<String, Object> model) {
+    public String pageRegister(Map<String, Object> model) {
         return "register";
+    }
+	
+	/**
+	 * APP的download，下载APP页面
+	 */
+	@RequestMapping("/download")
+    public String pageDownload(String url, Model model) {
+		model.addAttribute("url", url);
+        return "download";
     }
 }

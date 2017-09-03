@@ -262,7 +262,7 @@ public class AppDoRest {
 		 }
 		 logger.info("跳转url=" + url);
 		 try {
-			 if(url != null) {
+			 if(!url.equals("")) {
 				 IpShareCodeVo ipShareCodeVo = new IpShareCodeVo();
 				 ipShareCodeVo.setId(UUID.getUUID());
 				 ipShareCodeVo.setSourceIp(sourceIp);
@@ -276,13 +276,47 @@ public class AppDoRest {
 					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
 				 }
 				 if(!url.equals("")) {
-					 response.sendRedirect(url);
+					 InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
+					 response.sendRedirect(initConfigVo.getPageUrl()  + initConfigVo.getDownloadUrl());
 				 }
 			 }
 		} catch (IOException e) {
 			logger.error("跳转异常：" + e.getMessage(), e);
-		} 
-		return new JsonResult(ResultCode.SUCCESS, url);
+		}
+		return new JsonResult(ResultCode.SUCCESS);
+	}
+	
+	/**
+	 * 下载APP接口
+	 * @return
+	 */
+	@RequestMapping(value = "/doDownloadUrl", method = {RequestMethod.GET})
+	public JsonResult doDownloadUrl(String type, HttpServletRequest request, HttpServletResponse response) {
+		 Enumeration<String> names = request.getHeaderNames();
+		 String url = "";
+		 while (names.hasMoreElements()){
+			 String name = (String) names.nextElement();
+			 if(request.getHeader(name).contains("iPhone")){
+				//配置信息
+				 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				 url = appConfigVo.getIphoneUrl();
+				 break;
+			 }else if(request.getHeader(name).contains("Android")) {
+				//配置信息
+				 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				 url = appConfigVo.getAndroidUrl();
+				 break;
+			 }
+		 }
+		 logger.info("下载APP url=" + url);
+		 try {
+			 if(!url.equals("")) {
+				 response.sendRedirect(url);
+			 }
+		} catch (IOException e) {
+			logger.error("跳转异常：" + e.getMessage(), e);
+		}
+		return new JsonResult(ResultCode.SUCCESS);
 	}
 	
 	/**

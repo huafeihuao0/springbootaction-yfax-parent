@@ -13,12 +13,26 @@ public class InitConfigVo implements Serializable{
 	private String duration;			//阅读文章控制时长
 	private Integer frequency;		//阅读文章拖动次数
 	private String appInviteUrl;		//APP生成的分享邀请链接
+	private String pageUrl;			//h5下载显示界面
+	private String downloadUrl;		//apk下载跳转接口
 	private String createDate;	//创建时间
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	private AppVersionVo appVersionVo;
 	
+	public String getPageUrl() {
+		return pageUrl;
+	}
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+	}
+	public String getDownloadUrl() {
+		return downloadUrl;
+	}
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
+	}
 	public String getAppInviteUrl() {
 		return appInviteUrl;
 	}

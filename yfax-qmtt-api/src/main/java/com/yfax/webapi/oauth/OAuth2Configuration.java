@@ -47,14 +47,17 @@ public class OAuth2Configuration {
                     .logoutSuccessHandler(customLogoutSuccessHandler)
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/hello/", 
-                    		GlobalUtils.PROJECT_QMTT + "/doRegister",
-                    		GlobalUtils.PROJECT_QMTT + "/queryInitConfig",
-                    		GlobalUtils.PROJECT_QMTT + "/doLogin", 
-                    		GlobalUtils.PROJECT_QMTT + "/doSms",
-                    		GlobalUtils.PROJECT_QMTT + "/doResetPwd",
-                    		GlobalUtils.PROJECT_QMTT + "/doRedirectUrl",
-                    		GlobalUtils.PROJECT_QMTT + "/queryRank").permitAll()
+                    .antMatchers("/hello/"
+                    		, GlobalUtils.PROJECT_QMTT + "/faq"
+                    		, GlobalUtils.PROJECT_QMTT + "/invite"
+                    		, GlobalUtils.PROJECT_QMTT + "/register"
+                    		, GlobalUtils.PROJECT_QMTT + "/download"
+                    		, GlobalUtils.PROJECT_QMTT + "/doLogin"
+                    		, GlobalUtils.PROJECT_QMTT + "/doSms"
+                    		, GlobalUtils.PROJECT_QMTT + "/doDownloadUrl"
+                    		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"
+                    		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl"
+                    		, GlobalUtils.PROJECT_QMTT + "/queryRank").permitAll()
                     .antMatchers("/secure/**", 
                     		GlobalUtils.PROJECT_QMTT + "/**").authenticated();
 

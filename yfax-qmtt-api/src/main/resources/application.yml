@@ -33,6 +33,10 @@ spring:
   #    suffix: .html
   thymeleaf: 
     prefix: classpath:/templates/
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
   jmx: 
     default-domain: agentservice
 

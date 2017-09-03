@@ -49,8 +49,10 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/faq") 
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/invite") 
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/register") 
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/download") 
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryInitConfig") 
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doRedirectUrl")
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doDownloadUrl")
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryRank")){
             return true;
         }
