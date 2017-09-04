@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.task.vo.RateSetVo">
+<mapper namespace="com.yfax.task.qmtt.vo.RateSetVo">
 
-	 <select id="selectRateSet" resultType="com.yfax.task.vo.RateSetVo">
+	 <select id="selectRateSet" resultType="com.yfax.task.qmtt.vo.RateSetVo">
         select * from qmtt_rate_set where status=2 order by updateDate desc, createDate desc limit 1
     </select>
     

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.yfax.task.service.AppUserService;
-import com.yfax.task.service.BalanceHisService;
-import com.yfax.task.vo.AppUserVo;
+import com.yfax.task.cfdb.service.UserTaskListService;
+import com.yfax.task.cfdb.vo.UserTaskListVo;
+import com.yfax.task.qmtt.service.AppUserService;
+import com.yfax.task.qmtt.service.BalanceHisService;
+import com.yfax.task.qmtt.vo.AppUserVo;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.StrUtil;
 
@@ -23,6 +25,8 @@ public class ScheduledTasks {
 	private AppUserService appUserService;
 	@Autowired
 	private BalanceHisService balanceHisService;
+	@Autowired
+	private UserTaskListService userTaskListService;
 
 	// 以指定时间间隔调度任务（以方法执行开始时间为准）
 //	@Scheduled(fixedRate = 20000)
@@ -34,11 +38,18 @@ public class ScheduledTasks {
 //		logger.info("=======================end====================");
 //	}
 
-	// 以指定时间间隔调度（以方法执行结束时间为准）
-	// @Scheduled(fixedDelay = 5000)
-	// public void doSomething() {
-	// // something that should execute periodically
-	// }
+	 //以指定时间间隔调度（以方法执行结束时间为准）
+	 @Scheduled(fixedDelay = 300000)
+	 public void cfdbTask() {
+		 logger.info("==================start=================");
+		 logger.info("====返利达人任务，开始检查是否存在超时任务====");
+		 List<UserTaskListVo> list = this.userTaskListService.selectUserTaskListByTime();
+		 for (UserTaskListVo userTaskListVo : list) {
+			this.userTaskListService.abandonUserTask(userTaskListVo.getId(), userTaskListVo.getPhoneId(), 
+					userTaskListVo.getTaskId());
+		 }
+		 logger.info("==================end=================");
+	 }
 
 	// 指定延迟后开始调度任务
 	// @Scheduled(initialDelay = 1000, fixedRate = 5000)
@@ -49,8 +60,8 @@ public class ScheduledTasks {
 	// cron表达式，second, minute, hour, day, month, weekday
 	// 每日零点跑批
 	@Scheduled(cron = "0 0 0 * * *")
-	public void doSomething() {
-		logger.info("======================start===================");
+	public void qmttTask() {
+		logger.info("============乐头条任务，start===================");
 		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
 		this.batchResetDailyCheckIn();
 		this.batchAutoTransfer();

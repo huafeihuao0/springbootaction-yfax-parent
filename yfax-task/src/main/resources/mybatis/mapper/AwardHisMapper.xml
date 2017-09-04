@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yfax.task.vo.AwardHisVo">
+<mapper namespace="com.yfax.task.qmtt.vo.AwardHisVo">
 
-	<select id="selectAwardHisByPhoneNum" resultType="com.yfax.task.vo.AwardHisVo">
+	<select id="selectAwardHisByPhoneNum" resultType="com.yfax.task.qmtt.vo.AwardHisVo">
         select * from qmtt_award_his where phoneNum=#{phoneNum} order by createDate desc limit 200
     </select>
     
     <!-- 今日签到判断 -->
-    <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.task.vo.AwardHisVo">
+    <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.task.qmtt.vo.AwardHisVo">
          select * from qmtt_award_his where phoneNum=#{phoneNum} and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
     </select>
     
@@ -20,7 +20,7 @@
     </select>
 
     <!-- 添加 -->
-	<insert id="insertAwardHis" parameterType="com.yfax.task.vo.AwardHisVo">
+	<insert id="insertAwardHis" parameterType="com.yfax.task.qmtt.vo.AwardHisVo">
 		insert into qmtt_award_his
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="id != null" > id, </if>

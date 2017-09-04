@@ -12,5 +12,9 @@
     		<mapper resource="mybatis/mapper/RateSetMapper.xml"/>
     		<mapper resource="mybatis/mapper/AppConfigMapper.xml"/>
     		<mapper resource="mybatis/mapper/AwardHisMapper.xml"/>
+    		
+    		<mapper resource="mybatis/mapper/TaskListMapper.xml"/>
+    		<mapper resource="mybatis/mapper/UserTasklistHisMapper.xml"/>
+    		<mapper resource="mybatis/mapper/UserTaskListMapper.xml"/>
     </mappers>
 </configuration>
