@@ -38,8 +38,8 @@ public class ScheduledTasks {
 //		logger.info("=======================end====================");
 //	}
 
-	 //以指定时间间隔调度（以方法执行结束时间为准）
-	 @Scheduled(fixedDelay = 300000)
+	//每十分钟执行一次
+	 @Scheduled(initialDelay = 1000, fixedDelay = 600000)
 	 public void cfdbTask() {
 		 logger.info("==================start=================");
 		 logger.info("====返利达人任务，开始检查是否存在超时任务====");
