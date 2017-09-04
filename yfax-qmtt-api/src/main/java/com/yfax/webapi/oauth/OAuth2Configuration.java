@@ -48,6 +48,8 @@ public class OAuth2Configuration {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/hello/"
+                    		, GlobalUtils.PROJECT_QMTT + "/doRegister"
+                    		, GlobalUtils.PROJECT_QMTT + "/queryInitConfig"
                     		, GlobalUtils.PROJECT_QMTT + "/faq"
                     		, GlobalUtils.PROJECT_QMTT + "/invite"
                     		, GlobalUtils.PROJECT_QMTT + "/register"

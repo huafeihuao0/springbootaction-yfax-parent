@@ -40,13 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     	//排除/hello路径拦截
     @Override
     public void configure(WebSecurity web) throws Exception {
-    		//排除/hello路径拦截
-    		//faq页不做拦截
-    		//登录不做拦截
-    		//注册验证码
-    		//重置密码
-    		//中转链接url
         web.ignoring().antMatchers("/hello"
+        		, GlobalUtils.PROJECT_QMTT + "/doRegister"
+        		, GlobalUtils.PROJECT_QMTT + "/queryInitConfig"
         		, GlobalUtils.PROJECT_QMTT + "/faq"
         		, GlobalUtils.PROJECT_QMTT + "/invite"
         		, GlobalUtils.PROJECT_QMTT + "/register"
