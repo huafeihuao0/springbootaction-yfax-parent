@@ -41,6 +41,8 @@ import com.yfax.webapi.qmtt.vo.RateSetVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
+import sun.tools.tree.ThisExpression;
+
 /**
  * @author Minbo.He 
  * 查询接口
@@ -188,6 +190,14 @@ public class AppQueryRest {
 		return dFormat.format(sum);
 	}
 	
+	public static void main(String[] args) {
+		AppQueryRest rest = new AppQueryRest();
+		List<AppUserVo> list = rest.initTestData(new ArrayList<AppUserVo>());
+		for (AppUserVo appUserVo : list) {
+			System.out.println(appUserVo);
+		}
+	}
+	
 	//测试方法，虚拟数据
 	private List<AppUserVo> initTestData(List<AppUserVo> list) {
 		if(list == null) {
@@ -198,12 +208,13 @@ public class AppQueryRest {
 				,"13500002325","15600006843","15800001335","13000008731","18000007232","18800002545","18200006813","13900001314"
 				,"15900005632","13300008683","18400001332","13500002338","15600006682","15800001334","13000004153","18000009773"
 				,"18800009377","18200001733","13900001632"};
+		int salt = 10;
 		//格式化，保留三位小数，DB做四舍五入
 		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
 		for (int i = 0; i < strings.length; i++) {
 			AppUserVo appUserVo = new AppUserVo();
 			appUserVo.setPhoneNum(strings[i]);
-			appUserVo.setBalance(String.valueOf(dFormat.format(new Random().nextInt(100) * new Random().nextFloat())));
+			appUserVo.setBalance(String.valueOf(dFormat.format(new Random().nextInt(100) * salt * new Random().nextFloat())));
 			list.add(appUserVo);
 		}
 		Collections.sort(list, new Comparator<AppUserVo>() {
