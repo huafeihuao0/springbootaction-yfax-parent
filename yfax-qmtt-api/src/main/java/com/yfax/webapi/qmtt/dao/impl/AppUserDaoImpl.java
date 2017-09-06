@@ -57,4 +57,9 @@ public class AppUserDaoImpl implements AppUserDao {
 	public Long selectByRankSum() {
 		return this.sqlSessionTemplate.selectOne("selectByRankSum");
 	}
+
+	@Override
+	public Long selectByTodaySum(Map<String, Object> params) {
+		return this.sqlSessionTemplate.selectOne("selectByTodaySum", params);
+	}
 }

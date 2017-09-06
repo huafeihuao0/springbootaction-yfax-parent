@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
+import com.yfax.utils.StrUtil;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppUserService;
@@ -75,20 +77,26 @@ public class AppQueryRest {
 	 */
 	@RequestMapping("/queryOwnInfo")
 	public JsonResult queryOwnInfo(String phoneNum) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("phoneNum", phoneNum);
+		paramsMap.put("currentTime", DateUtil.getCurrentDate());
+		//今日已获得金币
+		Long todayGlod = this.appUserService.selectByTodaySum(paramsMap);
+		Map<String, Object> resultMap = new HashMap<>();
 		//我的零钱，我的金币
 		AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
-		map.put("gold", appUserVo.getGold());
-		map.put("balance", appUserVo.getBalance());
+		resultMap.put("gold", appUserVo.getGold());
+		resultMap.put("balance", appUserVo.getBalance());
+		resultMap.put("todayGlod", StrUtil.null2Str(String.valueOf(todayGlod)));
 		//得到当前汇率
 		RateSetVo rateSetVo = this.rateSetService.selectRateSet();
-		map.put("rate", rateSetVo.getRate());
-		map.put("students", appUserVo.getStudents());
-		map.put("appUserVo", appUserVo);
+		resultMap.put("rate", rateSetVo.getRate());
+		resultMap.put("students", appUserVo.getStudents());
+		resultMap.put("appUserVo", appUserVo);
 		//配置信息
 		AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
-		map.put("appConfigVo", appConfigVo);
-		return new JsonResult(ResultCode.SUCCESS, map);
+		resultMap.put("appConfigVo", appConfigVo);
+		return new JsonResult(ResultCode.SUCCESS, resultMap);
 	}
 	
 	/**

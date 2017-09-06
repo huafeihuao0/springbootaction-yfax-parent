@@ -13,4 +13,5 @@ public interface AppUserDao {
 	public boolean updateUser(AppUserVo appUserVo);
 	public List<AppUserVo> selectByRank();
 	public Long selectByRankSum();
+	public Long selectByTodaySum(Map<String, Object> params);
 }
