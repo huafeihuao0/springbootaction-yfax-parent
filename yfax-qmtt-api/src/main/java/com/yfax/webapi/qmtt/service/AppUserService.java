@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.common.xinge.XgServiceApi;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.NetworkUtil;
@@ -117,10 +118,12 @@ public class AppUserService {
 							 //配置信息
 							 AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 							 JsonResult result = new JsonResult();
+							 int awardGold = 0;
 							 if(appUserVo2.getFirstInvite() == 0) {
 								 //给邀请人首次邀请奖励
 								 result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), appConfigVo.getFirstInviteGold()
 										 , GlobalUtils.AWARD_TYPE_FIRSTINVITE, null, null, 1, null, null);
+								 awardGold = appConfigVo.getFirstInviteGold();
 								 logger.info("首次邀请奖励，gold=" + appConfigVo.getFirstInviteGold()
 										 + "，phoneNum=" + appUserVo2.getPhoneNum() + ", result=" + result.toJsonString());
 							 }else {
@@ -128,6 +131,7 @@ public class AppUserService {
 								int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 								result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), gold, 
 										GlobalUtils.AWARD_TYPE_INVITE, null, null, null, null, null);
+								awardGold = gold;
 								logger.info("邀请随机奖励，gold=" + gold + "，phoneNum=" + appUserVo2.getPhoneNum() 
 									+ ", result=" + result.toJsonString());
 							 }
@@ -156,6 +160,14 @@ public class AppUserService {
 								 if(!flag2 && !flag3 && !flag4) {
 									 logger.error("邀请人信息更新失败，请检查", new RuntimeException("flag2=" + flag2 + ", flag3=" + flag3 
 											 + ", flag4=" + flag4));
+								 }else {
+									 if(awardGold>0) {
+										 //推送用户通知
+										 String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
+												 	"恭喜您获得邀请奖励" + awardGold + "金币", 
+													GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+										 logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+									 }
 								 }
 							 }else {
 								 logger.error("邀请奖励失败，请检查", new RuntimeException("result=" + result.toJsonString()));
@@ -171,5 +183,19 @@ public class AppUserService {
 			logger.error("用户注册服务异常：" + e.getMessage(), e);
 			return new JsonResult(ResultCode.SUCCESS_FAIL);
 		}
+	}
+	
+	/**
+	 * rest推送测试用
+	 */
+	public String testPushNotify(String phoneId, int type) {
+		String result = "";
+		if(type == 1) {
+			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+		}else if(type == 2){
+			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+		}
+		logger.info("推送通知给用户[phoneId=" + phoneId + ", type=" + type + "]，推送发送结果result=" + result);
+		return result;
 	}
 }

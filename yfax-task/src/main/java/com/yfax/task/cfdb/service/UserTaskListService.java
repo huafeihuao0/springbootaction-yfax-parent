@@ -128,18 +128,4 @@ public class UserTaskListService {
 				throw new RuntimeException("未知操作类型 statusFlag值");
 		}
 	}
-	
-	/**
-	 * rest推送测试用
-	 */
-	public String testPushNotify(String phoneId, int type) {
-		String result = "";
-		if(type == 1) {
-			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元");
-		}else if(type == 2){
-			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元");
-		}
-		logger.info("推送通知给用户[phoneId=" + phoneId + ", type=" + type + "]，推送发送结果result=" + result);
-		return result;
-	}
 }

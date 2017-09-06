@@ -41,8 +41,6 @@ import com.yfax.webapi.qmtt.vo.RateSetVo;
 import com.yfax.webapi.qmtt.vo.ReadHisVo;
 import com.yfax.webapi.qmtt.vo.WithdrawHisVo;
 
-import sun.tools.tree.ThisExpression;
-
 /**
  * @author Minbo.He 
  * 查询接口

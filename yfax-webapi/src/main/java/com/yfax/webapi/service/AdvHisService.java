@@ -155,7 +155,8 @@ public class AdvHisService{
 							
 							//推送用户通知
 							String result =  XgServiceApi.pushNotifyByMessage(advHis.getDeviceid(), "恭喜获得奖励", 
-									"任务[" + incomeHis.getTaskName() + "]已完成，获得收益：" + incomeHis.getIncome() + "元");
+									"任务[" + incomeHis.getTaskName() + "]已完成，获得收益：" + incomeHis.getIncome() + "元", 
+									GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
 							logger.info("推送通知给用户[phoneId=" + advHis.getDeviceid() + "]，推送发送结果result=" + result);
 						}else {
 							logger.warn("回调用户加钱失败。balance=" + balance 

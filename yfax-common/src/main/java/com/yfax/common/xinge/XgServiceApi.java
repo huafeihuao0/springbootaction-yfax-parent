@@ -47,9 +47,9 @@ public class XgServiceApi {
 	
 	protected static Logger logger = LoggerFactory.getLogger(XgServiceApi.class);
 	
-	private final static long ACCESS_ID = 2100263322;
+//	private final static long ACCESS_ID = 2100263322;
 	private final static String ACCESS_KEY = "AQ4Z2C865LDH";
-	private final static String SECRET_KEY = "cb488973e809c94e4d8a97e6064d2d3d";
+//	private final static String SECRET_KEY = "cb488973e809c94e4d8a97e6064d2d3d";
 	private final static String IMEI_NO = "860514034348291";
 	
 	/**
@@ -59,8 +59,8 @@ public class XgServiceApi {
 	 * @param msg
 	 * @return
 	 */
-	public static String pushNotify(String phoneId, String title, String msg) {
-		String result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, title, msg, phoneId).toString();
+	public static String pushNotify(String phoneId, String title, String msg, long access_id, String secret_key) {
+		String result = XingeApp.pushAccountAndroid(access_id, secret_key, title, msg, phoneId).toString();
 		return result;
 	}
 	
@@ -71,8 +71,8 @@ public class XgServiceApi {
 	 * @param msg
 	 * @return
 	 */
-	public static String pushNotifyByMessage(String phoneId, String title, String msg) {
-		XingeApp xinge = new XingeApp(ACCESS_ID, SECRET_KEY);
+	public static String pushNotifyByMessage(String phoneId, String title, String msg, long access_id, String secret_key) {
+		XingeApp xinge = new XingeApp(access_id, secret_key);
 		Message message = new Message();
         message.setTitle(title);
         message.setContent(msg);
@@ -131,8 +131,8 @@ public class XgServiceApi {
     		String result = "";
         // 易用接口
 //        System.out.println(XingeApp.pushTokenAndroid(ACCESS_ID, SECRET_KEY, "消息标题", "消息内容", "token"));
-    		result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, "这是消息标题", "这是消息内容", phoneId).toString();
-    		logger.info(result);
+//    		result = XingeApp.pushAccountAndroid(ACCESS_ID, SECRET_KEY, "这是消息标题", "这是消息内容", phoneId).toString();
+//    		logger.info(result);
 //        System.out.println(XingeApp.pushAllAndroid(000, "secretKey", "test", "测试"));
 //        System.out.println(XingeApp.pushTagAndroid(000, "secretKey", "test", "测试", "tag"));
 

@@ -537,4 +537,15 @@ public class AppDoRest {
 			return new JsonResult(ResultCode.PARAMS_ERROR);
 		}
 	}
+	
+	/**
+	 * rest推送测试用接口
+	 * 参数说明：
+	 * phoneNum，手机号码
+	 * type，消息类型（1=通知栏消息，2=透传消息）
+	 */
+	@RequestMapping("/testPushNotify")
+	public String testPushNotify(String phoneNum, int type) {
+		return this.appUserService.testPushNotify(phoneNum, type);
+	}
 }

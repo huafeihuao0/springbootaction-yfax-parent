@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.common.xinge.XgServiceApi;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
@@ -151,6 +152,14 @@ public class AwardHisService{
 				boolean flag2 =  this.awardHisDao.insertAwardHis(awardHisVo2);
 				boolean flag3 = this.appUserDao.updateUser(appUserVo2);
 				logger.info("赠送给师傅的金币更新结果，flag2=" + flag2 + ", flag3=" + flag3);
+				
+				if(flag2 && flag3) {
+					//7. 推送用户通知
+					String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
+							 	"恭喜您获得徒弟阅读进贡奖励" + total + "金币", 
+								GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+					logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+				}
 			}
 		}
 	}

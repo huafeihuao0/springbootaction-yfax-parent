@@ -108,4 +108,13 @@ public class GlobalUtils {
 		return golds[new Random().nextInt(golds.length)];
 	}
 	
+	/**
+	 * 信鸽推送ACCESS_ID
+	 */
+	public final static long XG_ACCESS_ID = 2100266505;
+	
+	/**
+	 * 信鸽推送SECRET_KEY
+	 */
+	public final static String XG_SECRET_KEY = "3a4cbec8bad30976f0f4bee732c6c988";
 }

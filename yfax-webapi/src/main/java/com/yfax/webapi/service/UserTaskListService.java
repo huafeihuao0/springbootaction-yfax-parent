@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.cfdb.vo.TaskDetailVo;
 import com.yfax.webapi.cfdb.vo.TaskListVo;
 import com.yfax.webapi.cfdb.vo.UserTaskListVo;
@@ -319,9 +320,9 @@ public class UserTaskListService {
 	public String testPushNotify(String phoneId, int type) {
 		String result = "";
 		if(type == 1) {
-			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元");
+			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
 		}else if(type == 2){
-			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元");
+			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
 		}
 		logger.info("推送通知给用户[phoneId=" + phoneId + ", type=" + type + "]，推送发送结果result=" + result);
 		return result;
