@@ -1,5 +1,6 @@
 package com.yfax.webapi.qmtt.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
 import com.yfax.webapi.qmtt.vo.ShareUserHisVo;
+
+import net.sf.json.JSONObject;
 
 /**
  * 用户管理服务
@@ -190,10 +193,16 @@ public class AppUserService {
 	 */
 	public String testPushNotify(String phoneId, int type) {
 		String result = "";
+		Map<String, Object> map = new HashMap<>();
+		map.put("task", "XXX");
+		map.put("income", "100");
+		JSONObject json = JSONObject.fromObject(map);
 		if(type == 1) {
-			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+//			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+			result = XgServiceApi.pushNotify(phoneId, "通知栏消息", json.toString(), GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
 		}else if(type == 2){
-			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+//			result =  XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+			result = XgServiceApi.pushNotifyByMessage(phoneId, "透传消息", json.toString(), GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);;
 		}
 		logger.info("推送通知给用户[phoneId=" + phoneId + ", type=" + type + "]，推送发送结果result=" + result);
 		return result;
