@@ -142,23 +142,27 @@ public class AwardHisService{
 				awardHisVo2.setUpdateDate(cTime);
 				//6. 更新师傅的金币余额
 				AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(shareUserHisVo.getMasterPhoneNum());
-				int old2 = Integer.valueOf(appUserVo2.getGold());
-				int sum2 = Integer.valueOf(appUserVo2.getGold()) + total;
-				appUserVo2.setGold(String.valueOf(sum2));
-				appUserVo2.setUpdateDate(cTime);
-				logger.info("师傅的手机号码phoneNum=" + shareUserHisVo.getMasterPhoneNum() + ", 原金币余额gold=" + old2 + ", 奖励金币gold=" + gold 
-						+ ", alpha值=" + studentConfigVo.getAlpha() + ", 总赠送金币=" + total 
-						+ ", 更新金币总余额sum=" + sum2 + ", 奖励类型awardType=" + GlobalUtils.AWARD_TYPE_STUDENT);
-				boolean flag2 =  this.awardHisDao.insertAwardHis(awardHisVo2);
-				boolean flag3 = this.appUserDao.updateUser(appUserVo2);
-				logger.info("赠送给师傅的金币更新结果，flag2=" + flag2 + ", flag3=" + flag3);
-				
-				if(flag2 && flag3) {
-					//7. 推送用户通知
-					String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
-							 	"恭喜您获得徒弟阅读进贡奖励" + total + "金币", 
-								GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
-					logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+				if(appUserVo2 != null) {
+					int old2 = Integer.valueOf(appUserVo2.getGold());
+					int sum2 = Integer.valueOf(appUserVo2.getGold()) + total;
+					appUserVo2.setGold(String.valueOf(sum2));
+					appUserVo2.setUpdateDate(cTime);
+					logger.info("师傅的手机号码phoneNum=" + shareUserHisVo.getMasterPhoneNum() + ", 原金币余额gold=" + old2 + ", 奖励金币gold=" + gold 
+							+ ", alpha值=" + studentConfigVo.getAlpha() + ", 总赠送金币=" + total 
+							+ ", 更新金币总余额sum=" + sum2 + ", 奖励类型awardType=" + GlobalUtils.AWARD_TYPE_STUDENT);
+					boolean flag2 =  this.awardHisDao.insertAwardHis(awardHisVo2);
+					boolean flag3 = this.appUserDao.updateUser(appUserVo2);
+					logger.info("赠送给师傅的金币更新结果，flag2=" + flag2 + ", flag3=" + flag3);
+					
+					if(flag2 && flag3) {
+						//7. 推送用户通知
+						String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
+								 	"恭喜您获得徒弟阅读进贡奖励" + total + "金币", 
+									GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+						logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+					}
+				}else {
+					logger.warn("师傅账号phoneNum=" + shareUserHisVo.getMasterPhoneNum() + " 不存在。");
 				}
 			}
 		}
