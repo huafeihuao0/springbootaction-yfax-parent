@@ -177,6 +177,34 @@ public class AppQueryRest {
 		return new JsonResult(ResultCode.SUCCESS, map);
 	}
 	
+	/**
+	 * 获得排行榜数据-金币排行榜
+	 */
+	@RequestMapping("/queryRankGold")
+	public JsonResult queryRankGold() {
+		Map<String, Object> map = new HashMap<>();
+		List<AppUserVo> list = this.appUserService.selectByRankGold();
+		if(list.size()>0) {
+			List<AppUserVo> listTmp = initTestDataGold(list);		//for test
+			map.put("list", listTmp);			//for test
+			map.put("sum", "0");		//for test
+			
+//			map.put("list", list);
+//			Long sum = this.appUserService.selectByRankSum();
+			//格式化，保留三位小数，DB做四舍五入
+//			DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
+//			map.put("sum", dFormat.format(sum));
+		}else {
+//			map.put("list", null);
+//			map.put("sum", "0.000");
+			
+			List<AppUserVo> listTmp = initTestDataGold(list);	//for test
+			map.put("list", listTmp);	//for test
+			map.put("sum", "0");		//for test
+		}
+		return new JsonResult(ResultCode.SUCCESS, map);
+	}
+	
 	//测试方法，统计总收益金额
 	private String calSum(List<AppUserVo> list) {
 		double sum = 0;
@@ -225,6 +253,34 @@ public class AppQueryRest {
 	    });
 		return list.subList(0, 20);
 	}
+	
+	//测试方法，虚拟数据-金币数
+	private List<AppUserVo> initTestDataGold(List<AppUserVo> list) {
+		if(list == null) {
+			list = new ArrayList<>();
+		}
+		String[] strings = new String[] {"15900008732","13300008123","18400001351","13500002314","15600006532","15800001317"
+				,"13000004123","18000009873","18800009345","18200001713","13900001532","15900002017","13300001789","18400001638"
+				,"13500002325","15600006843","15800001335","13000008731","18000007232","18800002545","18200006813","13900001314"
+				,"15900005632","13300008683","18400001332","13500002338","15600006682","15800001334","13000004153","18000009773"
+				,"18800009377","18200001733","13900001632"};
+		for (int i = 0; i < strings.length; i++) {
+			AppUserVo appUserVo = new AppUserVo();
+			appUserVo.setPhoneNum(strings[i]);
+			DecimalFormat myFormat = new DecimalFormat("#0");
+			appUserVo.setGold(myFormat.format(Double.valueOf(new Random().nextFloat() * 1000000 * new Random().nextFloat())));
+			list.add(appUserVo);
+		}
+		Collections.sort(list, new Comparator<AppUserVo>() {
+	        @Override
+	        public int compare(AppUserVo o1, AppUserVo o2) {
+	        		int result = Integer.valueOf(o2.getGold()) - Integer.valueOf(o1.getGold());
+	        		return result;
+	        }
+	    });
+		return list.subList(0, 20);
+	}
+	
 	/**
 	 * 获得APP初始化配置数据
 	 */

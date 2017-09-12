@@ -18,6 +18,12 @@
 			from qmtt_balance_his where balance like '+%' group by phoneNum order by total desc limit 20) a
     </select>
     
+    <!-- 统计前二十获得金币最高的人 -->
+    <select id="selectByRankGold" resultType="com.yfax.webapi.qmtt.vo.AppUserVo">
+		select phoneNum, goldSum as gold from (select phoneNum, sum(gold) as goldSum 
+			from qmtt_balance_his where balance like '+%' group by phoneNum order by goldSum desc limit 20) a
+    </select>
+    
     <!-- 统计总收益金额 -->
     <select id="selectByRankSum" resultType="java.lang.Long">
         select ROUND(sum(balance), 3) as sum from qmtt_balance_his where balance like '+%'

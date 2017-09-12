@@ -66,6 +66,10 @@ public class AppUserService {
 		return this.appUserDao.selectByRank();
 	}
 	
+	public List<AppUserVo> selectByRankGold() {
+		return this.appUserDao.selectByRankGold();
+	}
+	
 	public Long selectByRankSum() {
 		return this.appUserDao.selectByRankSum();
 	}

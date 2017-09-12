@@ -53,7 +53,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryInitConfig") 
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doRedirectUrl")
         		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/doDownloadUrl")
-        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryRank")){
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryRank")
+        		|| uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_QMTT + "/queryRankGold")){
             return true;
         }
 		
