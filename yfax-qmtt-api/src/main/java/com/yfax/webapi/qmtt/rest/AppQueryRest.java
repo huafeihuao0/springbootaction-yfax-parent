@@ -88,6 +88,9 @@ public class AppQueryRest {
 		resultMap.put("gold", appUserVo.getGold());
 		resultMap.put("balance", appUserVo.getBalance());
 		resultMap.put("todayGlod", StrUtil.null2Str(String.valueOf(todayGlod)));
+		//总奖励金币数
+		Long totalGold = this.appUserService.selectByTotalGold(paramsMap);
+		resultMap.put("totalGold", totalGold);
 		//得到当前汇率
 		RateSetVo rateSetVo = this.rateSetService.selectRateSet();
 		resultMap.put("rate", rateSetVo.getRate());

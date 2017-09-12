@@ -29,10 +29,15 @@
         select ROUND(sum(balance), 3) as sum from qmtt_balance_his where balance like '+%'
     </select>
     
-    <!-- 统计今日获得金额 -->
+    <!-- 统计今日获得金币 -->
     <select id="selectByTodaySum" resultType="java.lang.Long">
 		select sum(gold) as gold from qmtt_award_his where phoneNum=#{phoneNum} 
 			and date_format(createDate,'%Y-%m-%d')=#{currentTime} and awardType!=8
+    </select>
+    
+     <!-- 统计总获得金币 -->
+    <select id="selectByTotalGold" resultType="java.lang.Long">
+		select sum(gold) as gold from qmtt_award_his where phoneNum=#{phoneNum} and awardType!=8
     </select>
     
 	<delete id="deleteByPhoneNum" parameterType="java.lang.String">

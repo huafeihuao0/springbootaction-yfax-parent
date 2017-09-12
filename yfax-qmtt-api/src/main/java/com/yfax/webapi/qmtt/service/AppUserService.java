@@ -77,6 +77,10 @@ public class AppUserService {
 	public Long selectByTodaySum(Map<String, Object> params) {
 		return this.appUserDao.selectByTodaySum(params);
 	}
+	
+	public Long selectByTotalGold(Map<String, Object> params) {
+		return this.appUserDao.selectByTotalGold(params);
+	}
 	       
 	@Transactional
 	public boolean doLoginOut(String phoneNum) {

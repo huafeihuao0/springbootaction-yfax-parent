@@ -67,4 +67,9 @@ public class AppUserDaoImpl implements AppUserDao {
 	public List<AppUserVo> selectByRankGold() {
 		return this.sqlSessionTemplate.selectList("selectByRankGold");
 	}
+
+	@Override
+	public Long selectByTotalGold(Map<String, Object> params) {
+		return this.sqlSessionTemplate.selectOne("selectByTotalGold", params);
+	}
 }
