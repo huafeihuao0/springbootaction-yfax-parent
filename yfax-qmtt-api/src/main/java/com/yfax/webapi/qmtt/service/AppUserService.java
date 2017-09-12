@@ -222,8 +222,8 @@ public class AppUserService {
 	public String testPushNotify(String phoneId, int type) {
 		String result = "";
 		Map<String, Object> map = new HashMap<>();
-		map.put("task", "XXX");
-		map.put("income", "100");
+		map.put("gold", "2000");
+		map.put("balance", "0.2");
 		JSONObject json = JSONObject.fromObject(map);
 		if(type == 1) {
 //			result =  XgServiceApi.pushNotify(phoneId, "通知栏消息", "恭喜获得奖励，任务[XXX]已完成，获得收益：XXX元", GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
