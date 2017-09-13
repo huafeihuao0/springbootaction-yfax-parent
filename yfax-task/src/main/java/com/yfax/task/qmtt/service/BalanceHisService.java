@@ -41,6 +41,8 @@ public class BalanceHisService{
 	@Autowired 
 	private AwardHisDao awardHisDao;
 	
+	private static String ACTION_NAME = "零钱自动兑换";
+	
 	@Transactional
 	public JsonResult addBalanceHis(String phoneNum, String gold){
 		try {
@@ -52,7 +54,7 @@ public class BalanceHisService{
 			balanceHisVo.setId(UUID.getUUID());
 			balanceHisVo.setPhoneNum(phoneNum);
 			balanceHisVo.setBalanceType(GlobalUtils.BALANCE_TYPE_REDEEM);
-			balanceHisVo.setBalanceName("每日自动兑换");
+			balanceHisVo.setBalanceName(ACTION_NAME);
 			balanceHisVo.setGold(gold);
 			//2. 需要根据汇率计算，获得零钱
 			double rate = Double.valueOf(rateSetVo.getRate());
@@ -81,7 +83,7 @@ public class BalanceHisService{
 			awardHisVo.setId(UUID.getUUID());
 			awardHisVo.setPhoneNum(phoneNum);
 			awardHisVo.setAwardType(8);
-			awardHisVo.setAwardName("每日自动扣减");
+			awardHisVo.setAwardName(ACTION_NAME);
 			awardHisVo.setGold("-" + String.valueOf(gold));
 			awardHisVo.setCreateDate(cTime);
 			awardHisVo.setUpdateDate(cTime);

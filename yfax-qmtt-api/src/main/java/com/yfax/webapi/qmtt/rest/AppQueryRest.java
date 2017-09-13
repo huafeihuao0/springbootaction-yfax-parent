@@ -186,7 +186,7 @@ public class AppQueryRest {
 	@RequestMapping("/queryRankGold")
 	public JsonResult queryRankGold() {
 		Map<String, Object> map = new HashMap<>();
-		List<AppUserVo> list = this.appUserService.selectByRankGold();
+		List<AppUserVo> list = new ArrayList<>();	//this.appUserService.selectByRankGold();
 		if(list.size()>0) {
 			List<AppUserVo> listTmp = initTestDataGold(list);		//for test
 			map.put("list", listTmp);			//for test

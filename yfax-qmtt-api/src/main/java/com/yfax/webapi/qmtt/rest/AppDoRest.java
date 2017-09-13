@@ -429,12 +429,8 @@ public class AppDoRest {
 	@RequestMapping(value = "/doDailyCheckIn", method = {RequestMethod.POST})
 	public JsonResult doDailyCheckIn(String phoneNum) {
 		if(!StrUtil.null2Str(phoneNum).equals("")) {
-			String currentTime = DateUtil.getCurrentDate();
-			Map<String, Object> map = new HashMap<>();
-			map.put("phoneNum", phoneNum);
-			map.put("currentTime", currentTime);
-			AwardHisVo awardHisVo = this.awardHisService.selectAwardHisIsCheckIn(map);
-			if(awardHisVo == null) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo.getDailyCheckIn() == 0) {
 				//配置信息
 				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
 				//随机金币奖励

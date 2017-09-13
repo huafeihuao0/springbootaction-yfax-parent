@@ -8,7 +8,7 @@
         select * from qmtt_award_his where phoneNum=#{phoneNum} order by createDate desc limit 200
     </select>
     
-    <!-- 今日签到判断 -->
+    <!-- 今日签到判断-弃用 -->
     <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.webapi.qmtt.vo.AwardHisVo">
          select * from qmtt_award_his where phoneNum=#{phoneNum} and awardType=3 
          	and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
