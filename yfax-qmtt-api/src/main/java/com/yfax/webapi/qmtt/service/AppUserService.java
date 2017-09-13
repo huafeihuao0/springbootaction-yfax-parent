@@ -124,7 +124,9 @@ public class AppUserService {
 				 
 				 //3. 判断是否是由其他人邀请加入的
 				 this.processInvite(sourceIp, appUserVo, appConfigVo, cTime);
-				 return new JsonResult(ResultCode.SUCCESS);
+				 Map<String, Object> map = new HashMap<>();
+				 map.put("gold", regGold);
+				 return new JsonResult(ResultCode.SUCCESS, map);
 			}else {
 				 return new JsonResult(ResultCode.SUCCESS_FAIL);
 			}
