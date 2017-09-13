@@ -37,7 +37,8 @@
     
      <!-- 统计总获得金币 -->
     <select id="selectByTotalGold" resultType="java.lang.Long">
-		select sum(gold) as gold from qmtt_award_his where phoneNum=#{phoneNum} and awardType!=8
+		select sum(gold) as gold from qmtt_award_his where awardType in (2,5,7) and 
+			phoneNum in (select distinct studentPhoneNum from qmtt_shareuser_his where masterPhoneNum=#{phoneNum})
     </select>
     
 	<delete id="deleteByPhoneNum" parameterType="java.lang.String">
