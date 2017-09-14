@@ -200,11 +200,11 @@ public class AppUserService {
 										 + ", flag4=" + flag4));
 							 }else {
 								 if(awardGold>0) {
-									 //推送用户通知
-									 String msg = "恭喜您获得邀请奖励" + awardGold + "金币";
-									 String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", msg, 
-												GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
-									 logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + ", msg=" + msg + "]，推送发送结果result=" + result2);
+//									 //推送用户通知
+//									 String msg = "恭喜您获得邀请奖励" + awardGold + "金币";
+//									 String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", msg, 
+//												GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+//									 logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + ", msg=" + msg + "]，推送发送结果result=" + result2);
 								 }
 							 }
 					 	 } catch (Exception e) {
