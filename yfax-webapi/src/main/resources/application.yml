@@ -78,11 +78,11 @@ spring:
 spring:
   profiles: test
   datasource:
-     url: jdbc:mysql://182.92.82.188:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+     url: jdbc:mysql://192.168.56.101:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
 
 ---
 # 生产环境配置
 spring: 
   profiles: prod
   datasource: 
-    url: jdbc:mysql://182.92.82.188:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.56.101:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
