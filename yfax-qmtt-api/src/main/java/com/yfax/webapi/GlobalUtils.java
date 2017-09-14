@@ -62,7 +62,7 @@ public class GlobalUtils {
 	/**
 	 * 短信模板ID
 	 */
-	public static final String SMS_TEMPLATE_ID = "199335";
+	public static final String SMS_TEMPLATE_ID = "204910";
 	/**
 	 * 短信模板ID
 	 */

@@ -241,7 +241,7 @@ public class AppQueryRest {
 		int salt = 10;
 		//格式化，保留三位小数，DB做四舍五入
 		DecimalFormat dFormat = new DecimalFormat(GlobalUtils.DECIMAL_FORMAT); 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < strings.length; i++) {
 			AppUserVo appUserVo = new AppUserVo();
 			appUserVo.setPhoneNum(strings[i]);
 			appUserVo.setBalance(String.valueOf(dFormat.format(new Random().nextInt(100) * salt * new Random().nextFloat())));
