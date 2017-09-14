@@ -155,11 +155,11 @@ public class AwardHisService{
 					logger.info("赠送给师傅的金币更新结果，flag2=" + flag2 + ", flag3=" + flag3);
 					
 					if(flag2 && flag3) {
-						//7. 推送用户通知
-						String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
-								 	"恭喜您获得徒弟阅读进贡奖励" + total + "金币", 
-									GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
-						logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+//						//7. 推送用户通知
+//						String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
+//								 	"恭喜您获得徒弟阅读进贡奖励" + total + "金币", 
+//									GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
+//						logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
 					}
 				}else {
 					logger.warn("师傅账号phoneNum=" + shareUserHisVo.getMasterPhoneNum() + " 不存在。");

@@ -146,14 +146,14 @@ public class AppUserService {
 		 map.put("sourceIp", sourceIp);
 		 IpShareCodeVo ipShareCodeVo = this.ipShareCodeDao.selectIpShareCodeIsFromIp(map);
 		 if(ipShareCodeVo != null) {
-			 logger.info("ipShareCodeVo=" + ipShareCodeVo.toString());
+			 logger.info("获取到是由他人邀请的。ipShareCodeVo=" + ipShareCodeVo.toString());
 			 AppShareCodeVo appShareCodeVo = this.appShareCodeDao.selectAppShareCodeByShareCode(ipShareCodeVo.getShareCode());
 			 if(appShareCodeVo != null){
-				 logger.info("appShareCodeVo=" + appShareCodeVo.toString());
+				 logger.info("获取到师傅的邀请码信息。appShareCodeVo=" + appShareCodeVo.toString());
 				 //邀请人信息
 				 AppUserVo appUserVo2 = this.appUserDao.selectByPhoneNum(appShareCodeVo.getPhoneNum());
 				 if(appUserVo2 != null) {
-					 logger.info("appUserVo2=" + appUserVo2.toString());
+					 logger.info("获取到师傅个人账号信息。appUserVo2=" + appUserVo2.toString());
 					 JsonResult result = new JsonResult();
 					 int awardGold = 0;
 					 if(appUserVo2.getFirstInvite() == 0) {
@@ -161,15 +161,15 @@ public class AppUserService {
 						 result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), appConfigVo.getFirstInviteGold()
 								 , GlobalUtils.AWARD_TYPE_FIRSTINVITE, null, null, 1, null, null);
 						 awardGold = appConfigVo.getFirstInviteGold();
-						 logger.info("首次邀请奖励，gold=" + appConfigVo.getFirstInviteGold()
-								 + "，phoneNum=" + appUserVo2.getPhoneNum() + ", result=" + result.toJsonString());
+						 logger.info("给师傅的首次邀请奖励，phoneNum=" + appUserVo2.getPhoneNum() + "gold=" + appConfigVo.getFirstInviteGold() 
+						 		+ ", result=" + result.toJsonString());
 					 }else {
 						//随机金币奖励
 						int gold = GlobalUtils.getRanomGold(appConfigVo.getGoldRange());
 						result = this.awardHisService.addAwardHis(appUserVo2.getPhoneNum(), gold, 
 								GlobalUtils.AWARD_TYPE_INVITE, null, null, null, null, null);
 						awardGold = gold;
-						logger.info("邀请随机奖励，gold=" + gold + "，phoneNum=" + appUserVo2.getPhoneNum() 
+						logger.info("给师傅的邀请随机奖励，phoneNum=" + appUserVo2.getPhoneNum() + "，gold=" + gold
 							+ ", result=" + result.toJsonString());
 					 }
 					 //奖励成功
@@ -201,10 +201,10 @@ public class AppUserService {
 							 }else {
 								 if(awardGold>0) {
 									 //推送用户通知
-									 String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", 
-											 	"恭喜您获得邀请奖励" + awardGold + "金币", 
+									 String msg = "恭喜您获得邀请奖励" + awardGold + "金币";
+									 String result2 =  XgServiceApi.pushNotifyByMessage(appUserVo2.getPhoneNum(), "恭喜获得奖励", msg, 
 												GlobalUtils.XG_ACCESS_ID, GlobalUtils.XG_SECRET_KEY);
-									 logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + "]，推送发送结果result=" + result2);
+									 logger.info("推送通知给用户[phoneNum=" + appUserVo2.getPhoneNum() + ", msg=" + msg + "]，推送发送结果result=" + result2);
 								 }
 							 }
 					 	 } catch (Exception e) {
