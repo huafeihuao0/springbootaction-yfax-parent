@@ -60,7 +60,8 @@ public class OAuth2Configuration {
                     		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"
                     		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl"
                     		, GlobalUtils.PROJECT_QMTT + "/queryRank"
-                    		, GlobalUtils.PROJECT_QMTT + "/queryRankGold").permitAll()
+                    		, GlobalUtils.PROJECT_QMTT + "/queryRankGold"
+                    		, GlobalUtils.PROJECT_QMTT + "/queryAdvList").permitAll()
                     .antMatchers("/secure/**", 
                     		GlobalUtils.PROJECT_QMTT + "/**").authenticated();
 

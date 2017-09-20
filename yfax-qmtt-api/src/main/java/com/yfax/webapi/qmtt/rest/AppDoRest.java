@@ -38,7 +38,6 @@ import com.yfax.webapi.qmtt.service.WithdrawHisService;
 import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppShareCodeVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
-import com.yfax.webapi.qmtt.vo.AwardHisVo;
 import com.yfax.webapi.qmtt.vo.InitConfigVo;
 import com.yfax.webapi.qmtt.vo.IpShareCodeVo;
 import com.yfax.webapi.qmtt.vo.LoginHisVo;

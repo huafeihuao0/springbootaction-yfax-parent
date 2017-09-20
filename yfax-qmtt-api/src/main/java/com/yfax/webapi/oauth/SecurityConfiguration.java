@@ -53,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         		, GlobalUtils.PROJECT_QMTT + "/doResetPwd"
         		, GlobalUtils.PROJECT_QMTT + "/doRedirectUrl"
         		, GlobalUtils.PROJECT_QMTT + "/queryRank"
-        		, GlobalUtils.PROJECT_QMTT + "/queryRankGold");
+        		, GlobalUtils.PROJECT_QMTT + "/queryRankGold"
+        		, GlobalUtils.PROJECT_QMTT + "/queryAdvList");
     }
     
     @Override

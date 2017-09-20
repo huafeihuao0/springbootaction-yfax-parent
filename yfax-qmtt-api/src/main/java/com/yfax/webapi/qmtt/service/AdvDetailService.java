@@ -1,0 +1,29 @@
+package com.yfax.webapi.qmtt.service;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.yfax.webapi.qmtt.dao.AdvDetailDao;
+import com.yfax.webapi.qmtt.vo.AdvDetailVo;
+
+/**
+ * 广告内容详情配置
+ * @author Minbo
+ */
+@Service
+public class AdvDetailService{
+	
+	protected static Logger logger = LoggerFactory.getLogger(AdvDetailService.class);
+	
+	@Autowired
+	private AdvDetailDao dao;
+	
+	public List<AdvDetailVo> selectAdvDetail(String advFkid) {
+		return this.dao.selectAdvDetail(advFkid);
+	}
+
+}

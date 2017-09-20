@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,6 +20,8 @@ import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.StrUtil;
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.qmtt.service.AdvDetailService;
+import com.yfax.webapi.qmtt.service.AdvListService;
 import com.yfax.webapi.qmtt.service.AppConfigService;
 import com.yfax.webapi.qmtt.service.AppUserService;
 import com.yfax.webapi.qmtt.service.AppVersionService;
@@ -31,6 +32,8 @@ import com.yfax.webapi.qmtt.service.InitConfigService;
 import com.yfax.webapi.qmtt.service.RateSetService;
 import com.yfax.webapi.qmtt.service.ReadHisService;
 import com.yfax.webapi.qmtt.service.WithdrawHisService;
+import com.yfax.webapi.qmtt.vo.AdvDetailVo;
+import com.yfax.webapi.qmtt.vo.AdvListVo;
 import com.yfax.webapi.qmtt.vo.AppConfigVo;
 import com.yfax.webapi.qmtt.vo.AppUserVo;
 import com.yfax.webapi.qmtt.vo.AppVersionVo;
@@ -72,6 +75,10 @@ public class AppQueryRest {
 	private InitConfigService initConfigService;
 	@Autowired
 	private AppVersionService appVersionService;
+	@Autowired
+	private AdvListService advListService;
+	@Autowired
+	private AdvDetailService advDetailService;
 	
 	/**
 	 * 个人信息接口
@@ -405,5 +412,18 @@ public class AppQueryRest {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 获得广告列表数据
+	 */
+	@RequestMapping("/queryAdvList")
+	public JsonResult queryAdvList() {
+		List<AdvListVo> advListVoList = this.advListService.selectAdvList();
+		for (AdvListVo advListVo : advListVoList) {
+			List<AdvDetailVo> advDetailVo = this.advDetailService.selectAdvDetail(advListVo.getId());
+			advListVo.setListAdvDetail(advDetailVo);
+		}
+		return new JsonResult(ResultCode.SUCCESS, advListVoList);
 	}
 }
