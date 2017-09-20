@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.AdvListVo">
 
 	 <select id="selectAdvList" resultType="com.yfax.webapi.qmtt.vo.AdvListVo">
-        select * from qmtt_adv_list
+        select * from qmtt_adv_list where status=2
     </select>
     
 </mapper>

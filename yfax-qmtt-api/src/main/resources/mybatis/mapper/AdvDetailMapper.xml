@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.AdvDetailVo">
 
 	 <select id="selectAdvDetail" resultType="com.yfax.webapi.qmtt.vo.AdvDetailVo">
-        select * from qmtt_adv_detail where advFkid=#{advFkid} order by orderNum desc
+        select * from qmtt_adv_detail where status=2 and advFkid=#{advFkid} order by orderNum desc
     </select>
     
 </mapper>
