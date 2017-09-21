@@ -21,6 +21,7 @@
 	<module>yfax-common</module>
 	<module>yfax-utils</module>
 	<module>yfax-task</module>
+	<module>yfax-ytt-api</module>
   </modules>
   
   <parent>

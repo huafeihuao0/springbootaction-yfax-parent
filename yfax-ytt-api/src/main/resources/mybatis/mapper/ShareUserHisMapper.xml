@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.ytt.vo.ShareUserHisVo">
+
+	<!-- 首次邀请奖励 -->
+    <select id="selectCountByPhoneNum" resultType="java.lang.Long">
+        select count(id) from ytt_shareuser_his where masterPhoneNum=#{phoneNum}
+    </select>
+    
+    <!-- 查找师傅手机账号 -->
+    <select id="selectShareUserByStudentPhoneNum" resultType="com.yfax.webapi.ytt.vo.ShareUserHisVo">
+        select * from ytt_shareuser_his where studentPhoneNum=#{phoneNum} order by createDate desc limit 1
+    </select>
+
+    <!-- 添加 -->
+	<insert id="insertShareUserHis" parameterType="com.yfax.webapi.ytt.vo.ShareUserHisVo">
+		insert into ytt_shareuser_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="masterPhoneNum != null" > masterPhoneNum, </if>
+		  <if test="studentPhoneNum != null" > studentPhoneNum, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="masterPhoneNum != null" > #{masterPhoneNum}, </if>
+		  <if test="studentPhoneNum != null" > #{studentPhoneNum}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  
+        </trim>
+	</insert>
+</mapper>

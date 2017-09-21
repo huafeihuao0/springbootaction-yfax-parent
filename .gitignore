@@ -11,6 +11,11 @@ yfax-qmtt-api/.settings
 yfax-utils/target
 yfax-task/target
 yfax-common/target
+yfax-ytt-api/log
+yfax-ytt-api/target
+yfax-ytt-api/.classpath
+yfax-ytt-api/.project
+yfax-ytt-api/.settings
 .project
 .settings
 log/

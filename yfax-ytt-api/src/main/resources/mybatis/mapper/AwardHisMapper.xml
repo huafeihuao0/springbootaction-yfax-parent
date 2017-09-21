@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yfax.webapi.ytt.vo.AwardHisVo">
+
+	<select id="selectAwardHisByPhoneNum" resultType="com.yfax.webapi.ytt.vo.AwardHisVo">
+        select * from ytt_award_his where phoneNum=#{phoneNum} order by createDate desc limit 200
+    </select>
+    
+    <!-- 今日签到判断-弃用 -->
+    <select id="selectAwardHisIsFirstLogin" resultType="com.yfax.webapi.ytt.vo.AwardHisVo">
+         select * from ytt_award_his where phoneNum=#{phoneNum} and awardType=3 
+         	and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
+    </select>
+    
+    <!-- 统计各类型指定日期下领取的金币值 -->
+    <select id="selectUserTotalOfGold" resultType="java.lang.Long">
+		select ifnull(sum(gold),0) as total from ytt_award_his where phoneNum=#{phoneNum} 
+			and awardType=#{awardType} and date_format(createDate,'%Y-%m-%d')=#{currentTime}
+    </select>
+    
+    <!-- 统计各类型收益的次数 -->
+    <select id="selectUserAwardCount" resultType="java.lang.Long">
+		select count(id) as count from ytt_award_his where phoneNum=#{phoneNum} 
+			and awardType=#{awardType}
+    </select>
+
+    <!-- 添加 -->
+	<insert id="insertAwardHis" parameterType="com.yfax.webapi.ytt.vo.AwardHisVo">
+		insert into ytt_award_his
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > id, </if>
+		  <if test="phoneNum != null" > phoneNum, </if>
+		  <if test="awardType != null" > awardType, </if>
+		  <if test="awardName != null" > awardName, </if>
+		  <if test="gold != null" > gold, </if>
+		  <if test="createDate != null" > createDate, </if>
+		  <if test="updateDate != null" > updateDate, </if>
+		  
+		</trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null" > #{id}, </if>
+		  <if test="phoneNum != null" > #{phoneNum}, </if>
+		  <if test="awardType != null" > #{awardType}, </if>
+		  <if test="awardName != null" > #{awardName}, </if>
+		  <if test="gold != null" > #{gold}, </if>
+		  <if test="createDate != null" > #{createDate}, </if>
+		  <if test="updateDate != null" > null, </if>
+		  
+        </trim>
+	</insert>
+</mapper>
