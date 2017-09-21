@@ -275,8 +275,11 @@ public class AppDoRest {
 					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
 				 }
 				 if(!url.equals("")) {
-					 InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
-					 response.sendRedirect(initConfigVo.getPageUrl()  + initConfigVo.getDownloadUrl());
+					 response.sendRedirect(url);
+					 
+					 //0921 遗留处理
+//					 InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
+//					 response.sendRedirect(initConfigVo.getPageUrl()  + initConfigVo.getDownloadUrl());
 				 }
 			 }
 		} catch (IOException e) {
