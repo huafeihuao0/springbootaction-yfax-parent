@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class AdvDetailDaoImpl implements AdvDetailDao {
 	private SqlSessionTemplate sqlSessionTemplate;;
 	
 	@Override
-	public List<AdvDetailVo> selectAdvDetail(String advFkid) {
-		return this.sqlSessionTemplate.selectList("selectAdvDetail", advFkid);
+	public List<AdvDetailVo> selectAdvDetail(Map<String, Object> map) {
+		return this.sqlSessionTemplate.selectList("selectAdvDetail", map);
 	}
 
 }

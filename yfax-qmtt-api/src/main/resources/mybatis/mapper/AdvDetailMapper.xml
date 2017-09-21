@@ -5,7 +5,10 @@
 <mapper namespace="com.yfax.webapi.qmtt.vo.AdvDetailVo">
 
 	 <select id="selectAdvDetail" resultType="com.yfax.webapi.qmtt.vo.AdvDetailVo">
-        select * from qmtt_adv_detail where status=2 and advFkid=#{advFkid} order by orderNum desc
+       	select * from (select a.*,b.advFlag,b.advName from qmtt_adv_detail a 
+		inner join qmtt_adv_list b on a.advFkid=b.id) c 
+		where status=2 and tagName=#{tagName} 
+       	and showRate>=#{showRate} order by orderNum desc
     </select>
     
 </mapper>

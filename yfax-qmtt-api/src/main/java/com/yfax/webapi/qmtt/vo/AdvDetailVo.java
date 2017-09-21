@@ -28,6 +28,21 @@ public class AdvDetailVo implements Serializable{
 	private String advFkid;		//广告渠道id
 	private String tagName;		//新闻Tab标识
 	
+	private String advFlag;		//唯一标识
+	private String advName;		//渠道名称
+	
+	public String getAdvFlag() {
+		return advFlag;
+	}
+	public void setAdvFlag(String advFlag) {
+		this.advFlag = advFlag;
+	}
+	public String getAdvName() {
+		return advName;
+	}
+	public void setAdvName(String advName) {
+		this.advName = advName;
+	}
 	public String getTagName() {
 		return tagName;
 	}

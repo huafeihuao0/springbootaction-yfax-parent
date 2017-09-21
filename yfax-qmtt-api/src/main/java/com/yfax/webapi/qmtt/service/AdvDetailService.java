@@ -1,6 +1,7 @@
 package com.yfax.webapi.qmtt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ public class AdvDetailService{
 	@Autowired
 	private AdvDetailDao dao;
 	
-	public List<AdvDetailVo> selectAdvDetail(String advFkid) {
-		return this.dao.selectAdvDetail(advFkid);
+	public List<AdvDetailVo> selectAdvDetail(Map<String, Object> map) {
+		return this.dao.selectAdvDetail(map);
 	}
 
 }

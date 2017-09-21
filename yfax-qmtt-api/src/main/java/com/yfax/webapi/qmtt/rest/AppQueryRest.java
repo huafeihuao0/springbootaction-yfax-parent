@@ -418,12 +418,11 @@ public class AppQueryRest {
 	 * 获得广告列表数据
 	 */
 	@RequestMapping("/queryAdvList")
-	public JsonResult queryAdvList() {
-		List<AdvListVo> advListVoList = this.advListService.selectAdvList();
-		for (AdvListVo advListVo : advListVoList) {
-			List<AdvDetailVo> advDetailVo = this.advDetailService.selectAdvDetail(advListVo.getId());
-			advListVo.setListAdvDetail(advDetailVo);
-		}
-		return new JsonResult(ResultCode.SUCCESS, advListVoList);
+	public JsonResult queryAdvList(String tagName) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("showRate", (new Random().nextInt(100) + 1));
+		map.put("tagName", tagName);
+		List<AdvDetailVo> advDetailVo = this.advDetailService.selectAdvDetail(map);
+		return new JsonResult(ResultCode.SUCCESS, advDetailVo);
 	}
 }
