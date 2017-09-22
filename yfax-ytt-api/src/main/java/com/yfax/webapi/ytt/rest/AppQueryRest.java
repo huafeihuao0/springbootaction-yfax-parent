@@ -270,11 +270,11 @@ public class AppQueryRest {
 		if(list == null) {
 			list = new ArrayList<>();
 		}
-		String[] strings = new String[] {"15900008732","13300008123","18400001351","13500002314","15600006532","15800001317"
-				,"13000004123","18000009873","18800009345","18200001713","13900001532","15900002017","13300001789","18400001638"
-				,"13500002325","15600006843","15800001335","13000008731","18000007232","18800002545","18200006813","13900001314"
-				,"15900005632","13300008683","18400001332","13500002338","15600006682","15800001334","13000004153","18000009773"
-				,"18800009377","18200001733","13900001632"};
+		String[] strings = new String[] {"18900008156","13700007229","18100001358","13500004317","15600006541","15800005131"
+				,"13100004342","18000009441","18800001445","18200003353","13500002342","15100005515","13300004443","18400007656"
+				,"13500002423","15600001121","15800001335","13000008731","18000007232","18800002545","18200006813","13900001314"
+				,"15900006642","13300008683","18400001344","13500002338","15600006982","15800001771","13000004346","18000009723 "
+				,"18800008872","18200001453","13900001641"};
 		for (int i = 0; i < 3; i++) {
 			AppUserVo appUserVo = new AppUserVo();
 			appUserVo.setPhoneNum(strings[i]);
@@ -391,22 +391,22 @@ public class AppQueryRest {
 		Integer result = 0;
 		if(type == 1) {
 			while(true) {
-				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000000 * new Random().nextFloat())) * 2;
-				if(result>5000*10000 && result<10000*10000) {
+				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000 * new Random().nextFloat())) * 2;
+				if(result>5000*10 && result<10000*10) {
 					return result;
 				}
 			}
 		}else if(type == 2) {
 			while(true) {
-				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000000 * new Random().nextFloat()));
-				if(result>2000*10000 && result<5000*10000) {
+				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000 * new Random().nextFloat()));
+				if(result>2000*10 && result<5000*10) {
 					return result;
 				}
 			}
 		}else if(type == 3) {
 			while(true) {
-				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000000 * new Random().nextFloat()));
-				if(result>500*10000 && result<2000*10000) {
+				result = Integer.valueOf(myFormat.format(new Random().nextFloat() * 100000 * new Random().nextFloat()));
+				if(result>500*10 && result<2000*10) {
 					return result;
 				}
 			}
