@@ -543,4 +543,42 @@ public class AppDoRest {
 	public String testPushNotify(String phoneNum, int type) {
 		return this.appUserService.testPushNotify(phoneNum, type);
 	}
+	
+	/**
+	 * 用户登录奖励接口
+	 */
+	@RequestMapping(value = "/doLoginAward", method = {RequestMethod.POST})
+	public JsonResult doLoginAward(String phoneNum) {
+		if(!StrUtil.null2Str(phoneNum).equals("")) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo != null) {
+				String currentDate = DateUtil.getCurrentLongDateTime();
+				LoginHisVo loginHisVo = this.loginHisService.selectLoginHisDate(phoneNum);
+				String loginHisDate = loginHisVo.getCreateDate().substring(0, 19);
+				long[] dates = DateUtil.getDistanceTimes(currentDate, loginHisDate);
+				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+				logger.info("用户登录奖励接口，currentDate=" + currentDate + ", loginHisDate=" + loginHisDate + ", time=" + dates[2] + ", " + appConfigVo);
+				if(loginHisVo.getIsUsed() == 1) {
+					return new JsonResult(ResultCode.SUCCESS_DUPLICATE);
+				}
+				if(dates[1]>=appConfigVo.getLoginDuration()) {
+					logger.info("phoneNum=" + phoneNum + " 获得时段奖励，time=" + dates[2] + ", gold=" + appConfigVo.getLoginGold());
+					//1. 更新已使用
+					loginHisVo.setIsUsed(1);	//已使用
+					loginHisVo.setUpdateDate(currentDate);
+					this.loginHisService.modifyLoginHis(loginHisVo);
+					//2. 记录奖励
+					return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getLoginGold()
+							, GlobalUtils.AWARD_TYPE_TIME, null, null, null, null, null);
+				}else {
+					return new JsonResult(ResultCode.SUCCESS_NO_DATA);
+				}
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_NO_USER);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
+	
 }

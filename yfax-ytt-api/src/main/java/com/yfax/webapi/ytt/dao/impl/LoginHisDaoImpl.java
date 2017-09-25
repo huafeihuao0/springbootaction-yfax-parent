@@ -1,5 +1,7 @@
 package com.yfax.webapi.ytt.dao.impl;
 
+import java.util.Date;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +19,19 @@ public class LoginHisDaoImpl implements LoginHisDao {
 	
 	@Override
 	@Transactional
-	public boolean insertLoginHis(LoginHisVo userSms) throws Exception {
-		int i = this.sqlSessionTemplate.insert("insertLoginHis", userSms);
+	public boolean insertLoginHis(LoginHisVo loginHis) throws Exception {
+		int i = this.sqlSessionTemplate.insert("insertLoginHis", loginHis);
+		return i > 0 ? true : false;
+	}
+
+	@Override
+	public LoginHisVo selectLoginHisDate(String phoneNum) {
+		return this.sqlSessionTemplate.selectOne("selectLoginHisDate", phoneNum);
+	}
+
+	@Override
+	public boolean updateLoginHis(LoginHisVo loginHis) throws Exception {
+		int i = this.sqlSessionTemplate.insert("updateLoginHis", loginHis);
 		return i > 0 ? true : false;
 	}
 

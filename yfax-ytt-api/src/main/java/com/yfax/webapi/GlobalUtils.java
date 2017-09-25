@@ -52,6 +52,10 @@ public class GlobalUtils {
 	 */
 	public static final int AWARD_TYPE_REGISTER = 9;
 	/**
+	 * 时段奖励
+	 */
+	public static final int AWARD_TYPE_TIME = 10;
+	/**
 	 * 兑换类型-兑换金币
 	 */
 	public static final int BALANCE_TYPE_REDEEM = 1;
@@ -91,6 +95,8 @@ public class GlobalUtils {
 				return "首次邀请奖励";
 			case AWARD_TYPE_REGISTER:
 				return "注册奖励";
+			case AWARD_TYPE_TIME:
+				return "时段奖励";
 		}
 		return "未知奖励类型";
 	}

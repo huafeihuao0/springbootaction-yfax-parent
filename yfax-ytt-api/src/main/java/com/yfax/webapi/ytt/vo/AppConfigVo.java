@@ -23,6 +23,21 @@ public class AppConfigVo implements Serializable{
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
 	
+	private Integer loginDuration;	//登录使用奖励间隔时长
+	private Integer loginGold;		//登录使用奖励金币值
+	
+	public Integer getLoginDuration() {
+		return loginDuration;
+	}
+	public void setLoginDuration(Integer loginDuration) {
+		this.loginDuration = loginDuration;
+	}
+	public Integer getLoginGold() {
+		return loginGold;
+	}
+	public void setLoginGold(Integer loginGold) {
+		this.loginGold = loginGold;
+	}
 	public String getRegGoldRange() {
 		return regGoldRange;
 	}
@@ -107,5 +122,13 @@ public class AppConfigVo implements Serializable{
 	public void setIphoneUrl(String iphoneUrl) {
 		this.iphoneUrl = iphoneUrl;
 	}
-	
+	@Override
+	public String toString() {
+		return "AppConfigVo [id=" + id + ", goldLimit=" + goldLimit + ", goldAuto=" + goldAuto + ", goldRange="
+				+ goldRange + ", firstReadGold=" + firstReadGold + ", firstShareGold=" + firstShareGold
+				+ ", firstInviteGold=" + firstInviteGold + ", androidUrl=" + androidUrl + ", iphoneUrl=" + iphoneUrl
+				+ ", regGoldRange=" + regGoldRange + ", createDate=" + createDate + ", createdBy=" + createdBy
+				+ ", updateDate=" + updateDate + ", updatedBy=" + updatedBy + ", loginDuration=" + loginDuration
+				+ ", loginGold=" + loginGold + "]";
+	}
 }

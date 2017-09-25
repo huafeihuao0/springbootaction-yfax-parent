@@ -18,7 +18,14 @@ public class LoginHisVo implements Serializable{
 	private String createdBy;	//创建人
 	private String updateDate;	//更新时间
 	private String updatedBy;	//更新人
+	private Integer isUsed;		//是否已使用
 	
+	public Integer getIsUsed() {
+		return isUsed;
+	}
+	public void setIsUsed(Integer isUsed) {
+		this.isUsed = isUsed;
+	}
 	public String getId() {
 		return id;
 	}

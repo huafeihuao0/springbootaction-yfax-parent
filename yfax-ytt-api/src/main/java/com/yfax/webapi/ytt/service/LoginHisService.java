@@ -20,11 +20,24 @@ public class LoginHisService{
 	@Autowired
 	private LoginHisDao dao;
 	
+	public LoginHisVo selectLoginHisDate(String phoneNum) {
+		return this.dao.selectLoginHisDate(phoneNum);
+	}
+	
 	public boolean addLoginHis(LoginHisVo loginHisVo){
 		try {
 			return this.dao.insertLoginHis(loginHisVo);
 		} catch (Exception e) {
 			logger.error("记录用户登录历史异常：" + e.getMessage(), e);
+			return false;
+		}
+	}
+	
+	public boolean modifyLoginHis(LoginHisVo loginHisVo){
+		try {
+			return this.dao.updateLoginHis(loginHisVo);
+		} catch (Exception e) {
+			logger.error("更新用户登录历史异常：" + e.getMessage(), e);
 			return false;
 		}
 	}

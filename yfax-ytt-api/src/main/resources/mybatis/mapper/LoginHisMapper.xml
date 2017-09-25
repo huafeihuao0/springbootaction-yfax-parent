@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yfax.webapi.ytt.vo.LoginHisVo">
 
+	<select id="selectLoginHisDate" resultType="com.yfax.webapi.ytt.vo.LoginHisVo">
+		select * from ytt_login_his order by createDate desc limit 1
+	</select>
+
     <!-- 添加 -->
 	<insert id="insertLoginHis" parameterType="com.yfax.webapi.ytt.vo.LoginHisVo">
 		insert into ytt_login_his
@@ -34,4 +38,13 @@
 		  
         </trim>
 	</insert>
+	
+	<update id="updateLoginHis" parameterType="com.yfax.webapi.ytt.vo.LoginHisVo">
+		update ytt_login_his 
+		<set>
+			<if test="isUsed != null"> isUsed = #{isUsed}, </if>
+			<if test="updateDate != null"> updateDate = #{updateDate}, </if>
+		</set>
+		where id = #{id}
+	</update>
 </mapper>
