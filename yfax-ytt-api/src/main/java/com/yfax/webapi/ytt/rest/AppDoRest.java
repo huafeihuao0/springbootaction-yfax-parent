@@ -1,6 +1,7 @@
 package com.yfax.webapi.ytt.rest;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -567,7 +569,17 @@ public class AppDoRest {
 					loginHisVo.setIsUsed(1);	//已使用
 					loginHisVo.setUpdateDate(currentDate);
 					this.loginHisService.modifyLoginHis(loginHisVo);
-					//2. 记录奖励
+					
+					//2. 新增一条记录
+					loginHisVo = new LoginHisVo();
+					loginHisVo.setId(UUID.getUUID());
+					loginHisVo.setPhoneNum(phoneNum);
+					loginHisVo.setCreateDate(currentDate);
+					loginHisVo.setUpdateDate(currentDate);
+					boolean flag = this.loginHisService.addLoginHis(loginHisVo);
+					logger.info("新增一条记录flag=" + flag);
+					
+					//3. 记录奖励
 					return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getLoginGold()
 							, GlobalUtils.AWARD_TYPE_TIME, null, null, null, null, null);
 				}else {
@@ -581,4 +593,51 @@ public class AppDoRest {
 		}
 	}
 	
+	/**
+	 * 用户连续签到倒计时长和奖励标识接口
+	 */
+	@RequestMapping(value = "/doIsCheckInAward", method = {RequestMethod.POST})
+	public JsonResult doIsCheckInAward(String phoneNum) {
+		String currentDate = DateUtil.getCurrentLongDateTime();
+		LoginHisVo loginHisVo = this.loginHisService.selectLoginHisDate(phoneNum);
+		String loginHisDate = loginHisVo.getCreateDate().substring(0, 19);
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("phoneNum", phoneNum);
+		Date endDate = DateUtils.addHours(DateUtil.parseLongDateTime(loginHisDate), 1);
+		logger.info("currentDate=" + currentDate + ", endDate=" + DateUtil.formatLongDate(endDate));
+		if(DateUtil.parseLongDateTime(currentDate).after(endDate)) {
+			AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+			paramsMap.put("isAward", 1);				//可获得奖励
+			paramsMap.put("restTime", appConfigVo.getLoginDuration() * 60);
+		}else {
+			long[] dates = DateUtil.getDistanceTimes(currentDate, DateUtil.formatLongDate(endDate));
+			paramsMap.put("isAward", 0);				//不可获得奖励
+			paramsMap.put("restTime", dates[2]);		//剩余分钟数
+		}
+		return new JsonResult(ResultCode.SUCCESS, paramsMap);
+	}
+	
+//	/**
+//	 * 连续签到获得随机金币
+//	 */
+//	@RequestMapping(value = "/doContinueCheckIn", method = {RequestMethod.POST})
+//	public JsonResult doContinueCheckIn(String phoneNum) {
+//		if(!StrUtil.null2Str(phoneNum).equals("")) {
+//			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+//			if(appUserVo.getDailyCheckIn() == 0) {
+//				//配置信息
+//				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
+//				//随机金币奖励
+//				int gold = GlobalUtils.getRanomGold(appConfigVo.getCheckInGold());
+//				String appUserVo.getGold();
+////				return this.awardHisService.addAwardHis(phoneNum, gold, 
+////						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null, 1);
+//				return new JsonResult(ResultCode.SUCCESS);
+//			}else {
+//				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
+//			}
+//		}else {
+//			return new JsonResult(ResultCode.PARAMS_ERROR);
+//		}
+//	}
 }

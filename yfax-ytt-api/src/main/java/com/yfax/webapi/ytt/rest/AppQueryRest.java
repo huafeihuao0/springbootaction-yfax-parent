@@ -33,7 +33,6 @@ import com.yfax.webapi.ytt.service.RateSetService;
 import com.yfax.webapi.ytt.service.ReadHisService;
 import com.yfax.webapi.ytt.service.WithdrawHisService;
 import com.yfax.webapi.ytt.vo.AdvDetailVo;
-import com.yfax.webapi.ytt.vo.AdvListVo;
 import com.yfax.webapi.ytt.vo.AppConfigVo;
 import com.yfax.webapi.ytt.vo.AppUserVo;
 import com.yfax.webapi.ytt.vo.AppVersionVo;
@@ -75,8 +74,6 @@ public class AppQueryRest {
 	private InitConfigService initConfigService;
 	@Autowired
 	private AppVersionService appVersionService;
-	@Autowired
-	private AdvListService advListService;
 	@Autowired
 	private AdvDetailService advDetailService;
 	

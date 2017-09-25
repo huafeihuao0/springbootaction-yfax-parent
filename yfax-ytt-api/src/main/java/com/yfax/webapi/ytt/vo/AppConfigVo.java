@@ -25,7 +25,21 @@ public class AppConfigVo implements Serializable{
 	
 	private Integer loginDuration;	//登录使用奖励间隔时长
 	private Integer loginGold;		//登录使用奖励金币值
+	private String checkInGold;		//连续签到奖励金币随机范围
+	private String checkInConfig;	//连续签到金币和阀值配置
 	
+	public String getCheckInGold() {
+		return checkInGold;
+	}
+	public void setCheckInGold(String checkInGold) {
+		this.checkInGold = checkInGold;
+	}
+	public String getCheckInConfig() {
+		return checkInConfig;
+	}
+	public void setCheckInConfig(String checkInConfig) {
+		this.checkInConfig = checkInConfig;
+	}
 	public Integer getLoginDuration() {
 		return loginDuration;
 	}
