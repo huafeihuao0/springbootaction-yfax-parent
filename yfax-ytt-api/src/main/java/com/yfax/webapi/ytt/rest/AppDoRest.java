@@ -579,7 +579,13 @@ public class AppDoRest {
 					boolean flag = this.loginHisService.addLoginHis(loginHisVo);
 					logger.info("新增一条记录flag=" + flag);
 					
-					//3. 记录奖励
+					//3. 更新连续签到标识
+					appUserVo.setContinueCheckIn(0);
+					appUserVo.setUpdateDate(currentDate);
+					boolean flag1 = this.appUserService.modifyUser(appUserVo);
+					logger.info("更新用户记录flag1=" + flag1);
+					
+					//4. 记录奖励
 					return this.awardHisService.addAwardHis(phoneNum, appConfigVo.getLoginGold()
 							, GlobalUtils.AWARD_TYPE_TIME, null, null, null, null, null);
 				}else {
@@ -613,6 +619,14 @@ public class AppDoRest {
 			long[] dates = DateUtil.getDistanceTimes(currentDate, DateUtil.formatLongDate(endDate));
 			paramsMap.put("isAward", 0);				//不可获得奖励
 			paramsMap.put("restTime", dates[2]);		//剩余分钟数
+			//更新连续签到标识
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo.getContinueCheckIn() == 0) {
+				appUserVo.setContinueCheckIn(1);
+				appUserVo.setUpdateDate(currentDate);
+				boolean flag = this.appUserService.modifyUser(appUserVo);
+				logger.info("更新用户记录flag=" + flag);
+			}
 		}
 		return new JsonResult(ResultCode.SUCCESS, paramsMap);
 	}

@@ -1,8 +1,8 @@
-package com.yfax.webapi.ytt.vo;
+package com.yfax.task.ytt.vo;
 
 import java.io.Serializable;
 
-public class AppUserVo implements Serializable {
+public class YttAppUserVo implements Serializable {
 	
 	private static final long serialVersionUID = 5875750673354485490L;
 	
@@ -25,14 +25,7 @@ public class AppUserVo implements Serializable {
 	private Integer firstRead;	//首次阅读标识
 	private Integer students;	//徒弟数
 	private Integer dailyCheckIn;	//今日签到标识
-	private Integer continueCheckIn;	//连续签到标识
 	
-	public Integer getContinueCheckIn() {
-		return continueCheckIn;
-	}
-	public void setContinueCheckIn(Integer continueCheckIn) {
-		this.continueCheckIn = continueCheckIn;
-	}
 	public Integer getDailyCheckIn() {
 		return dailyCheckIn;
 	}
@@ -149,7 +142,7 @@ public class AppUserVo implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "AppUserVo [phoneNum=" + phoneNum + ", gold=" + gold + ", balance=" + balance
+		return "AppUserVo [phoneNum=" + phoneNum + ", userPwd=" + userPwd + ", gold=" + gold + ", balance=" + balance
 				+ ", userName=" + userName + ", address=" + address + ", wechat=" + wechat + ", qq=" + qq + ", email="
 				+ email + ", registerDate=" + registerDate + ", lastLoginDate=" + lastLoginDate + ", updateDate="
 				+ updateDate + ", blackList=" + blackList + ", shareCount=" + shareCount + ", firstShare=" + firstShare

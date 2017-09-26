@@ -67,6 +67,7 @@
 		  <if test="firstRead != null" > firstRead, </if>
 		  <if test="students != null" > students, </if>
 		  <if test="dailyCheckIn != null" > dailyCheckIn, </if>
+		  <if test="continueCheckIn != null" > continueCheckIn, </if>
 		  
 		</trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -89,6 +90,7 @@
 		  <if test="firstRead != null" > #{firstRead}, </if>
 		  <if test="students != null" > #{students}, </if>
 		  <if test="dailyCheckIn != null" > #{dailyCheckIn}, </if>
+		  <if test="continueCheckIn != null" > #{continueCheckIn}, </if>
 		  
         </trim>
 	</insert>
@@ -113,6 +115,7 @@
 			<if test="firstRead != null"> firstRead = #{firstRead}, </if>
 			<if test="students != null"> students = #{students}, </if>
 			<if test="dailyCheckIn != null"> dailyCheckIn = #{dailyCheckIn}, </if>
+			<if test="continueCheckIn != null"> continueCheckIn = #{continueCheckIn}, </if>
 			
 		</set>
 		where phoneNum = #{phoneNum} 
