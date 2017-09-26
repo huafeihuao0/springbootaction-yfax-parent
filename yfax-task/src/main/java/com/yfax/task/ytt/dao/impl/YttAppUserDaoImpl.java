@@ -8,63 +8,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yfax.task.qmtt.dao.AppUserDao;
-import com.yfax.task.qmtt.vo.AppUserVo;
+import com.yfax.task.ytt.dao.YttAppUserDao;
+import com.yfax.task.ytt.vo.YttAppUserVo;
 
 @Component
-public class YttAppUserDaoImpl implements AppUserDao {
+public class YttAppUserDaoImpl implements YttAppUserDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;;
 	
 	@Override
-	public AppUserVo selectByPhoneNumAndPwd(Map<String, Object> params) {
-		return this.sqlSessionTemplate.selectOne("selectByPhoneNumAndPwd", params);
+	public YttAppUserVo selectByPhoneNumAndPwd(Map<String, Object> params) {
+		return this.sqlSessionTemplate.selectOne("selectYttByPhoneNumAndPwd", params);
 	}
 
 	@Override
-	public AppUserVo selectByPhoneNum(String phoneNum) {
-		return this.sqlSessionTemplate.selectOne("selectByPhoneNum", phoneNum);
+	public YttAppUserVo selectByPhoneNum(String phoneNum) {
+		return this.sqlSessionTemplate.selectOne("selectYttByPhoneNum", phoneNum);
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteTokenByPhoneNum(String phoneNum) {
-		int i = this.sqlSessionTemplate.delete("deleteByPhoneNum", phoneNum);
+		int i = this.sqlSessionTemplate.delete("deleteYttByPhoneNum", phoneNum);
 		return i > 0 ? true : false;
 	}
 
 	@Override
 	@Transactional
-	public boolean insertUser(AppUserVo appUserVo) {
-		int i = this.sqlSessionTemplate.delete("insertUser", appUserVo);
+	public boolean insertUser(YttAppUserVo appUserVo) {
+		int i = this.sqlSessionTemplate.delete("insertYttUser", appUserVo);
 		return i > 0 ? true : false;
 	}
 
 	@Override
 	@Transactional
-	public boolean updateUser(AppUserVo appUserVo) {
-		int i = this.sqlSessionTemplate.delete("updateUser", appUserVo);
+	public boolean updateUser(YttAppUserVo appUserVo) {
+		int i = this.sqlSessionTemplate.delete("updateYttUser", appUserVo);
 		return i > 0 ? true : false;
 	}
 
 	@Override
-	public List<AppUserVo> selectByRank() {
-		return this.sqlSessionTemplate.selectList("selectByRank");
+	public List<YttAppUserVo> selectByRank() {
+		return this.sqlSessionTemplate.selectList("selectYttByRank");
 	}
 	
 	@Override
 	public Long selectByRankSum() {
-		return this.sqlSessionTemplate.selectOne("selectByRankSum");
+		return this.sqlSessionTemplate.selectOne("selectYttByRankSum");
 	}
 
 	@Override
-	public List<AppUserVo> selectByPhoneNumGoldLimit() {
-		return this.sqlSessionTemplate.selectList("selectByPhoneNumGoldLimit");
+	public List<YttAppUserVo> selectByPhoneNumGoldLimit() {
+		return this.sqlSessionTemplate.selectList("selectYttByPhoneNumGoldLimit");
 	}
 
 	@Override
-	public List<AppUserVo> selectAllUser() {
-		return this.sqlSessionTemplate.selectList("selectAllUser");
+	public List<YttAppUserVo> selectAllUser() {
+		return this.sqlSessionTemplate.selectList("selectYttAllUser");
 	}
 }

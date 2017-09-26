@@ -13,6 +13,9 @@ import com.yfax.task.cfdb.vo.UserTaskListVo;
 import com.yfax.task.qmtt.service.AppUserService;
 import com.yfax.task.qmtt.service.BalanceHisService;
 import com.yfax.task.qmtt.vo.AppUserVo;
+import com.yfax.task.ytt.service.YttAppUserService;
+import com.yfax.task.ytt.service.YttBalanceHisService;
+import com.yfax.task.ytt.vo.YttAppUserVo;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.StrUtil;
 
@@ -27,6 +30,11 @@ public class ScheduledTasks {
 	private BalanceHisService balanceHisService;
 	@Autowired
 	private UserTaskListService userTaskListService;
+	
+	@Autowired
+	private YttAppUserService yttAppUserService;
+	@Autowired
+	private YttBalanceHisService yttBalanceHisService;
 
 	// 以指定时间间隔调度任务（以方法执行开始时间为准）
 //	@Scheduled(fixedRate = 20000)
@@ -59,15 +67,31 @@ public class ScheduledTasks {
 
 	// cron表达式，second, minute, hour, day, month, weekday
 	// 每日零点跑批
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0/10 * * * *")
 	public void qmttTask() {
 		logger.info("============乐头条任务，start===================");
-		logger.info("my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+		logger.info("乐头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
 		this.batchResetDailyCheckIn();
 		this.batchAutoTransfer();
 		logger.info("=======================end====================");
+		
+		logger.info("");
+		try {
+			logger.info("休眠三秒...");
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		logger.info("");
+		
+		logger.info("============悦头条任务，start===================");
+		logger.info("悦头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+		this.batchResetDailyCheckInYtt();
+		this.batchAutoTransferYtt();
+		logger.info("=======================end====================");
 	}
 	
+	//============乐头条任务，start===================
 	/**
 	 * 每日零点重置用户今日签到标识
 	 */
@@ -83,8 +107,6 @@ public class ScheduledTasks {
 			}
 		}
 	}
-	
-	
 	/**
 	 * 跑批自动金币转零钱任务
 	 */
@@ -99,4 +121,37 @@ public class ScheduledTasks {
 			}
 		}
 	}
+	//=======================end====================
+	
+	//============悦头条任务，start===================
+	/**
+	 * 每日零点重置用户今日签到标识
+	 */
+	private void batchResetDailyCheckInYtt() {
+		logger.info("第一步，开始清除用户的每日签到标识...");
+		List<YttAppUserVo> list = this.yttAppUserService.selectAllUser();
+		for (YttAppUserVo yttAppUserVo : list) {
+			if(yttAppUserVo.getDailyCheckIn() == 1) {
+				yttAppUserVo.setDailyCheckIn(0);
+				boolean result = this.yttAppUserService.modifyUser(yttAppUserVo);
+				logger.info("phoneNum" + yttAppUserVo.getPhoneNum() 
+					+ ", 重置结果result=" + (result?"成功":"失败"));
+			}
+		}
+	}
+	/**
+	 * 跑批自动金币转零钱任务
+	 */
+	private void batchAutoTransferYtt() {
+		logger.info("第二步，开始自动批量处理金币转换零钱...");
+		List<YttAppUserVo> list = this.yttAppUserService.selectByPhoneNumGoldLimit();
+		for (YttAppUserVo yttAppUserVo : list) {
+			if(!StrUtil.null2Str(yttAppUserVo.getGold()).equals("") 
+					&& Integer.valueOf(yttAppUserVo.getGold()) > 0) {
+				logger.info("转换用户数据：" + yttAppUserVo.toString());
+				this.yttBalanceHisService.addBalanceHis(yttAppUserVo.getPhoneNum(), yttAppUserVo.getGold());
+			}
+		}
+	}
+	//=======================end====================
 }

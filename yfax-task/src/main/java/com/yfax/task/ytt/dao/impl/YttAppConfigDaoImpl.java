@@ -16,7 +16,7 @@ public class YttAppConfigDaoImpl implements YttAppConfigDao {
 	
 	@Override
 	public YttAppConfigVo selectAppConfig() {
-		return this.sqlSessionTemplate.selectOne("selectAppConfig");
+		return this.sqlSessionTemplate.selectOne("selectYttAppConfig");
 	}
 
 }
