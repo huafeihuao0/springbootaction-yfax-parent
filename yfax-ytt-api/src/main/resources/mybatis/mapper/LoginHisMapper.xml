@@ -5,7 +5,7 @@
 <mapper namespace="com.yfax.webapi.ytt.vo.LoginHisVo">
 
 	<select id="selectLoginHisDate" resultType="com.yfax.webapi.ytt.vo.LoginHisVo">
-		select * from ytt_login_his order by createDate desc limit 1
+		select * from ytt_login_his where phoneNum=#{phoneNum} order by createDate desc limit 1
 	</select>
 
     <!-- 添加 -->
