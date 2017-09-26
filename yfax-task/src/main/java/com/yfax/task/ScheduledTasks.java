@@ -67,7 +67,7 @@ public class ScheduledTasks {
 
 	// cron表达式，second, minute, hour, day, month, weekday
 	// 每日零点跑批
-	@Scheduled(cron = "0 0/10 * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void qmttTask() {
 		logger.info("============乐头条任务，start===================");
 		logger.info("乐头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());

@@ -4,20 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yfax.task.ytt.vo.YttAwardHisVo">
 
-	<selectYtt id="selectYttAwardHisByPhoneNum" resultType="com.yfax.task.ytt.vo.YttAwardHisVo">
+	<select id="selectYttAwardHisByPhoneNum" resultType="com.yfax.task.ytt.vo.YttAwardHisVo">
         selectYtt * from ytt_award_his where phoneNum=#{phoneNum} order by createDate desc limit 200
-    </selectYtt>
+    </select>
     
     <!-- 今日签到判断 -->
-    <selectYtt id="selectYttAwardHisIsFirstLogin" resultType="com.yfax.task.ytt.vo.YttAwardHisVo">
+    <select id="selectYttAwardHisIsFirstLogin" resultType="com.yfax.task.ytt.vo.YttAwardHisVo">
          selectYtt * from ytt_award_his where phoneNum=#{phoneNum} and date_format(createDate,'%Y-%m-%d')=#{currentTime} limit 1
-    </selectYtt>
+    </select>
     
     <!-- 统计各类型指定类型下领取的金币值 -->
-    <selectYtt id="selectYttUserTotalOfGold" resultType="java.lang.Long">
+    <select id="selectYttUserTotalOfGold" resultType="java.lang.Long">
 		selectYtt ifnull(sum(gold),0) as total from ytt_award_his where phoneNum=#{phoneNum} 
 			and awardType=#{awardType} and date_format(createDate,'%Y-%m-%d')=#{currentTime}
-    </selectYtt>
+    </select>
 
     <!-- 添加 -->
 	<insert id="insertYttAwardHis" parameterType="com.yfax.task.ytt.vo.YttAwardHisVo">

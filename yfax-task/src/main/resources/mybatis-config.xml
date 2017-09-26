@@ -17,10 +17,10 @@
     		<mapper resource="mybatis/mapper/UserTasklistHisMapper.xml"/>
     		<mapper resource="mybatis/mapper/UserTaskListMapper.xml"/>
     		
+    		<mapper resource="mybatis/mapper/YttAppConfigMapper.xml"/>
     		<mapper resource="mybatis/mapper/YttAppUserMapper.xml"/>
+    		<mapper resource="mybatis/mapper/YttAwardHisMapper.xml"/>
     		<mapper resource="mybatis/mapper/YttBalanceHisMapper.xml"/>
     		<mapper resource="mybatis/mapper/YttRateSetMapper.xml"/>
-    		<mapper resource="mybatis/mapper/YttAppConfigMapper.xml"/>
-    		<mapper resource="mybatis/mapper/YttAwardHisMapper.xml"/>
     </mappers>
 </configuration>
