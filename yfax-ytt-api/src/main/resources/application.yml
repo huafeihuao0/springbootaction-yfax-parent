@@ -4,11 +4,11 @@
 # 生产环境：java -jar xxx.jar --spring.profiles.active=prod
 spring: 
   profiles: 
-    active: test
+    active: dev
   datasource: 
     # mysql
     username: root
-    password: Yfax2016
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     # 默认使用Tomcat自带db连接池
     maximum-pool-size: 50
@@ -82,7 +82,7 @@ spring:
 spring:
   profiles: test
   datasource:
-     url: jdbc:mysql://182.92.82.188:33061/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+     url: jdbc:mysql://192.168.56.101:3306/cfdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
 
 ---
 # 生产环境配置
