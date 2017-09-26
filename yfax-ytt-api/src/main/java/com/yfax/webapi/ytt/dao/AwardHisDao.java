@@ -11,4 +11,5 @@ public interface AwardHisDao {
 	public AwardHisVo selectAwardHisIsCheckIn(Map<String, Object> map);
 	public Long selectUserTotalOfGold(Map<String, Object> map);
 	public Long selectUserAwardCount(Map<String, Object> map);
+	public List<AwardHisVo> selectAwardHisCheckList(String phoneNum);
 }

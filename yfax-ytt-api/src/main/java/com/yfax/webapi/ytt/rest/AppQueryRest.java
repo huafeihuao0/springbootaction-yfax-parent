@@ -21,7 +21,6 @@ import com.yfax.utils.ResultCode;
 import com.yfax.utils.StrUtil;
 import com.yfax.webapi.GlobalUtils;
 import com.yfax.webapi.ytt.service.AdvDetailService;
-import com.yfax.webapi.ytt.service.AdvListService;
 import com.yfax.webapi.ytt.service.AppConfigService;
 import com.yfax.webapi.ytt.service.AppUserService;
 import com.yfax.webapi.ytt.service.AppVersionService;
@@ -422,4 +421,13 @@ public class AppQueryRest {
 		List<AdvDetailVo> advDetailVo = this.advDetailService.selectAdvDetail(map);
 		return new JsonResult(ResultCode.SUCCESS, advDetailVo);
 	}
+	
+	/**
+	 * 获取连续签到的七日数据
+	 */
+	@RequestMapping("/queryContinueCheckList")
+	public JsonResult queryContinueCheckList(String phoneNum) {
+		return this.awardHisService.queryContinueCheckList(phoneNum);
+	}
+	
 }

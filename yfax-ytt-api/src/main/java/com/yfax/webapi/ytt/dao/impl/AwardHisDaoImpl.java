@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yfax.webapi.ytt.dao.AwardHisDao;
 import com.yfax.webapi.ytt.vo.AwardHisVo;
 
-
 @Component
 public class AwardHisDaoImpl implements AwardHisDao {
 
@@ -43,6 +42,11 @@ public class AwardHisDaoImpl implements AwardHisDao {
 	@Override
 	public Long selectUserAwardCount(Map<String, Object> map) {
 		return this.sqlSessionTemplate.selectOne("selectUserAwardCount", map);
+	}
+
+	@Override
+	public List<AwardHisVo> selectAwardHisCheckList(String phoneNum) {
+		return this.sqlSessionTemplate.selectList("selectAwardHisCheckList", phoneNum);
 	}
 
 }

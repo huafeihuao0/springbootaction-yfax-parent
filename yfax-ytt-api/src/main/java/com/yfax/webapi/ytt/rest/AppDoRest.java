@@ -617,27 +617,24 @@ public class AppDoRest {
 		return new JsonResult(ResultCode.SUCCESS, paramsMap);
 	}
 	
-//	/**
-//	 * 连续签到获得随机金币
-//	 */
-//	@RequestMapping(value = "/doContinueCheckIn", method = {RequestMethod.POST})
-//	public JsonResult doContinueCheckIn(String phoneNum) {
-//		if(!StrUtil.null2Str(phoneNum).equals("")) {
-//			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
-//			if(appUserVo.getDailyCheckIn() == 0) {
-//				//配置信息
-//				AppConfigVo appConfigVo = this.appConfigService.selectAppConfig();
-//				//随机金币奖励
-//				int gold = GlobalUtils.getRanomGold(appConfigVo.getCheckInGold());
-//				String appUserVo.getGold();
-////				return this.awardHisService.addAwardHis(phoneNum, gold, 
-////						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null, 1);
-//				return new JsonResult(ResultCode.SUCCESS);
-//			}else {
-//				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
-//			}
-//		}else {
-//			return new JsonResult(ResultCode.PARAMS_ERROR);
-//		}
-//	}
+	/**
+	 * 连续签到获得随机金币
+	 */
+	@RequestMapping(value = "/doContinueCheckIn", method = {RequestMethod.POST})
+	public JsonResult doContinueCheckIn(String phoneNum) {
+		if(!StrUtil.null2Str(phoneNum).equals("")) {
+			AppUserVo appUserVo = this.appUserService.selectByPhoneNum(phoneNum);
+			if(appUserVo.getDailyCheckIn() == 0) {
+				//最终获得金币
+				int finalGlod = this.awardHisService.calAwardGold(phoneNum);
+				return this.awardHisService.addAwardHis(phoneNum, finalGlod, 
+						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null, 1);
+			}else {
+				return new JsonResult(ResultCode.SUCCESS_CHECK_IN);
+			}
+		}else {
+			return new JsonResult(ResultCode.PARAMS_ERROR);
+		}
+	}
+	
 }

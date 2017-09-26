@@ -1,26 +1,29 @@
 package com.yfax.webapi.ytt.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yfax.common.xinge.XgServiceApi;
 import com.yfax.utils.DateUtil;
 import com.yfax.utils.JsonResult;
 import com.yfax.utils.ResultCode;
 import com.yfax.utils.UUID;
 import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.ytt.dao.AppConfigDao;
 import com.yfax.webapi.ytt.dao.AppUserDao;
 import com.yfax.webapi.ytt.dao.AwardHisDao;
 import com.yfax.webapi.ytt.dao.ReadHisDao;
 import com.yfax.webapi.ytt.dao.ShareUserHisDao;
 import com.yfax.webapi.ytt.dao.StudentConfigDao;
+import com.yfax.webapi.ytt.vo.AppConfigVo;
 import com.yfax.webapi.ytt.vo.AppUserVo;
 import com.yfax.webapi.ytt.vo.AwardHisVo;
 import com.yfax.webapi.ytt.vo.ReadHisVo;
@@ -46,6 +49,8 @@ public class AwardHisService{
 	private ShareUserHisDao shareUserHisDao;
 	@Autowired
 	private StudentConfigDao studentConfigDao;
+	@Autowired
+	private AppConfigDao appConfigDao;
 	
 	/**
 	 * @param phoneNum
@@ -184,4 +189,81 @@ public class AwardHisService{
 		return this.awardHisDao.selectUserAwardCount(map);
 	}
 	
+	public List<AwardHisVo> selectAwardHisCheckList(String phoneNum) {
+		return this.awardHisDao.selectAwardHisCheckList(phoneNum);
+	}
+	
+	/**
+	 * 根据奖励记录获取七日签到数据
+	 * @param phoneNum
+	 * @return
+	 */
+	public JsonResult queryContinueCheckList(String phoneNum) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<AwardHisVo> list = this.awardHisDao.selectAwardHisCheckList(phoneNum);
+		List<Map<String, Object>> mapList = new ArrayList<>();
+		if(list != null) {
+			Map<String, Object> map = new HashMap<>();
+			String currentDate = DateUtil.getCurrentDate();
+			int day = DateUtil.getWeek(DateUtil.parseDate(currentDate));
+			for (int i = 1; i <day; i++) {
+				map = new HashMap<>();
+				map.put("day", i);
+				String preDate = DateUtil.formatDate(DateUtils.addDays(DateUtil.parseDate(currentDate), -i));
+				map.put("isCheckIn", getCheckInFlag(preDate, list));
+				mapList.add(map);
+			}
+			int todayCheckIn = getCheckInFlag(currentDate, list);
+			map = new HashMap<>();
+			map.put("day", day);
+			map.put("isCheckIn", todayCheckIn);
+			resultMap.put("gold", todayCheckIn==0?this.calAwardGold(phoneNum):0);
+			mapList.add(map);
+			for (int i = day+1; i < 8; i++) {
+				map = new HashMap<>();
+				map.put("day", i);
+				map.put("isCheckIn", 0);
+				mapList.add(map);
+			}
+		}
+		resultMap.put("list", mapList);
+		return new JsonResult(ResultCode.SUCCESS, resultMap);
+	}
+	
+	/**
+	 * 计算预期获得金币值
+	 * @param phoneNum
+	 * @return 可预期获得金币值
+	 */
+	public int calAwardGold(String phoneNum) {
+		//用户数据
+		AppUserVo appUserVo = this.appUserDao.selectByPhoneNum(phoneNum);
+		//配置信息
+		AppConfigVo appConfigVo = this.appConfigDao.selectAppConfig();
+		//随机金币奖励
+		int gold = GlobalUtils.getRanomGold(appConfigVo.getCheckInGold());
+		String checkInConfig = appConfigVo.getCheckInConfig();
+		int userGold = Integer.valueOf(appUserVo.getGold());
+		//最终获得金币
+		int finalGlod = GlobalUtils.getContinueCheckInGold(gold, userGold, checkInConfig);
+		logger.info("phoneNum=" + phoneNum + ", userGold=" + userGold + ", 获得随机金币gold=" + gold
+				+ ", 获得金币glod=" + finalGlod + ", 最终余额result=" + (userGold + finalGlod));
+		return finalGlod;
+	}
+	
+	/**
+	 * 通过签到奖励数据看是否已签到过
+	 * @param date
+	 * @param list
+	 * @return 1=已签到；0=未签到
+	 */
+	private int getCheckInFlag(String date, List<AwardHisVo> list) {
+		for (AwardHisVo awardHisVo : list) {
+			String createDate = awardHisVo.getCreateDate().substring(0, 10);
+			if(createDate.equals(date)) {
+				return 1;
+			}
+		}
+		return 0;
+	}
 }

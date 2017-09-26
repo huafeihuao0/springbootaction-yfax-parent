@@ -1,6 +1,5 @@
 package com.yfax.webapi.ytt.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ import com.yfax.webapi.ytt.vo.AppUserVo;
 import com.yfax.webapi.ytt.vo.IpShareCodeVo;
 import com.yfax.webapi.ytt.vo.ShareUserHisVo;
 
-import javassist.bytecode.annotation.StringMemberValue;
 import net.sf.json.JSONObject;
 
 /**
