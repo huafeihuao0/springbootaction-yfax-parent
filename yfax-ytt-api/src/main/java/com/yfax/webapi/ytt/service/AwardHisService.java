@@ -91,6 +91,7 @@ public class AwardHisService{
 				+ ", 更新金币总余额sum=" + sum + ", 奖励类型awardType=" + awardType);
 			boolean flag =  this.awardHisDao.insertAwardHis(awardHisVo);
 			boolean flag1 = this.appUserDao.updateUser(appUserVo);
+			logger.info("奖励记录插入flag=" + flag + ", 更新用户信息flag1=" + flag1);
 			if(flag && flag1) {
 				//3. 记录文章已获取金币标识
 				if(awardType == GlobalUtils.AWARD_TYPE_FIRSTREAD 
@@ -100,6 +101,7 @@ public class AwardHisService{
 					readHisVo.setIsAward(1);		//已奖励标识
 					readHisVo.setUpdateDate(cTime);
 					boolean flag2 =  this.readHisDao.updateReadHis(readHisVo);
+					logger.info("记录文章已获取金币flag2=" + flag2);
 					if (!flag2) {
 						logger.error("阅读文章奖励标识更新异常", new RuntimeException("readHisId=" + readHisId));
 					}

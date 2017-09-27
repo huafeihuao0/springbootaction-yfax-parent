@@ -5,7 +5,8 @@
 <mapper namespace="com.yfax.webapi.ytt.vo.IncomeSetVo">
 
 	 <select id="selectIncomeSet" resultType="com.yfax.webapi.ytt.vo.IncomeSetVo">
-        select * from ytt_income_set where status=2 and saleFlag!=1
+        select * from ytt_income_set where status=2 and saleFlag!=1 
+        		order by cast(`income` as signed integer)
     </select>
     
 </mapper>

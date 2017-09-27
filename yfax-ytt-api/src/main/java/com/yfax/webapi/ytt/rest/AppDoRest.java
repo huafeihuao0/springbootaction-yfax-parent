@@ -273,12 +273,14 @@ public class AppDoRest {
 				 ipShareCodeVo.setCreateDate(cTime);
 				 ipShareCodeVo.setUpdateDate(cTime);
 				 boolean flag = this.ipShareCodeService.addIpShareCode(ipShareCodeVo);
+				 logger.info("新增ipShareCode记录标识flag=" + flag);
 				 if(!flag) {
 					 logger.warn("新增失败，ipShareCodeVo=" + ipShareCodeVo.toString());
 				 }
 				 if(!url.equals("")) {
 					 InitConfigVo initConfigVo = this.initConfigService.selectInitConfig();
 					 response.sendRedirect(initConfigVo.getPageUrl()  + initConfigVo.getDownloadUrl());
+					 logger.info("跳转链接：" + initConfigVo.getPageUrl()  + initConfigVo.getDownloadUrl());
 				 }
 			 }
 		} catch (IOException e) {
@@ -641,6 +643,7 @@ public class AppDoRest {
 			if(appUserVo.getDailyCheckIn() == 0) {
 				//最终获得金币
 				int finalGlod = this.awardHisService.calAwardGold(phoneNum);
+				logger.info("phoneNum=" + phoneNum + ", 连续签到获得随机金币gold=" + finalGlod);
 				return this.awardHisService.addAwardHis(phoneNum, finalGlod, 
 						GlobalUtils.AWARD_TYPE_DAYLY, null, null, null, null, 1);
 			}else {

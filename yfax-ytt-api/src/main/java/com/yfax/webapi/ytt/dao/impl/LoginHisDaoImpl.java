@@ -1,7 +1,5 @@
 package com.yfax.webapi.ytt.dao.impl;
 
-import java.util.Date;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
