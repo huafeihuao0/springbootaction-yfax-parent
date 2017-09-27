@@ -67,7 +67,7 @@ public class ScheduledTasks {
 
 	// cron表达式，second, minute, hour, day, month, weekday
 	// 每日零点跑批
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0/5 * * * *")
 	public void qmttTask() {
 		logger.info("============乐头条任务，start===================");
 		logger.info("乐头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
@@ -102,7 +102,7 @@ public class ScheduledTasks {
 			if(appUserVo.getDailyCheckIn() == 1) {
 				appUserVo.setDailyCheckIn(0);
 				boolean result = this.appUserService.modifyUser(appUserVo);
-				logger.info("phoneNum" + appUserVo.getPhoneNum() 
+				logger.info("phoneNum=" + appUserVo.getPhoneNum() 
 					+ ", 重置结果result=" + (result?"成功":"失败"));
 			}
 		}
@@ -134,7 +134,7 @@ public class ScheduledTasks {
 			if(yttAppUserVo.getDailyCheckIn() == 1) {
 				yttAppUserVo.setDailyCheckIn(0);
 				boolean result = this.yttAppUserService.modifyUser(yttAppUserVo);
-				logger.info("phoneNum" + yttAppUserVo.getPhoneNum() 
+				logger.info("phoneNum=" + yttAppUserVo.getPhoneNum() 
 					+ ", 重置结果result=" + (result?"成功":"失败"));
 			}
 		}
