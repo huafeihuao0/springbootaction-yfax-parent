@@ -35,7 +35,7 @@ public interface GlobalUtils {
 	/**
 	 * app用户统一密码
 	 */
-	public final static String CFDB_PWD="D6Z6ek1STzQnRSNg";
+	public final static String CFDB_PWD="xxx";
 	/**
 	 * 内存-缓存
 	 */

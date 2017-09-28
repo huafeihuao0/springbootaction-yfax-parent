@@ -50,7 +50,7 @@ public class ScheduledTasks {
 	 @Scheduled(initialDelay = 1000, fixedDelay = 600000)
 	 public void cfdbTask() {
 		 logger.info("==================start=================");
-		 logger.info("====返利达人任务，开始检查是否存在超时任务====");
+		 logger.info("====xxx任务，开始检查是否存在超时任务====");
 		 List<UserTaskListVo> list = this.userTaskListService.selectUserTaskListByTime();
 		 for (UserTaskListVo userTaskListVo : list) {
 			this.userTaskListService.abandonUserTask(userTaskListVo.getId(), userTaskListVo.getPhoneId(), 
