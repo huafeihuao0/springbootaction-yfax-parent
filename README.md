@@ -1,6 +1,6 @@
-# yfax-parent
+# SprintBoot开发的Rest API接口项目实战
 
-SprintBoot开发的Rest API接口项目实战，集成了拦截器，日志处理，mysql，mybatis, oauth2.0, spring secutity等，已投入生产线上使用
+此项目集成了拦截器，日志处理，mysql，mybatis, oauth2.0, spring secutity等，已投入生产线上使用
 
 应用了https://github.com/hemin1003/spring-boot-study 所含功能
 
