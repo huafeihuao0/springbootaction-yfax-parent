@@ -47,10 +47,10 @@ public class XgServiceApi {
 	
 	protected static Logger logger = LoggerFactory.getLogger(XgServiceApi.class);
 	
-//	private final static long ACCESS_ID = 2100263322;
-	private final static String ACCESS_KEY = "AQ4Z2C865LDH";
-//	private final static String SECRET_KEY = "cb488973e809c94e4d8a97e6064d2d3d";
-	private final static String IMEI_NO = "860514034348291";
+//	private final static long ACCESS_ID = 000;
+	private final static String ACCESS_KEY = "xxx";
+//	private final static String SECRET_KEY = "xxx";
+	private final static String IMEI_NO = "xxx";
 	
 	/**
 	 * 推送栏通知消息

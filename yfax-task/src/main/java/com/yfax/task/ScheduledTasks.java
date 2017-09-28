@@ -69,8 +69,8 @@ public class ScheduledTasks {
 	// 每日零点跑批
 	@Scheduled(cron = "0 0/5 * * * *")
 	public void qmttTask() {
-		logger.info("============乐头条任务，start===================");
-		logger.info("乐头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+		logger.info("============xxx任务，start===================");
+		logger.info("xxx，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
 		this.batchResetDailyCheckIn();
 		this.batchAutoTransfer();
 		logger.info("=======================end====================");
@@ -84,14 +84,14 @@ public class ScheduledTasks {
 		}
 		logger.info("");
 		
-		logger.info("============悦头条任务，start===================");
-		logger.info("悦头条，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
+		logger.info("============xxx任务，start===================");
+		logger.info("xxx，my task is running, The time is now " + DateUtil.getCurrentLongDateTime());
 		this.batchResetDailyCheckInYtt();
 		this.batchAutoTransferYtt();
 		logger.info("=======================end====================");
 	}
 	
-	//============乐头条任务，start===================
+	//============xxx任务，start===================
 	/**
 	 * 每日零点重置用户今日签到标识
 	 */
@@ -123,7 +123,7 @@ public class ScheduledTasks {
 	}
 	//=======================end====================
 	
-	//============悦头条任务，start===================
+	//============xxx任务，start===================
 	/**
 	 * 每日零点重置用户今日签到标识
 	 */

@@ -44,19 +44,19 @@ public interface GlobalUtils {
 	/**
 	 * 短信模板ID
 	 */
-	public static final String SMS_TEMPLATE_ID = "195930";
+	public static final String SMS_TEMPLATE_ID = "xxx";
 	/**
 	 * 短信模板ID
 	 */
-	public static final String SMS_APP_ID = "8aaf07085d7cf73f015da0accd660bc0";
+	public static final String SMS_APP_ID = "xxx";
 	
 	/**
 	 * 信鸽推送ACCESS_ID
 	 */
-	public final static long XG_ACCESS_ID = 2100263322;
+	public final static long XG_ACCESS_ID = 000;
 	
 	/**
 	 * 信鸽推送SECRET_KEY
 	 */
-	public final static String XG_SECRET_KEY = "cb488973e809c94e4d8a97e6064d2d3d";
+	public final static String XG_SECRET_KEY = "xxx";
 }

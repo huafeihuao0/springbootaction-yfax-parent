@@ -34,17 +34,17 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String ip = NetworkUtil.getIpAddress(request);
 		logger.info(String.format("请求参数, url: %s, method: %s, uri: %s, params: %s, ip: %s", url, method, uri, queryString, ip));
 		
-		//冲返单包，广告平台回调不做拦截
+		//广告平台回调不做拦截
         if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB + "/sendAdvInfo")){
             return true;
         }
         
-        //冲返单包，常见问题faq页不做拦截
+        //常见问题faq页不做拦截
         if(uri.equals(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB + "/faq")){
             return true;
         }
 		
-        //冲返单包，请求拦截
+        //请求拦截
         if(uri.startsWith(GlobalUtils.URL + GlobalUtils.PROJECT_CFDB)) {
 	        	//拦截请求
 	    		String phoneId = request.getParameter("phoneId");

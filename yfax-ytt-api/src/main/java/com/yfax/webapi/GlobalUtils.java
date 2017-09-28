@@ -70,11 +70,11 @@ public class GlobalUtils {
 	/**
 	 * 短信模板ID
 	 */
-	public static final String SMS_TEMPLATE_ID = "206740";
+	public static final String SMS_TEMPLATE_ID = "xxx";
 	/**
 	 * 短信模板ID
 	 */
-	public static final String SMS_APP_ID = "8a216da85ea31fdd015ea378f48c005e";
+	public static final String SMS_APP_ID = "xxx";
 	
 	/**
 	 * 取奖励类型名
@@ -127,12 +127,12 @@ public class GlobalUtils {
 	/**
 	 * 信鸽推送ACCESS_ID
 	 */
-	public final static long XG_ACCESS_ID = 2100266505;
+	public final static long XG_ACCESS_ID = 000;
 	
 	/**
 	 * 信鸽推送SECRET_KEY
 	 */
-	public final static String XG_SECRET_KEY = "3a4cbec8bad30976f0f4bee732c6c988";
+	public final static String XG_SECRET_KEY = "xxx";
 	
 	/**
 	 * 获得连续签到阀值的金币值
@@ -153,7 +153,7 @@ public class GlobalUtils {
 			String[] strings = goldRange.split("#");
 			int start = Integer.valueOf(strings[0]);
 			int end = Integer.valueOf(strings[1]);
-			if(userGold>start && userGold<=end) {
+			if(userGold>=start && userGold<end) {
 				result = Integer.valueOf(dFormat.format(gold * Double.valueOf(alpha)));
 				break;
 			}
