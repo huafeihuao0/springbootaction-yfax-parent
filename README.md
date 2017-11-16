@@ -1,4 +1,6 @@
-# SprintBoot开发的Rest API接口项目实战，已投入生产线上使用
+# SprintBoot项目实战
+
+基于SpringBoot开发的RestAPI接口项目实战，已投入生产线上使用
 
 此项目集成了：
 1. 拦截器
