@@ -2,23 +2,26 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!--【父】-->
 	<parent>
 		<groupId>com.yfax</groupId>
 		<artifactId>yfax-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
+	<!--【模块标识】-->
 	<artifactId>yfax-webapi</artifactId>
 	<packaging>war</packaging>
-
 	<name>yfax-webapi</name>
 	<description>Spring Boot, MVC, Rest API for App</description>
 
+	<!--【属性集】-->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
+	<!--【仓库】-->
 	<repositories>
 		<repository>
 			<id>in-project</id>

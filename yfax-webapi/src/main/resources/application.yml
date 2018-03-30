@@ -2,10 +2,19 @@
 # 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
 # 测试环境：java -jar xxx.jar --spring.profiles.active=test
 # 生产环境：java -jar xxx.jar --spring.profiles.active=prod
+####
+#   【配置文件】
+###
+#【自定义属性】
+name: zhangsan
+age: 30
+address: hanzhou
+remark: my name is ${name}
+
 spring: 
   profiles: 
     active: dev
-  datasource: 
+  datasource: #【数据源】
     # mysql
     username: root
     password: 123456
@@ -20,11 +29,11 @@ spring:
     test-on-borrow: false
     test-while-idle: true
     time-between-eviction-runs-millis: 18800
-  jpa: 
+  jpa: #【jpa】
     hibernate: 
       ddl-auto: update
     show-sql: true
-  jackson: 
+  jackson: #【json】
     serialization:
       indent_output: true
   #mvc: 
@@ -36,7 +45,7 @@ spring:
   jmx: 
     default-domain: agentservice
 
-# tomcat
+# 【tomcat】
 server:
   tomcat: 
     # 默认200
@@ -54,14 +63,9 @@ endpoints:
   jmx: 
     domain: agentservice
     unique-names: true
-    
-#自定义属性
-name: zhangsan
-age: 30
-address: hanzhou
-remark: my name is ${name}
 
-# mybatis
+
+# 【mybatis】
 mybatis: 
   config-location: classpath:mybatis-config.xml
   
