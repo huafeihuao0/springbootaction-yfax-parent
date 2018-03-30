@@ -49,5 +49,10 @@
             <artifactId>yfax-utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 	</dependencies>
 </project>

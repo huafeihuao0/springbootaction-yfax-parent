@@ -19,3 +19,7 @@ yfax-ytt-api/.settings
 .project
 .settings
 log/
+.idea
+target
+out
+*.iml
