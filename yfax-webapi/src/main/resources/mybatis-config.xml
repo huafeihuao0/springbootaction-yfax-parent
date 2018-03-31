@@ -2,10 +2,15 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--
+    【mybatis的配置文件】
+-->
 <configuration>
     <typeAliases>
+        <!--【dao接口包名】-->
         <package name="com.yfax.webapi"/>
     </typeAliases>
+    <!--【映射文件】-->
     <mappers>
         <mapper resource="mybatis/mapper/IncomeHisMapper.xml"/>
         <mapper resource="mybatis/mapper/WithdrawHisMapper.xml"/>
