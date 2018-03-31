@@ -1,5 +1,7 @@
 package com.yfax.webapi.oauth;
 
+import com.yfax.webapi.GlobalUtils;
+import com.yfax.webapi.oauth.service.CfdbUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,57 +15,70 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 
-import com.yfax.webapi.GlobalUtils;
-import com.yfax.webapi.oauth.service.CfdbUserDetailsService;
-
+/***
+ *  【开启安全配置】
+ * */
 @Configuration
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter
+@EnableWebSecurity  //启动web安全配置
+public class SecurityConfiguration
+        extends WebSecurityConfigurerAdapter//继承安全配置器适配器
 {
     //自定义UserDetailsService注入
     @Autowired
     private CfdbUserDetailsService userDetailsService;
-    
-    //配置匹配用户时密码规则
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return null;
-//    }
-    
-    //配置全局设置
+
+
+    /***
+     *  配置全局认证策略
+     * */
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder authManagerBuilder) throws Exception
+    {
         //设置UserDetailsService以及密码规则
-        auth.userDetailsService(userDetailsService);
+        authManagerBuilder.userDetailsService(userDetailsService);
     }
-    
-    	//排除/hello路径拦截
+
+    /***
+     *  配置具体的安全策略
+     *
+     排除/hello路径拦截
+     版本升级
+     广告平台回调不做拦截
+     faq页不做拦截
+     登录不做拦截（因为同时要创建新用户）
+     * */
     @Override
-    public void configure(WebSecurity web) throws Exception {
-    		//排除/hello路径拦截
-    		//版本升级
-    		//广告平台回调不做拦截
-    		//faq页不做拦截
-    		//登录不做拦截（因为同时要创建新用户）
-        web.ignoring().antMatchers("/hello"
-        		, GlobalUtils.PROJECT_CFDB + "/queryUpgradeByVersion"
-        		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfo"
-        		, GlobalUtils.PROJECT_CFDB + "/sendAdvInfoYm"
-        		, GlobalUtils.PROJECT_CFDB + "/faq"
-        		, GlobalUtils.PROJECT_CFDB + "/doLogin");
+    public void configure(WebSecurity webSecurity) throws Exception
+    {
+        webSecurity.ignoring()
+                   .antMatchers("/hello"
+                           , GlobalUtils.PROJECT_CFDB + "/queryUpgradeByVersion"
+                           , GlobalUtils.PROJECT_CFDB + "/sendAdvInfo"
+                           , GlobalUtils.PROJECT_CFDB + "/sendAdvInfoYm"
+                           , GlobalUtils.PROJECT_CFDB + "/faq"
+                           , GlobalUtils.PROJECT_CFDB + "/doLogin");
     }
-    
+
+    /***
+     *  认证映射bean
+     * */
     @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception
+    {
         return super.authenticationManagerBean();
     }
-    
-    //开启全局方法拦截
+
+    /***
+     *  开启全局方法拦截
+     * */
     @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
-    public static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+    public static class GlobalSecurityConfiguration
+            extends GlobalMethodSecurityConfiguration  //全局方法安全配置
+    {
         @Override
-        protected MethodSecurityExpressionHandler createExpressionHandler() {
+        protected MethodSecurityExpressionHandler createExpressionHandler()
+        {
             return new OAuth2MethodSecurityExpressionHandler();
         }
     }

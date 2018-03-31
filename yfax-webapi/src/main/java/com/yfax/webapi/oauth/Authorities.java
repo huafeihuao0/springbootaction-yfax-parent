@@ -1,9 +1,11 @@
 package com.yfax.webapi.oauth;
 
-public enum Authorities {
-	
-    ROLE_ANONYMOUS,
-    ROLE_USER,
-    ROLE_ADMIN
-    
+/***
+ *  【授权校色】
+ * */
+public enum Authorities
+{
+    ROLE_ANONYMOUS, //匿名
+    ROLE_USER,//普通用户
+    ROLE_ADMIN  //管理员
 }
